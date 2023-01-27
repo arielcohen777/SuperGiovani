@@ -8,7 +8,6 @@ using static UnityEngine.UI.Image;
 
 public class Enemy2 : MonoBehaviour
 {
-
     public NavMeshAgent enemy;
     public Transform player;
     public LayerMask whatIsGround, whatIsPlayer;
