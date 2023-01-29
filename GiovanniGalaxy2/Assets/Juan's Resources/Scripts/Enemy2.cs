@@ -33,8 +33,10 @@ public class Enemy2 : MonoBehaviour
     public int health;
 
     private GameObject enemy2;
-    public bool isDead;    
+    public bool isDead;
 
+    //SAVS - Particle System ref 
+    private  ParticleSystem explosionEffect;
 
     //states
 
@@ -48,6 +50,7 @@ public class Enemy2 : MonoBehaviour
 
     private void Awake()
     {
+        explosionEffect = GetComponent<ParticleSystem>();
         anim = GetComponent<Animator>();
         player = GameObject.Find("Player").transform;
         enemy = GetComponent<NavMeshAgent>();
@@ -72,10 +75,12 @@ public class Enemy2 : MonoBehaviour
         if (playerInFleeRange && !isDead) RunAway();
 
         
-       
+
+
+
         //print(distanceRunTo.magnitude);
         //print(runTo);
-        
+
     }
     private void Patrol()
     {
@@ -169,6 +174,7 @@ public class Enemy2 : MonoBehaviour
         isDead = true;
         anim.SetTrigger("isDead");
         anim.SetInteger("deadIndex", Random.Range(0, 2));
+        explosionEffect.Play();
         Destroy(enemy2, 4f);
     }
 
