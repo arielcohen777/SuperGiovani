@@ -8,6 +8,9 @@ using static UnityEngine.UI.Image;
 
 public class Enemy2 : MonoBehaviour
 {
+
+    //SAVS - Particle System ref 
+    private ParticleSystem explosionEffect;
     //
     [Header("Fov")]
     public float viewAngle;
@@ -65,6 +68,7 @@ public class Enemy2 : MonoBehaviour
 
     private void Awake()
     {
+        explosionEffect = GetComponentInChildren<ParticleSystem>();
         anim = GetComponent<Animator>();
         player = GameObject.Find("Player").transform;
         enemy = GetComponent<NavMeshAgent>();
@@ -259,6 +263,7 @@ public class Enemy2 : MonoBehaviour
         isDead = true;
         anim.SetTrigger("isDead");
         anim.SetInteger("deadIndex", Random.Range(0, 2));
+        explosionEffect.Play();
         Destroy(enemy2, 4f);
     }
 
