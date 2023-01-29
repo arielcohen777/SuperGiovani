@@ -8,56 +8,41 @@ using static UnityEngine.UI.Image;
 
 public class Enemy2 : MonoBehaviour
 {
-    //
-    [Header("Fov")]
-    public float viewAngle;
-    
-    //
-
     public NavMeshAgent enemy;
     public Transform player;
-    public LayerMask whatIsGround, whatIsPlayer, whatIsObstruction;
+    public LayerMask whatIsGround, whatIsPlayer;
 
     // patrol
-    [Header ("Patrol")]
+    public Vector3 walkPoint;
+    bool walkPointSet;
     public float walkPointRange;
-    private Vector3 walkPoint;
-    private bool walkPointSet;
-    
 
     //attack
-    [Header("Enemy Projectile")] 
+     
     public GameObject projectile;
     public GameObject spawnPoint;
-    private GameObject cloneProjectile;
+    public GameObject cloneProjectile;
 
     //flee
-    private Vector3 direction, distanceRunTo, runTo;
-    private bool isRunning;
+    public Vector3 direction, distanceRunTo, runTo;
+    public bool isRunning;
 
     //health system     
 
-    [Header("Set Enemy Health Stats")]
     public const int maxHealth = 100;
     public int health;
 
     private GameObject enemy2;
     public bool isDead;
 
+    //SAVS - Particle System ref 
+    private  ParticleSystem explosionEffect;
 
     //states
-    [Header("Set State Ranges")]
-    public float sightRange;
-    public float attackRange;
-    public float fleeRange;
 
-    [Header("Set Speeds")]
-    public float walkSpeed;
-    public float chasingSpeed;
-    public float fleeingSpeed;
-
-    [SerializeField] private bool 
-        playerInSightRange, playerSpotted, playerInAttackRange, playerInFleeRange, enemyAlerted;
+    public float sightRange, attackRange, fleeRange;
+    public float walkSpeed, chasingSpeed, fleeingSpeed;
+    public bool playerInSightRange, playerInAttackRange, playerInFleeRange;
 
     // anim
     public Animator anim;    
@@ -65,6 +50,7 @@ public class Enemy2 : MonoBehaviour
 
     private void Awake()
     {
+        explosionEffect = GetComponent<ParticleSystem>();
         anim = GetComponent<Animator>();
         player = GameObject.Find("Player").transform;
         enemy = GetComponent<NavMeshAgent>();
@@ -72,30 +58,28 @@ public class Enemy2 : MonoBehaviour
         health = maxHealth;         
     }
 
-    private void Start()
-    {
-        
-    }
-
-    private void FixedUpdate()
+    private void Update()
     {
 
         // check sight, range, running 
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange +0.5f, whatIsPlayer);
         playerInFleeRange = Physics.CheckSphere(transform.position, fleeRange, whatIsPlayer);
 
-        CheckIsRunningAway();
-        CheckPlayerSpotted();
-         
-            if (!playerSpotted && !playerInAttackRange && !playerInFleeRange && !isRunning && !isDead) Patrol();
-            if ((playerSpotted && !playerInAttackRange && !playerInFleeRange && !isRunning && !isDead)|| (enemyAlerted && !playerInAttackRange && !playerInFleeRange && !isRunning && !isDead)) Chase();
-            if (playerSpotted && playerInAttackRange && !playerInFleeRange && !isRunning && !isDead) Attack();
-            if (playerInFleeRange && !isDead) RunAway();
-    
+        CheckIsRunningAway();        
+
+
+        if (!playerInSightRange && !playerInAttackRange && !playerInFleeRange && !isRunning && !isDead) Patrol();
+        if (playerInSightRange && !playerInAttackRange && !playerInFleeRange && !isRunning && !isDead) Chase();
+        if (playerInSightRange && playerInAttackRange && !playerInFleeRange && !isRunning && !isDead) Attack();
+        if (playerInFleeRange && !isDead) RunAway();
+
         
-        
- 
+
+
+
+        //print(distanceRunTo.magnitude);
+        //print(runTo);
 
     }
     private void Patrol()
@@ -106,113 +90,48 @@ public class Enemy2 : MonoBehaviour
         if (walkPointSet)
             enemy.SetDestination(walkPoint);
 
-        anim.SetTrigger("patrolling");         
+        anim.SetTrigger("patrolling");
+
         enemy.speed = walkSpeed;
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
         if (distanceToWalkPoint.magnitude < 1f)
-        {             
-            StartCoroutine(Idle());
             walkPointSet = false;
-        }
-            
-    }
-
-    private IEnumerator Idle()
-    {
-        //anim.SetTrigger("Idle");
-        
-        anim.SetTrigger("Idle");
-        enemy.isStopped = true;
-        yield return new WaitForSeconds(3);
-        transform.LookAt(walkPoint);
-        enemy.isStopped = false;
-      
-
     }
 
     private void SearchWalkPoint()
     {
-        //
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
         if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
-        {
-            
-            walkPointSet = true;
-        }
-            
+            walkPointSet = true;         
     }
     private void Chase()
     {
-        anim.SetTrigger("chasing");        
+        anim.SetTrigger("chasing");
         enemy.speed = chasingSpeed;
         enemy.SetDestination(player.position);
-
-    }
-
-    private void CheckPlayerSpotted()
-    {
-        Collider[] rangeCheck = Physics.OverlapSphere(transform.position, sightRange, whatIsPlayer);
-        if (rangeCheck.Length != 0)
-        {
-            Vector3 directionTarget = (player.transform.position - transform.position).normalized;
-
-
-            if (Vector3.Angle(transform.forward, directionTarget) < viewAngle / 2)
-            {
-                float distanceToTarget = Vector3.Distance(transform.position, player.position);
-                
-                if (!Physics.Raycast(transform.position, directionTarget, distanceToTarget, whatIsObstruction))
-                {
-                    Debug.DrawRay(transform.position, directionTarget * sightRange, Color.blue);
-                    playerSpotted = true;
-                    
-                }
-            }
-
-            else
-            {
-                Debug.DrawRay(transform.position, directionTarget * sightRange, Color.red);
-                playerSpotted = false;
-            }
-        }
-
-        else if (playerSpotted)
-        {
-            playerSpotted = false;
-        }
-
     }
 
     public void AttackAnimationEvent()
-    {        
+    {
+        anim.SetTrigger("attacking");
         cloneProjectile =  Instantiate(projectile, spawnPoint.transform.position, Quaternion.identity);
         Rigidbody rb = cloneProjectile.GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-        rb.AddForce(transform.forward * 8f, ForceMode.Impulse);        
+        rb.AddForce(transform.forward * 8f, ForceMode.Impulse);
+       // Destroy(cloneProjectile, 1.5f);
     }
     public void Attack()
     {
-        Vector3 directionTarget = (player.transform.position - transform.position).normalized;
-        float distanceToTarget = Vector3.Distance(transform.position, player.position);
         //stop agent movement
-        if (!Physics.Raycast(transform.position, directionTarget, distanceToTarget, whatIsObstruction))
-        {
-            transform.LookAt(player);
-            enemy.SetDestination(transform.position);
-            anim.SetTrigger("attacking");
-        }
-
-        else
-        {
-            Chase();                
-        }
-           
+        transform.LookAt(player);
+        enemy.SetDestination(transform.position);
+        anim.SetTrigger("attacking");      
         
     }
 
@@ -238,15 +157,11 @@ public class Enemy2 : MonoBehaviour
 
     public void IsHit(int damage)
     {
-        if (playerInSightRange && !playerSpotted)
-        {
-            enemyAlerted = true;
-        }
-
+      
         health -= damage;
         anim.SetTrigger("isHit");
         anim.SetInteger("hitIndex", Random.Range(0, 2));        
-
+  
         if (health <= 0)
         {
             Death();
@@ -259,6 +174,7 @@ public class Enemy2 : MonoBehaviour
         isDead = true;
         anim.SetTrigger("isDead");
         anim.SetInteger("deadIndex", Random.Range(0, 2));
+        explosionEffect.Play();
         Destroy(enemy2, 4f);
     }
 
@@ -271,14 +187,13 @@ public class Enemy2 : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, sightRange);
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, fleeRange);
-        //Gizmos.color = Color.black;       
-        //Gizmos.DrawLine(transform.position, player.transform.position);
-        //Gizmos.color = Color.green;
-        //Gizmos.DrawLine(transform.position, runTo);
+
         Gizmos.color = Color.black;
-        Gizmos.DrawLine(transform.position, walkPoint);
+        //Gizmos.DrawLine(transform.position,transform.position + direction);
+        Gizmos.DrawLine(transform.position, player.transform.position);
 
-
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(transform.position, runTo);
 
     }
 }
