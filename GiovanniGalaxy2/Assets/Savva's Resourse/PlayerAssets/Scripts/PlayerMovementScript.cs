@@ -187,7 +187,7 @@ public class PlayerMovementScript : MonoBehaviour {
 	[Tooltip("Tells us weather the player is grounded or not.")]
 	public bool grounded;
 	/*
-	* checks if our player is contacting the ground in the angle less than 60 degrees
+	* checks if our player is contacting the ground in the viewAngle less than 60 degrees
 	*	if it is, set groudede to true
 	*/
 	void OnCollisionStay(Collision other){
