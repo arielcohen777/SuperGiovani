@@ -12,11 +12,19 @@ public class Enemy2 : MonoBehaviour
     //SAVS - Particle System ref 
     private ParticleSystem explosionEffect;
     //
+
     [Header("Fov")]
     public float viewAngle;
-    
-    //
 
+    [Header("Checks")]
+    [SerializeField] private bool playerInSightRange;
+    [SerializeField] private bool playerInAttackRange;
+    [SerializeField] private bool playerInFleeRange;
+    public bool playerSpotted;
+    public bool enemyAlerted;
+
+    //
+    [Header("Navigation")]
     public NavMeshAgent enemy;
     public Transform player;
     public LayerMask whatIsGround, whatIsPlayer, whatIsObstruction;
@@ -59,11 +67,9 @@ public class Enemy2 : MonoBehaviour
     public float chasingSpeed;
     public float fleeingSpeed;
 
-    [SerializeField] private bool 
-        playerInSightRange, playerSpotted, playerInAttackRange, playerInFleeRange, enemyAlerted;
-
+  
     // anim
-    public Animator anim;    
+    private Animator anim;    
 
 
     private void Awake()
@@ -88,6 +94,7 @@ public class Enemy2 : MonoBehaviour
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
         playerInFleeRange = Physics.CheckSphere(transform.position, fleeRange, whatIsPlayer);
+         
 
         CheckIsRunningAway();
         CheckPlayerSpotted();
@@ -125,15 +132,11 @@ public class Enemy2 : MonoBehaviour
 
     private IEnumerator Idle()
     {
-        //anim.SetTrigger("Idle");
-        
         anim.SetTrigger("Idle");
         enemy.isStopped = true;
         yield return new WaitForSeconds(3);
         transform.LookAt(walkPoint);
         enemy.isStopped = false;
-      
-
     }
 
     private void SearchWalkPoint()
@@ -146,7 +149,6 @@ public class Enemy2 : MonoBehaviour
 
         if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
         {
-            
             walkPointSet = true;
         }
             
@@ -156,7 +158,6 @@ public class Enemy2 : MonoBehaviour
         anim.SetTrigger("chasing");        
         enemy.speed = chasingSpeed;
         enemy.SetDestination(player.position);
-
     }
 
     private void CheckPlayerSpotted()
