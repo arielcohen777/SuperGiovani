@@ -102,9 +102,9 @@ public float wantedCameraXRotation;
 [HideInInspector]
 public float currentCameraXRotation;
 
-[Tooltip("Top camera angle.")]
+[Tooltip("Top camera viewAngle.")]
 public float topAngleView = 60;
-[Tooltip("Minimum camera angle.")]
+[Tooltip("Minimum camera viewAngle.")]
 public float bottomAngleView = -45;
 /*
  * Upon mouse movenet it increases/decreased wanted value. (not actually moving yet)
