@@ -23,10 +23,12 @@ public class Health : MonoBehaviour
     public void IsHit(float damage)
     {
         armor -= damage;
+        gm.barUi.ArmorSlider();
         if (armor <= 0)
         {
             armor = 0;
             health -= damage;
+            gm.barUi.HealthSlider();
             gm.playerIsAlive = health > 0;
         }    
     }

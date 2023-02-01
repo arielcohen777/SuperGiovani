@@ -20,12 +20,14 @@ public class GameManager : MonoBehaviour
     public StarterAssets.FirstPersonController fpc;
     public Camera cam;
 
+    //Inventory
+    public ChangeGun changeGun;
     public InventoryObject inventory;
     public WeaponSlot activeWeapon;
 
+    //UIs
     public WeaponUI wepUi;
-
-    public ChangeGun changeGun;
+    public BarUI barUi;
 
     #region Singleton
     private GameManager() { }

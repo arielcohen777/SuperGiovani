@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8560480122011128044}
   - component: {fileID: 827033283226794118}
   m_Layer: 0
-  m_Name: PlayerDOESNOTMOVE
+  m_Name: PlayerNOTMOVEMENT
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -383,7 +383,7 @@ PrefabInstance:
       objectReference: {fileID: 5224501714218297757}
     - target: {fileID: 8762286023885395323, guid: 9c489a8547f4d9e4387da15a4ff82c81, type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.5229794
+      value: 2.0079238
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c489a8547f4d9e4387da15a4ff82c81, type: 3}

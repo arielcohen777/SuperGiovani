@@ -9,6 +9,9 @@ TagManager:
   - SecondCamera
   - BulletSpawn
   - HealthUIBar
+  - Weapon
+  - CinemachineTarget
+  - ArmorUIBar
   layers:
   - Default
   - TransparentFX

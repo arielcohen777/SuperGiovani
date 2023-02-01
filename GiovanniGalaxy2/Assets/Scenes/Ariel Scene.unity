@@ -235,36 +235,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &742370380
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 742370381}
-  m_Layer: 0
-  m_Name: ActiveWeapon
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &742370381
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 742370380}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1476247161}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &742691837
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,11 +557,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55919ac34a26952479f3fc91f777b2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1476247161 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9144677036718761150, guid: 5d79647e091be57498dd0f0d1886b149, type: 3}
-  m_PrefabInstance: {fileID: 5322517016011608476}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1627185341
 GameObject:
   m_ObjectHideFlags: 0
@@ -871,9 +836,13 @@ PrefabInstance:
       propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 974996648211522499, guid: 5d79647e091be57498dd0f0d1886b149, type: 3}
+      propertyPath: m_Name
+      value: PlayerUI
+      objectReference: {fileID: 0}
     - target: {fileID: 1608883552594384730, guid: 5d79647e091be57498dd0f0d1886b149, type: 3}
       propertyPath: m_Name
-      value: PlayerDOESNOTMOVE
+      value: PlayerNOTMOVEMENT
       objectReference: {fileID: 0}
     - target: {fileID: 2497033141982073844, guid: 5d79647e091be57498dd0f0d1886b149, type: 3}
       propertyPath: m_Name
@@ -893,7 +862,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2735050579720384607, guid: 5d79647e091be57498dd0f0d1886b149, type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.5229794
+      value: 2.0079238
+      objectReference: {fileID: 0}
+    - target: {fileID: 2793018845606417034, guid: 5d79647e091be57498dd0f0d1886b149, type: 3}
+      propertyPath: m_TagString
+      value: ArmorUIBar
       objectReference: {fileID: 0}
     - target: {fileID: 2793018845623324417, guid: 5d79647e091be57498dd0f0d1886b149, type: 3}
       propertyPath: m_AnchorMax.x

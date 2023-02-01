@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class BarUI : MonoBehaviour
 {
-    public Health healthRef;
+    private GameManager gm;
+    private Health healthRef;
     public Image fillImage;
     private Slider slider;
 
@@ -15,24 +16,28 @@ public class BarUI : MonoBehaviour
         slider = GetComponent<Slider>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
+    {
+        gm = GameManager.Instance;
+        healthRef = gm.player.GetComponent<Health>();
+    }
+
+    /*void UpdateSliders()
     {
         if (slider.CompareTag("HealthUIBar"))
             HealthSlider();
-        else
+        else if (slider.CompareTag("ArmorUIBar"))
             ArmorSlider();
+    }*/
 
-    }
-
-    private void HealthSlider()
+    public void HealthSlider()
     {
         float fill = healthRef.health / healthRef.maxHealth;
         slider.value = fill;
         ImageEnabling();
     }
 
-    private void ArmorSlider()
+    public void ArmorSlider()
     {
         float fill = healthRef.armor / healthRef.maxArmor;
         slider.value = fill;
