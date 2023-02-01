@@ -18,7 +18,6 @@ public class Enemy2 : MonoBehaviour
     public float walkPointRange;
 
     //attack
-     
     public GameObject projectile;
     public GameObject spawnPoint;
     public GameObject cloneProjectile;
@@ -27,8 +26,7 @@ public class Enemy2 : MonoBehaviour
     public Vector3 direction, distanceRunTo, runTo;
     public bool isRunning;
 
-    //health system     
-
+    //health system
     public const int maxHealth = 100;
     public int health;
 
@@ -37,19 +35,21 @@ public class Enemy2 : MonoBehaviour
 
 
     //states
-
     public float sightRange, attackRange, fleeRange;
     public float walkSpeed, chasingSpeed, fleeingSpeed;
     public bool playerInSightRange, playerInAttackRange, playerInFleeRange;
 
     // anim
-    public Animator anim;    
+    public Animator anim;
+
+    GameManager gm;
 
 
-    private void Awake()
+    private void Start()
     {
+        gm = GameManager.Instance;
         anim = GetComponent<Animator>();
-        player = GameObject.Find("Player").transform;
+        player = gm.player.transform;
         enemy = GetComponent<NavMeshAgent>();
         enemy2 = gameObject;
         health = maxHealth;         
@@ -152,11 +152,9 @@ public class Enemy2 : MonoBehaviour
 
     public void IsHit(int damage)
     {
-      
         health -= damage;
         anim.SetTrigger("isHit");
-        anim.SetInteger("hitIndex", Random.Range(0, 2));        
-  
+        anim.SetInteger("hitIndex", Random.Range(0, 2));
         if (health <= 0)
         {
             Death();

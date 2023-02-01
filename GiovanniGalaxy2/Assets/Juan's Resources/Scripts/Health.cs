@@ -10,6 +10,9 @@ public class Health : MonoBehaviour
 
     public float maxArmor = 60;
     public float armor;
+
+    private GameManager gm;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,58 +20,35 @@ public class Health : MonoBehaviour
         armor = maxArmor;
     }
 
-    private void Update()
-    {
-        //print(armor);
-        //print(health);
-
-    }
-
-    // Update is called once per frame
     public void IsHit(float damage)
     {
+        armor -= damage;
         if (armor <= 0)
         {
             armor = 0;
             health -= damage;
-
-            if (health <= 0)
-            {
-                Death();
-            }
-        }
-
-        else
-        {
-            armor -= damage;
-        }     
-
-       
+            gm.playerIsAlive = health > 0;
+        }    
     }
 
-    public void IsHealed(float healing)
+    public void Healing(float healingValue)
     {
-        health += healing;
-
+        health += healingValue;
         if (health >= maxHealth)
-        {
             health = maxHealth;
-        }
     }
 
-    public void PickArmor(float armorVal)
+    public void PickArmor(float armorValue)
     {
-        armor += armorVal;
-
+        armor += armorValue;
         if (armor >= maxArmor)
-        {
             armor = maxArmor;
-        }
+        
     }
 
     public void Death()
     {
         // code for what happens when player dies
-        print("Player has been killed");
+        
     }
 }

@@ -5,11 +5,10 @@ using UnityEngine.UI;
 
 public class BarUI : MonoBehaviour
 {
-
     public Health healthRef;
     public Image fillImage;
     private Slider slider;
-    
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -19,16 +18,11 @@ public class BarUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (slider.tag == "HealthUIBar")
-        {
+        if (slider.CompareTag("HealthUIBar"))
             HealthSlider();
-        }
-
         else
-        {
             ArmorSlider();
-        }
-        
+
     }
 
     private void HealthSlider()
@@ -43,18 +37,14 @@ public class BarUI : MonoBehaviour
         float fill = healthRef.armor / healthRef.maxArmor;
         slider.value = fill;
         ImageEnabling();
-
     }
 
     private void ImageEnabling()
     {
         if (slider.value <= slider.minValue)
-        {
             fillImage.enabled = false;
-        }
         if (slider.value > slider.minValue && !fillImage.enabled)
-        {
             fillImage.enabled = true;
-        }
+
     }
 }
