@@ -39,19 +39,7 @@ public class AlertAllies : MonoBehaviour
             {
                 enemy.gameObject.GetComponent<Enemy2>().enemyAlerted = true;
             }
-        }
-           
-
-          
-            //if (numberAlliesInRange.Length != 0)
-            //{
-            //    foreach (Collider enemy in numberAlliesInRange)
-            //    {
-            //        enemy.gameObject.GetComponent<Enemy2>().enemyAlerted = true;
-            //    }
-
-            //}
-        
+        }       
       
     }
 
@@ -66,9 +54,7 @@ public class AlertAllies : MonoBehaviour
         {
             Gizmos.color = Color.white;
             Gizmos.DrawWireSphere(transform.position, alertRange);
-        }
-
-        
+        }        
 
     }
 }

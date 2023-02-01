@@ -5,13 +5,6 @@ using UnityEngine;
 public class EnemyProjectile : MonoBehaviour
 {
     public float damage;
-    //public GameObject cloneProjectile;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-     
-    }
     private void OnCollisionEnter(Collision collision)
     {
         
