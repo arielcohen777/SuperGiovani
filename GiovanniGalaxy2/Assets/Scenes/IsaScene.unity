@@ -975,6 +975,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 734416488}
+    - target: {fileID: 3499488658121840963, guid: 72e0e7edc0f5b7744b0c3cb5f864bd0e, type: 3}
+      propertyPath: m_BaseOffset
+      value: -0.06
+      objectReference: {fileID: 0}
     - target: {fileID: 3499488658121841020, guid: 72e0e7edc0f5b7744b0c3cb5f864bd0e, type: 3}
       propertyPath: m_UseGravity
       value: 0
