@@ -41,27 +41,22 @@ public class InventoryObject : ScriptableObject
         }
         else
         {
-            Container[idx].AddAmmo(wep.maxAmmo);
+            Container[idx].AddAmmo(wep.currentAmmo);
         }
-    }
-
-    public void ChooseWeapon(int idx)
-    {
-        GameManager gm = GameManager.Instance;
-        gm.activeWeapon = Container[idx];
     }
 
     public WeaponSlot GetNextWeapon()
     {
         if (Container.Count == 0)
-            return null;
-        WeaponSlot wepToGive = Container[nextIdx];
+           return null;
+        
         if (Container.Count == 1)
-            return wepToGive;
+            return Container[0];
+
         nextIdx++;
         if (nextIdx == Container.Count)
             nextIdx = 0;
-        return wepToGive;
+        return Container[nextIdx];
     }
 
 }
@@ -70,24 +65,26 @@ public class InventoryObject : ScriptableObject
 public class WeaponSlot
 {
     public WeaponSO weapon;
-    public int ammoCount;
-    public int ammoMax;
+    public int currentAmmo;
+    public int maxAmmo;
+    public int magSize;
     public float nextFire;
     public string weaponName;
 
     public WeaponSlot(WeaponSO wep)
     {
         weapon = wep;
-        ammoCount = wep.countAmmo;
-        ammoMax = wep.maxAmmo;
+        currentAmmo = wep.currentAmmo;
+        magSize = wep.magSize;
+        maxAmmo = wep.maxAmmo;
         weaponName = wep.name;
     }
 
     public void AddAmmo(int value)
     {
-        ammoCount += value;
-        if (ammoCount > ammoMax)
-            ammoCount = ammoMax;
+        currentAmmo += value;
+        if (currentAmmo > maxAmmo)
+            currentAmmo = maxAmmo;
     }
 
     public bool Equals(WeaponSO obj)

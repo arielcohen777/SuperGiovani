@@ -76,8 +76,9 @@ namespace StarterAssets
 		[SerializeField]public const float _threshold = 0f;
 
 		private GameManager gm;
+        public bool _canChange;
 
-		private bool IsCurrentDeviceMouse
+        private bool IsCurrentDeviceMouse
 		{
 			get
 			{
@@ -87,11 +88,6 @@ namespace StarterAssets
 				return false;
 				#endif
 			}
-		}
-
-		private void Awake()
-		{
-			
 		}
 
 		private void Start()
@@ -109,24 +105,24 @@ namespace StarterAssets
 			// reset our timeouts on start
 			_jumpTimeoutDelta = JumpTimeout;
 			_fallTimeoutDelta = FallTimeout;
-
 			
 		}
 
 		private void Update()
 		{
-			if (gm.playerIsAlive)
+			if (gm.player.GetComponent<Health>().isAlive)
 			{
 				JumpAndGravity();
 				GroundedCheck();
                 Move();
 				Shoot(gm.activeWeapon);
+				Reload(gm.activeWeapon);
             }
         }
 
 		private void LateUpdate()
 		{
-			if (gm.playerIsAlive)
+			if (gm.player.GetComponent<Health>().isAlive)
 			{
 				CameraRotation();
 				ChangeWeapon();
@@ -164,6 +160,15 @@ namespace StarterAssets
 
 		private void Move()
 		{
+			_canChange = !_input.sprint;
+			gm.shoot.anim.SetBool("Sprinting", _input.sprint);
+			gm.shoot.anim.SetBool("Shooting", !_input.sprint);
+			
+			if (gm.inventory.Container.Count == 0)
+				gm.crosshair.SetActive(false);
+			else
+				gm.crosshair.SetActive(!_input.sprint);
+			
 			// set target speed based on move speed, sprint speed and if sprint is pressed
 			float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
@@ -174,17 +179,20 @@ namespace StarterAssets
 			if (_input.move == Vector2.zero) targetSpeed = 0.0f;
 
 			// a reference to the players current horizontal velocity
-			float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
+			float currentHorizontalSpeed = 
+				new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
 			float speedOffset = 0.1f;
 			float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
 
 			// accelerate or decelerate to target speed
-			if (currentHorizontalSpeed < targetSpeed - speedOffset || currentHorizontalSpeed > targetSpeed + speedOffset)
+			if (currentHorizontalSpeed < targetSpeed - speedOffset 
+				|| currentHorizontalSpeed > targetSpeed + speedOffset)
 			{
 				// creates curved result rather than a linear one giving a more organic speed change
 				// note T in Lerp is clamped, so we don't need to clamp our speed
-				_speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude, Time.deltaTime * SpeedChangeRate);
+				_speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude, 
+					Time.deltaTime * SpeedChangeRate);
 
 				// round speed to 3 decimal places
 				_speed = Mathf.Round(_speed * 1000f) / 1000f;
@@ -259,51 +267,39 @@ namespace StarterAssets
 
 		private void Shoot(WeaponSlot wep)
         {
-			if (wep.weaponName.Length == 0)
-				return;
-			
-			_timeBetweenShots += Time.deltaTime + 1f * (wep.weapon.rateOfFire / 100);
-
-			if (_input.shoot && _timeBetweenShots >= wep.weapon.rateOfFire)
-            {
-				_timeBetweenShots = 0;
-
-                if (wep.ammoCount <= 0)
-					return;
-				
-				wep.ammoCount--;
-				
-				//Muzzle Flash
-				if (wep.weapon.muzzleFlash != null)
-					wep.weapon.muzzleFlash.Play();
-
-				//Aiming
-				if (Physics.Raycast(_mainCamera.transform.position, _mainCamera.transform.forward, out RaycastHit hit, wep.weapon.range))
-				{
-					Debug.Log(hit.transform.name);
-					
-					//Making sure it's an enemy
-					Enemy2 target = hit.transform.GetComponent<Enemy2>();
-					if (target != null)
-					{
-						target.IsHit((int)wep.weapon.damage);
-					}
-
-					//Target impact effect
-					if (wep.weapon.impactEffect != null)
-					{
-						GameObject impactGO = Instantiate(wep.weapon.impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-						Destroy(impactGO, 1f);
-					}
-				}
-				gm.wepUi.UpdateWeaponHud();
+			if (wep.weaponName.Length == 0 || wep.currentAmmo == 0)
+			{
+				gm.shoot.anim.SetBool("Shooting", false);
 			}
-        }
+
+			if (_timeBetweenShots <= 100)
+				_timeBetweenShots += Time.deltaTime + 1f * (wep.weapon.rateOfFire / 100);
+
+			if (_input.shoot && !_input.sprint)
+			{ 
+				if (_timeBetweenShots >= wep.weapon.rateOfFire){
+					_timeBetweenShots = 0;
+
+					gm.shoot.Shooting(_mainCamera);
+					gm.wepUi.UpdateWeaponHud();
+				}
+			}
+			else
+            {
+				gm.shoot.anim.SetBool("Shooting", false);
+            }
+		}
 		
+		private void Reload(WeaponSlot wep)
+        {
+			if (_input.reload)
+				gm.shoot.ReloadInvoke();
+        }
+
 		private void ChangeWeapon()
         {
-			if (_input.changeWep)
-			{
+			if (_input.changeWep && _canChange)
+			{				
 				gm.changeGun.SwitchWeapons();
 			}
         }

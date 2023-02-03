@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,15 +16,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioSource coinAudio;
 
     //Player
-    public bool playerIsAlive = true;
     public GameObject player;
     public StarterAssets.FirstPersonController fpc;
     public Camera cam;
+    public Shoot shoot;
 
     //Inventory
     public ChangeGun changeGun;
     public InventoryObject inventory;
     public WeaponSlot activeWeapon;
+    public GameObject crosshair;
 
     //UIs
     public WeaponUI wepUi;
@@ -45,7 +47,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        
     }
     #endregion
 

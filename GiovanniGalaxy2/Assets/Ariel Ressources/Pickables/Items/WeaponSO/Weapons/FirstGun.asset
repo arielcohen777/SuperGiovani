@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: FirstGun
   m_EditorClassIdentifier: 
   weaponName: MachineGun
-  prefab: {fileID: 197730, guid: e3f6749e3b34b374ba0ae9092315c715, type: 3}
+  prefab: {fileID: 108886, guid: df804c49be2c3cf4a90d773eb9565e13, type: 3}
   maxAmmo: 1000
-  countAmmo: 1000
+  currentAmmo: 20
+  magSize: 20
   damage: 10
   rateOfFire: 11
   nextTimeToFire: 0
   range: 100
-  muzzleFlash: {fileID: 0}
   impactEffect: {fileID: 0}
+  gunshot: {fileID: 0}

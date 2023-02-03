@@ -5,6 +5,8 @@ using UnityEngine.UIElements.Experimental;
 
 public class Health : MonoBehaviour
 {
+    public bool isAlive = true;
+
     public float maxHealth = 100;
     public float health;
 
@@ -29,8 +31,8 @@ public class Health : MonoBehaviour
             armor = 0;
             health -= damage;
             gm.barUi.HealthSlider();
-            gm.playerIsAlive = health > 0;
-        }    
+        }
+        isAlive = health > 0;
     }
 
     public void Healing(float healingValue)

@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: SecondGun
   m_EditorClassIdentifier: 
   weaponName: Second
-  prefab: {fileID: 190946, guid: 0ea431ea42fab2c4eb57169868840585, type: 3}
+  prefab: {fileID: 166328, guid: 4687dbac65c37124e833c08251864ba7, type: 3}
   maxAmmo: 600
-  countAmmo: 600
+  currentAmmo: 16
+  magSize: 16
   damage: 20
   rateOfFire: 5
   nextTimeToFire: 0
   range: 100
-  muzzleFlash: {fileID: 0}
   impactEffect: {fileID: 0}
+  gunshot: {fileID: 0}

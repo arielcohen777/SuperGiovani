@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class WeaponUI : MonoBehaviour
 {
-    [SerializeField] private Text ammoCount;
-    [SerializeField] private Text ammoMax;
+    [SerializeField] private Text currentAmmo;
+    [SerializeField] private Text maxAmmo;
+    [SerializeField] private Text magSize;
     GameManager gm;
 
     // Start is called before the first frame update
@@ -19,7 +20,8 @@ public class WeaponUI : MonoBehaviour
     public void UpdateWeaponHud()
     {
         WeaponSlot wep = gm.activeWeapon;
-        ammoCount.text = wep.ammoCount.ToString();
-        ammoMax.text = wep.ammoMax.ToString();
+        currentAmmo.text = wep.currentAmmo.ToString();
+        maxAmmo.text = wep.maxAmmo.ToString();
+        magSize.text = wep.magSize.ToString();
     }
 }

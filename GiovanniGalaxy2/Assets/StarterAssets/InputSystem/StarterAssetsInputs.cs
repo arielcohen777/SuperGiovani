@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
@@ -14,6 +15,7 @@ namespace StarterAssets
 		public bool sprint;
 		public bool shoot;
 		public bool changeWep;
+		public bool reload;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -55,10 +57,17 @@ namespace StarterAssets
         {
 			SwitchWeaponInput(value.isPressed);
 		}
+
+		public void OnReload(InputValue value)
+        {
+			ReloadInput(value.isPressed);
+        }
+
+        
 #endif
 
 
-		public void MoveInput(Vector2 newMoveDirection)
+        public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
 		} 
@@ -87,6 +96,11 @@ namespace StarterAssets
         {
 			changeWep = newWeaponState;
         }
+
+		private void ReloadInput(bool isPressed)
+		{
+			reload = isPressed;
+		}
 
 		private void OnApplicationFocus(bool hasFocus)
 		{

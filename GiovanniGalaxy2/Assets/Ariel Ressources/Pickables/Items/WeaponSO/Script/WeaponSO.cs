@@ -5,21 +5,23 @@ using UnityEngine;
 
 public class WeaponSO : ScriptableObject
 {
+    [Header("Name of Gun")]
     [TextArea(1, 1)]
     public string weaponName;
 
+    [Header("Gun Prefab (Must have texture)")]
     public GameObject prefab;
+    [Header("Ammo")]
     public int maxAmmo;
-    public int countAmmo;
-
+    public int currentAmmo;
+    public int magSize;
+    [Header("Stats")]
     public float damage;
     public float rateOfFire;
     public float nextTimeToFire;
     public float range;
-
-    public ParticleSystem muzzleFlash;
+    [Header("Game Objects")]
     public GameObject impactEffect;
-
-    
+    public AudioSource gunshot;    
 
 }

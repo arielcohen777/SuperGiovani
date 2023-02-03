@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: ThirdWeapon
   m_EditorClassIdentifier: 
   weaponName: Third Weapon
-  prefab: {fileID: 166328, guid: 4687dbac65c37124e833c08251864ba7, type: 3}
+  prefab: {fileID: 138408, guid: a66d64962dad7b441b895147b3616981, type: 3}
   maxAmmo: 700
-  countAmmo: 700
+  currentAmmo: 30
+  magSize: 30
   damage: 43
   rateOfFire: 10
   nextTimeToFire: 0
   range: 100
-  muzzleFlash: {fileID: 0}
   impactEffect: {fileID: 0}
+  gunshot: {fileID: 0}

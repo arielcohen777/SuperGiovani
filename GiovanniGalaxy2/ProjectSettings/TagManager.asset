@@ -12,6 +12,7 @@ TagManager:
   - Weapon
   - CinemachineTarget
   - ArmorUIBar
+  - Muzzle
   layers:
   - Default
   - TransparentFX

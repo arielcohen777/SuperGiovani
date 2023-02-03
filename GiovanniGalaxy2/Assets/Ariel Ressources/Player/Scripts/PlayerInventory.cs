@@ -14,6 +14,7 @@ public class PlayerInventory : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
+        gm.crosshair.SetActive(true);
         if (other.CompareTag("Weapon"))
         {
             WeaponSO weapon = other.GetComponent<Weapon>().weapon;

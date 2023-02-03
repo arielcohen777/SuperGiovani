@@ -6,31 +6,33 @@ public class ChangeGun : MonoBehaviour
 {
     GameManager gm;
     GameObject currentWeapon;
-    MeshFilter meshGun;
     bool canChange = true;
     void Start()
     {
         gm = GameManager.Instance;
     }
 
-    public void UpdateGunMesh()
-    {
-        currentWeapon = gm.activeWeapon.weapon.prefab;
-        meshGun = currentWeapon.GetComponent<MeshFilter>();
-        GetComponent<MeshFilter>().sharedMesh = meshGun.sharedMesh;
-    }
-
     public void SwitchWeapons()
     {
-        if (canChange)
+        if (canChange && gm.inventory.Container.Count > 1)
         {
+            Debug.Log("Switching");
             canChange = false;
             gm.activeWeapon = gm.inventory.GetNextWeapon();
             gm.wepUi.UpdateWeaponHud();
-            UpdateGunMesh();
+            gm.shoot.anim.SetBool("Switch", true);
+            Invoke("UpdateGunMesh", 0.30f);
             StartCoroutine(CanChangeAgain());
         }
     }
+
+    public void UpdateGunMesh()
+    {
+        Debug.Log("Updating");
+        gm.shoot.anim.SetBool("Switch", false);
+        currentWeapon = gm.activeWeapon.weapon.prefab;
+        GetComponent<MeshFilter>().sharedMesh = currentWeapon.GetComponent<MeshFilter>().sharedMesh;
+        GetComponent<Renderer>().sharedMaterial = currentWeapon.GetComponent<Renderer>().sharedMaterial;    }
 
     IEnumerator CanChangeAgain()
     {
