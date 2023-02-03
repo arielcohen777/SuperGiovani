@@ -9,6 +9,10 @@ TagManager:
   - SecondCamera
   - BulletSpawn
   - HealthUIBar
+  - Weapon
+  - CinemachineTarget
+  - ArmorUIBar
+  - Muzzle
   layers:
   - Default
   - TransparentFX
