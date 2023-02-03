@@ -49,8 +49,8 @@ public class Enemy2 : MonoBehaviour
     //health system     
 
     [Header("Set Enemy Health Stats")]
-    public const int maxHealth = 100;
-    public int health;
+    public const float maxHealth = 100;
+    public float health;
 
     private GameObject enemy2;
     public bool isDead;
@@ -240,8 +240,8 @@ public class Enemy2 : MonoBehaviour
             isRunning = false;
         }
     }
-
-    public void IsHit(int damage)
+    // ->
+    public void IsHit(float damage)
     {
         if (playerInSightRange && !playerSpotted)
         {
@@ -265,6 +265,7 @@ public class Enemy2 : MonoBehaviour
         anim.SetTrigger("isDead");
         anim.SetInteger("deadIndex", Random.Range(0, 2));
         explosionEffect.Play();
+        GetComponentInChildren<CoinSpawn>().SpawnCoin();
         Destroy(enemy2, 4f);
     }
 
