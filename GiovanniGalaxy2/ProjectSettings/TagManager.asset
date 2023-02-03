@@ -4,11 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - LevelPart
-  - Dummie
-  - SecondCamera
-  - BulletSpawn
-  - HealthUIBar
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -17,9 +13,9 @@ TagManager:
   - Water
   - UI
   - Ground
-  - Player
-  - Obstruction
-  - Enemy
+  - 
+  - 
+  - 
   - 
   - 
   - 

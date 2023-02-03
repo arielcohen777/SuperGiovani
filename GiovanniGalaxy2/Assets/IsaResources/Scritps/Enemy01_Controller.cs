@@ -6,9 +6,10 @@ using UnityEngine.AI;
 
 public class Enemy01_Controller : MonoBehaviour
 {
-    //public int damage = 3;
-    //public const int maxHealth = 100;
-    //public int health;
+
+    // Health 
+    public const int maxHealth = 100;
+    public int health;
 
     // sounds 
     //public AudioSource enemyHits;
@@ -16,157 +17,169 @@ public class Enemy01_Controller : MonoBehaviour
 
     //Enemy 
     [SerializeField] private GameObject enemy01;
-   // private Vector3 destination;
+    
 
     Animator anim;
     private NavMeshAgent agent;
 
     //States 
     private bool isDead;
-    public bool isAttacking;
+    private bool isAttacking;
     private bool isFollowing;
-   // public float sightRange, attackRange, walkSpeed, chaseSpeed;
+    private bool climb; 
 
     public Transform player;
 
-    //For Moving 
-    //Vector3 lastPosition;
-    //Transform myTransform;
+    //Particle System Ref 
+    private ParticleSystem explosionEffect;
+    public int damage = 5; 
 
-
+    
     private void Start()
     {
+        explosionEffect = GetComponentInChildren<ParticleSystem>(); 
         player = GameObject.Find("Player").transform;
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         enemy01 = gameObject;
-        //health = maxHealth;
-       // myTransform = transform;
-       // lastPosition = myTransform.position;        
-     
-
-      //  destination = agent.destination;
-
-        //agent.radius = 0.35f;
-        //agent.speed = 6.0f;
-        //agent.avoidancePriority = 2;
-        //InvokeRepeating(nameof(IsAttacking), 1f, 1f); 
+        health = maxHealth;
     }
 
     private void FixedUpdate()
     {
-
-        
-       ReachedPlayer();
-       Follow();
-        
-      //  IsMoving();
-        //LeftBehind();
-        //IsAttacking();
+        if (!isDead)
+        {
+            ReachedPlayer(); 
+            Follow();
+            IsClimbing(); 
+        }
     }
-
-    //private void IsMoving()
-    //{
-    //    if (myTransform.position != lastPosition)
-    //    {
-    //        isChasing = true;
-    //        if (isChasing)
-    //        {
-    //            anim.SetFloat("Speed", 1.0f);
-    //        }
-    //    }
-    //    else
-    //    {
-    //        isChasing = false;
-    //        if (!isChasing)
-    //        {
-    //            anim.SetFloat("Speed", 0.0f);
-    //        }
-    //    }
-    //    lastPosition = myTransform.position;
-    //}
 
     private void Follow()
     {
-
         if (isFollowing)
         {
             anim.SetTrigger("isFollowing");
             agent.SetDestination(player.position);
         }
-     
     }
-
-    private void ReachedPlayer()
+        
+    public void ReachedPlayer()
     {
         float distance = Vector3.Distance(gameObject.transform.position, player.transform.position);
-        //print(distance);
 
         if (distance <= 2.1f)
-        {
             isFollowing = false;
-        }
-
         else
-        {
-            isFollowing = true;           
-        }
-
-        //print(isFollowing);
+            isFollowing = true; 
     }
-
-    //public bool LeftBehind()
-    //{
-    //    if (Vector3.Distance(lastPosition, player.position) < 50f)
-    //        return false;
-    //    else
-    //        return true;
-    //}
 
     private void IsAttacking()
-    {              
+    {
+        if (!climb)
+        {
             anim.SetTrigger("isAttacking");
-           // enemyHits.PlayOneShot(enemyHits.clip);
+            //enemyHits.PlayOneShot(enemyHits.clip);
+            health -= damage; 
             agent.SetDestination(transform.position);
             transform.LookAt(player);
-            Debug.Log("Estamos Atacando");
             isFollowing = false;
+        }
+        else
+            isFollowing = true;
+        /*
+        if (isAttacking && !climb)
+        {
+            anim.SetTrigger("isAttacking");
+            //enemyHits.PlayOneShot(enemyHits.clip); 
+            agent.SetDestination(transform.position);
+            transform.LookAt(player);
+            isFollowing = false; 
+        }
+        else
+            isFollowing = true; 
+        //Debug.Log("We are attacking");
+        */
     }
 
-    //public void EnemyHit()
-    //{
-    //    if (isAttacking)
-    //    {
-    //        anim.SetTrigger("isHit");
-    //        agent.isStopped = true;
-    //        print("we are attacking");
-    //    }
- 
-      
-        
-   // }   
 
- 
-    private void OnTriggerEnter(Collider other)
+    private void IsClimbing()
+    {
+        if (climb)
+        {
+            anim.SetBool("isClimbing", true);
+            //isFollowing = false;
+            //agent.SetDestination(player.position); 
+            //Debug.Log("funciona el climb");
+        }
+        else if(!climb)
+            anim.SetBool("isClimbing", false); 
+    }
+
+    public void IsHit(int damage)
+    {
+        health -= damage;
+        anim.SetTrigger("isHit");
+        anim.SetInteger("hitIndex", Random.Range(0, 2));
+
+        if (health <= 0)
+            Death(); 
+    }
+
+    private void Death()
+    {
+        agent.isStopped = true;
+        isDead = true;
+        anim.SetTrigger("isDead");
+        anim.SetInteger("deadIndex", Random.Range(0, 2));
+        explosionEffect.Play();
+        Destroy(enemy01, 4f); 
+    }
+
+   /* private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            isAttacking = true;
             IsAttacking();
         }
+        if (other.CompareTag("Wall"))
+        {
+            climb = true; 
+            IsClimbing();
+            Debug.Log("se quedo en la pared");
+        }
     }
-
+   */
     private void OnTriggerStay(Collider other)
     {
+        if (other.CompareTag("Wall"))
+        {
+            climb = true;
+            anim.SetBool("isClimbing", true); 
+            //IsClimbing();
+            Debug.Log("entro a la pared");
+        }
         if (other.CompareTag("Player"))
         {
+            // isAttacking = true;
             IsAttacking();
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+           // isAttacking = false;
             isFollowing = true;
         }
+        if (other.CompareTag("Wall"))
+        {
+            climb = false;
+            //IsClimbing(); 
+        }
+
     }
+
 }
