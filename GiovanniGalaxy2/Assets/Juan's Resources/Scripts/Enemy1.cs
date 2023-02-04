@@ -6,7 +6,6 @@ using UnityEngine.AI;
 public class Enemy1 : MonoBehaviour
 {
 
-
     [Header("Navigation")]
     private NavMeshAgent enemy;
     public Transform player;
@@ -14,9 +13,9 @@ public class Enemy1 : MonoBehaviour
     // anim
     private Animator anim;
     [SerializeField] private Vector3 rotation;
+    AnimatorClipInfo[] currentAnimInfo; 
 
     //checks
-
     public bool isOnWall;
     public bool playerReached;
 
@@ -24,6 +23,7 @@ public class Enemy1 : MonoBehaviour
     [Header("Set Enemy Health Stats")]
     public const float maxHealth = 100;
     public float health;
+    public float damage; 
 
     private GameObject enemy1;
     public bool isDead;
@@ -80,17 +80,19 @@ public class Enemy1 : MonoBehaviour
             enemy.baseOffset = 0.3f;
             transform.Rotate(90,0,0);
         }
-
         else
         {
             anim.SetBool("isClimbing", false);
             enemy.baseOffset = -0.06f;
         }
-       
     }
 
+    // This anim is called from the attack Animation when it hits the player 
     public void PunchAnimationEvent()
     {
+        health -= damage;
+        currentAnimInfo = this.anim.GetCurrentAnimatorClipInfo(0); 
+        Debug.Log("damage is working:" + " damage = " + damage);
         // codigo para hacerle dano al jugador 
         //checar si esta en el area cuando lanza el golpe 
     }
@@ -98,10 +100,14 @@ public class Enemy1 : MonoBehaviour
     {
         if (playerReached)
         {
-            anim.SetTrigger("attacking");
-            transform.LookAt(player);
+            //Debug.Log("is attacking works");
+            //anim.SetBool("isAttacking", true);
+            //transform.LookAt(player);
+
+            // plays a random animation for attacking
+            anim.SetInteger("attackAnimID", Random.Range(0, 3));
+            anim.SetTrigger("attack");
             enemy.SetDestination(transform.position);
-           
         }        
     }
 
@@ -110,11 +116,8 @@ public class Enemy1 : MonoBehaviour
         health -= damage;
         anim.SetTrigger("isHit");
     
-
         if (health <= 0)
-        {
-                Death();
-        }
+            Death();
     }
 
     private void Death()
@@ -129,17 +132,12 @@ public class Enemy1 : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         if(other.CompareTag("Wall"))
-        {
-            isOnWall = true;
-        }       
+            isOnWall = true;  
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Wall"))
-        {
             isOnWall = false;
-        }
     }
-
 }
