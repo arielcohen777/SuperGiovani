@@ -13,7 +13,6 @@ public class Enemy1 : MonoBehaviour
     // anim
     private Animator anim;
     [SerializeField] private Vector3 rotation;
-    AnimatorClipInfo[] currentAnimInfo; 
 
     //checks
     public bool isOnWall;
@@ -23,10 +22,14 @@ public class Enemy1 : MonoBehaviour
     [Header("Set Enemy Health Stats")]
     public const float maxHealth = 100;
     public float health;
-    public float damage; 
+    public int damage = 5; 
 
     private GameObject enemy1;
     public bool isDead;
+
+   /* public Transform attackPoint;
+    public float attackRange = 0.5f;
+    public LayerMask layer; */
 
     // Start is called before the first frame update
     void Start()
@@ -90,11 +93,14 @@ public class Enemy1 : MonoBehaviour
     // This anim is called from the attack Animation when it hits the player 
     public void PunchAnimationEvent()
     {
-        health -= damage;
-        currentAnimInfo = this.anim.GetCurrentAnimatorClipInfo(0); 
-        Debug.Log("damage is working:" + " damage = " + damage);
+       
+            Debug.Log("player is hit");
+            player.gameObject.GetComponent<Health>().IsHit(damage);
+       
+       
+
         // codigo para hacerle dano al jugador 
-        //checar si esta en el area cuando lanza el golpe 
+        // checar si esta en el area cuando lanza el golpe 
     }
     private void Attack()
     {
@@ -140,4 +146,6 @@ public class Enemy1 : MonoBehaviour
         if (other.CompareTag("Wall"))
             isOnWall = false;
     }
+
+  
 }
