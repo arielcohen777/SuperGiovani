@@ -28,9 +28,10 @@ public class Enemy1 : MonoBehaviour
     public bool isDead;
 
     //attack 
-    public Transform attackPoint;
+    public Transform[] attackPoints;
     public float attackRange = 0.5f;
-    public LayerMask playerLyr; 
+    public LayerMask playerLyr;
+    public bool isHit;
 
 
     // Start is called before the first frame update
@@ -113,11 +114,18 @@ public class Enemy1 : MonoBehaviour
             //transform.LookAt(player);
 
             // plays a random animation for attacking
-            anim.SetInteger("attackAnimID", Random.Range(0, 3));
+            int rnd = Random.Range(1, 4);
+            anim.SetInteger("attackAnimID", rnd);
             anim.SetTrigger("attack");
             enemy.SetDestination(transform.position);
 
-            Collider[] hitPlayer = Physics.OverlapSphere(attackPoint.position, attackRange, playerLyr);
+            Transform hitter;
+            if (rnd == 1) // Right Punch
+                hitter = attackPoints[0];
+            else // Left Punch
+                hitter = attackPoints[1];
+
+            Collider[] hitPlayer = Physics.OverlapSphere(hitter.position, attackRange, playerLyr);
 
             foreach (Collider player in hitPlayer)
             {
@@ -158,10 +166,11 @@ public class Enemy1 : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        if (attackPoint == null)
+        if (attackPoints == null)
             return; 
 
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange); 
+        foreach (Transform t in attackPoints)
+            Gizmos.DrawWireSphere(t.position, attackRange); 
     }
 
 }
