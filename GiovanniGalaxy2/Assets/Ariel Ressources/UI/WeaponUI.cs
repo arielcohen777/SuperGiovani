@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class WeaponUI : MonoBehaviour
 {
     [SerializeField] private Text currentAmmo;
-    [SerializeField] private Text maxAmmo;
     [SerializeField] private Text magSize;
+    [SerializeField] private Text maxAmmo;
+    
     GameManager gm;
 
     // Start is called before the first frame update

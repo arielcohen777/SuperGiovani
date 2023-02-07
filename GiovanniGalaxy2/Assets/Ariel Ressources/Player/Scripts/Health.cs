@@ -24,14 +24,19 @@ public class Health : MonoBehaviour
 
     public void IsHit(float damage)
     {
-        armor -= damage;
-        gm.barUi.ArmorSlider();
-        if (armor <= 0)
+        if (damage <= armor)
+            armor -= damage; 
+        else 
         {
-            armor = 0;
-            health -= damage;
-            gm.barUi.HealthSlider();
+            damage -= armor; 
+            armor = 0; 
+            health -= damage; 
+
         }
+
+        gm.barUi.ArmorSlider();
+        gm.barUi.HealthSlider();
+
         isAlive = health > 0;
     }
 
@@ -40,14 +45,15 @@ public class Health : MonoBehaviour
         health += healingValue;
         if (health >= maxHealth)
             health = maxHealth;
+        gm.barUi.HealthSlider();
     }
 
-    public void PickArmor(float armorValue)
+    public void AddArmor(float armorValue)
     {
         armor += armorValue;
         if (armor >= maxArmor)
             armor = maxArmor;
-        
+        gm.barUi.ArmorSlider();
     }
 
     public void Death()

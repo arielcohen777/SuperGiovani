@@ -15,13 +15,14 @@ public class WeaponSO : ScriptableObject
     public int maxAmmo;
     public int currentAmmo;
     public int magSize;
+    public int ogMaxAmmo;
     [Header("Stats")]
     public float damage;
     public float rateOfFire;
-    public float nextTimeToFire;
     public float range;
     [Header("Game Objects")]
     public GameObject impactEffect;
-    public AudioSource gunshot;    
-
+    public AudioSource gunshot;
+    [Header("Price of Gun")]
+    public int price;
 }

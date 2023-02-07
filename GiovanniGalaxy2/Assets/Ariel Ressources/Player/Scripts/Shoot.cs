@@ -13,6 +13,8 @@ public class Shoot : MonoBehaviour
 	[SerializeField] private GameObject impact;
 	[SerializeField] private GameObject blood;
 
+	private bool canReload;
+
 	private void Start()
     {
         gm = GameManager.Instance;
@@ -22,21 +24,23 @@ public class Shoot : MonoBehaviour
 	public void Shooting(Camera _mainCamera)
 	{
 		WeaponSlot wep = gm.activeWeapon;
+		
+		//Reduce ammo
+		wep.currentAmmo--;
 
-		Debug.Log("Current Ammo: " + wep.currentAmmo + " | Mag Size: " + wep.magSize + " | Max Ammo: " + wep.maxAmmo);
-
+		//If out of ammo, reload
 		if (wep.currentAmmo <= 0)
 		{
-			ReloadInvoke();
+			wep.currentAmmo = 0;
+			StartCoroutine(CanReload());
 			return;
 		}
 
-		gm.shoot.anim.SetBool("Shooting", true);
-		wep.currentAmmo--;
+		//Gun anim
+		anim.SetTrigger("Shooting");
 
-		int randomNumberForMuzzelFlash = Random.Range(0, 5);
-		//Debug.Log("Shooting now");
 		//Muzzle Flash
+		int randomNumberForMuzzelFlash = Random.Range(0, 5);
 		holdFlash = Instantiate(flashList[randomNumberForMuzzelFlash], muzzleSpawn.transform.position /*- muzzelPosition*/, muzzleSpawn.transform.rotation * Quaternion.Euler(0, 0, 90));
 		holdFlash.transform.parent = muzzleSpawn.transform;
 
@@ -59,17 +63,16 @@ public class Shoot : MonoBehaviour
 			}
 
 			Debug.Log(hit.transform.gameObject.tag);
-			if (!hit.transform.CompareTag("Enemy"))
+			if (hit.transform.CompareTag("Enemy") || hit.transform.CompareTag("Dummie"))
 			{
-				GameObject impactGO = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
-				Destroy(impactGO, 1f);
+				GameObject impactGO = Instantiate(blood, hit.point, Quaternion.LookRotation(hit.normal));
+				impactGO.GetComponent<ParticleSystem>().Play();
 			}
 			else
             {
-				GameObject impactGO = Instantiate(blood, hit.point, Quaternion.LookRotation(hit.normal));
-				impactGO.GetComponent<ParticleSystem>().Play();
-            }
-			
+				GameObject impactGO = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
+				Destroy(impactGO, 1f);
+			}
 
 			//Weapon Sound (NEEDS TESTING)
 			if (wep.weapon.gunshot != null)
@@ -79,34 +82,54 @@ public class Shoot : MonoBehaviour
 		}
 	}
 
-	public void ReloadInvoke() 
-	{
-		Invoke("Reload", 0.3f);
-	}
+	public IEnumerator CanReload()
+    {
+		canReload = true;
+		Invoke("Reload", 0.5f);
+		yield return new WaitForSeconds(0.5f);
+    }
+
 	public void Reload()
 	{
+		if (canReload) { 
+			canReload = false;
+		}
+		else
+			return;
+
 		WeaponSlot wep = gm.activeWeapon;
-		Debug.Log("Reloading");
 		//If currentAmmo is the same as magsize, don't reload
 		if (wep.currentAmmo == wep.magSize)
+		{
 			return;
+		}
 
 		//If no ammo in maxammo, don't reload
 		if (wep.maxAmmo == 0)
+		{
 			return;
-		
-		//If there is more ammo than a mag size, reload mag size
-		if (wep.maxAmmo > wep.magSize)
-			wep.currentAmmo = wep.magSize;
-		//If there is less ammo than a mag size, reload rest of ammo
+		}
+
+        int toReload;
+		//If there is less ammo than a mag, reload maxAmmo
+		if (wep.magSize > wep.maxAmmo)
+		{
+			toReload = wep.maxAmmo;
+		}
+		//Else reload amount necessary for a full mag
 		else
-			wep.currentAmmo = wep.maxAmmo;
-		//Reduce Max ammo
-		wep.maxAmmo -= wep.magSize;
+		{
+			toReload = wep.magSize - wep.currentAmmo;
+		}
+
+        wep.currentAmmo += toReload;
 		
 		//Set to 0 if it goes lower
-		if (wep.maxAmmo < 0)
+		if ((wep.maxAmmo -= toReload) < 0)
 			wep.maxAmmo = 0;
+
+		if (wep.currentAmmo > wep.magSize)
+			wep.currentAmmo = wep.magSize;
 
 		gm.wepUi.UpdateWeaponHud();
 	}

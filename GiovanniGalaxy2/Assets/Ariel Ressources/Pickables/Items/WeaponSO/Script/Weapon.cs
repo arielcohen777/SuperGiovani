@@ -5,10 +5,9 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public WeaponSO weapon;
-
-
-    private void OnApplicationQuit()    
+    private void Start()
     {
-        weapon.nextTimeToFire = 0;
+        weapon.currentAmmo = weapon.magSize;
+        weapon.ogMaxAmmo = weapon.maxAmmo;  
     }
 }

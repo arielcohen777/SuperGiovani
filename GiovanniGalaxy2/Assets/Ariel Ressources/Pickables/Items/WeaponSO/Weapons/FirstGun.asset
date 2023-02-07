@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: MachineGun
   prefab: {fileID: 108886, guid: df804c49be2c3cf4a90d773eb9565e13, type: 3}
-  maxAmmo: 1000
-  currentAmmo: 20
-  magSize: 20
+  maxAmmo: 50
+  currentAmmo: 30
+  magSize: 30
+  ogMaxAmmo: 50
   damage: 10
-  rateOfFire: 11
-  nextTimeToFire: 0
+  rateOfFire: 15
   range: 100
   impactEffect: {fileID: 0}
   gunshot: {fileID: 0}
+  price: 30

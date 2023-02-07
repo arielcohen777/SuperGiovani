@@ -41,7 +41,7 @@ public class InventoryObject : ScriptableObject
         }
         else
         {
-            Container[idx].AddAmmo(wep.currentAmmo);
+            Container[idx].AddAmmo(wep);
         }
     }
 
@@ -70,6 +70,7 @@ public class WeaponSlot
     public int magSize;
     public float nextFire;
     public string weaponName;
+    public int ogMaxAmmo;
 
     public WeaponSlot(WeaponSO wep)
     {
@@ -77,14 +78,13 @@ public class WeaponSlot
         currentAmmo = wep.currentAmmo;
         magSize = wep.magSize;
         maxAmmo = wep.maxAmmo;
+        ogMaxAmmo = wep.maxAmmo;
         weaponName = wep.name;
     }
 
-    public void AddAmmo(int value)
+    public void AddAmmo(WeaponSO wep)
     {
-        currentAmmo += value;
-        if (currentAmmo > maxAmmo)
-            currentAmmo = maxAmmo;
+        maxAmmo = wep.ogMaxAmmo;
     }
 
     public bool Equals(WeaponSO obj)

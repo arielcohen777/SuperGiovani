@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
@@ -63,9 +66,18 @@ namespace StarterAssets
 		// timeout deltatime
 		private float _jumpTimeoutDelta;
 		private float _fallTimeoutDelta;
-		public float _timeBetweenShots = 0;
+		private float _timeBetweenShots = 0;
 
-	
+		// Game Manager
+		private GameManager gm;
+
+		// weapons
+		[Header("Weapon Interactions")]
+		[Tooltip("Shows if the player can change weapons")]
+		[SerializeField] private bool _canChange;
+		[Tooltip("Shows if the player can shoot")]
+		[SerializeField] private bool _canShoot;
+
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 		private PlayerInput _playerInput;
 #endif
@@ -74,9 +86,8 @@ namespace StarterAssets
 		private Camera _mainCamera;
 
 		[SerializeField]public const float _threshold = 0f;
-
-		private GameManager gm;
-        public bool _canChange;
+		
+		
 
         private bool IsCurrentDeviceMouse
 		{
@@ -92,6 +103,8 @@ namespace StarterAssets
 
 		private void Start()
 		{
+			_canChange = true;
+			_canShoot = true;
 			gm = GameManager.Instance;
 			_mainCamera = gm.cam;
 			_controller = GetComponent<CharacterController>();
@@ -115,12 +128,16 @@ namespace StarterAssets
 				JumpAndGravity();
 				GroundedCheck();
                 Move();
-				Shoot(gm.activeWeapon);
-				Reload(gm.activeWeapon);
+				if (gm.inventory.Container.Count != 0)
+				{
+					Shoot(gm.activeWeapon);
+					Reload();
+				}
+				InteractWithObject();
             }
         }
 
-		private void LateUpdate()
+        private void LateUpdate()
 		{
 			if (gm.player.GetComponent<Health>().isAlive)
 			{
@@ -160,10 +177,12 @@ namespace StarterAssets
 
 		private void Move()
 		{
+			//If they can change weapons while sprinting
 			_canChange = !_input.sprint;
+			//Sprint Animation
 			gm.shoot.anim.SetBool("Sprinting", _input.sprint);
-			gm.shoot.anim.SetBool("Shooting", !_input.sprint);
 			
+			//Disable crosshair if sprinting
 			if (gm.inventory.Container.Count == 0)
 				gm.crosshair.SetActive(false);
 			else
@@ -267,42 +286,58 @@ namespace StarterAssets
 
 		private void Shoot(WeaponSlot wep)
         {
-			if (wep.weaponName.Length == 0 || wep.currentAmmo == 0)
-			{
-				gm.shoot.anim.SetBool("Shooting", false);
-			}
-
+			// Fire Rate Calculator
 			if (_timeBetweenShots <= 100)
+			{
 				_timeBetweenShots += Time.deltaTime + 1f * (wep.weapon.rateOfFire / 100);
-
-			if (_input.shoot && !_input.sprint)
-			{ 
+			}
+		
+			// When pressing shooting and not sprinting
+			if (_input.shoot && !_input.sprint && _canShoot)
+			{
+				_canChange = false;
+				//If firerate is able to shoot again
 				if (_timeBetweenShots >= wep.weapon.rateOfFire){
 					_timeBetweenShots = 0;
 
+					//Shoot and Update weapon hud
 					gm.shoot.Shooting(_mainCamera);
 					gm.wepUi.UpdateWeaponHud();
 				}
 			}
-			else
-            {
-				gm.shoot.anim.SetBool("Shooting", false);
-            }
 		}
 		
-		private void Reload(WeaponSlot wep)
+		private void Reload()
         {
 			if (_input.reload)
-				gm.shoot.ReloadInvoke();
-        }
-
-		private void ChangeWeapon()
-        {
-			if (_input.changeWep && _canChange)
-			{				
-				gm.changeGun.SwitchWeapons();
+			{
+				StartCoroutine(gm.shoot.CanReload());
 			}
         }
+		
+		private void ChangeWeapon()
+		{
+
+			if (_input.changeWep && _canChange)
+			{
+				_canShoot = false;
+				gm.changeGun.SwitchWeapons();
+				Invoke("CanShootAgain", 1f);
+			}
+        }
+
+		private void CanShootAgain()
+        {
+			_canShoot = true;
+        }
+
+		private void InteractWithObject()
+		{
+			if (_input.interact)
+			{
+				gm.interact.BuyItem();
+			}
+		}
 
 		private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
 		{

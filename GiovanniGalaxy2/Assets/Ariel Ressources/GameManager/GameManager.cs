@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     public InventoryObject inventory;
     public WeaponSlot activeWeapon;
     public GameObject crosshair;
+    public PlayerInventory pInv;
+    public Interact interact;
 
     //UIs
     public WeaponUI wepUi;
@@ -51,6 +53,12 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Coins
+
+    private void Start()
+    {
+        UpdateCoinDisplay();
+    }
+
     public void UpdateCoin()
     {
         coins++;
