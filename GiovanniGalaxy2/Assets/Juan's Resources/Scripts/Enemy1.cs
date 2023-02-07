@@ -27,9 +27,11 @@ public class Enemy1 : MonoBehaviour
     private GameObject enemy1;
     public bool isDead;
 
-   /* public Transform attackPoint;
+    //attack 
+    public Transform attackPoint;
     public float attackRange = 0.5f;
-    public LayerMask layer; */
+    public LayerMask playerLyr; 
+
 
     // Start is called before the first frame update
     void Start()
@@ -95,7 +97,7 @@ public class Enemy1 : MonoBehaviour
     {
        
             Debug.Log("player is hit");
-            player.gameObject.GetComponent<Health>().IsHit(damage);
+            //player.gameObject.GetComponent<Health>().IsHit(damage);
        
        
 
@@ -114,6 +116,13 @@ public class Enemy1 : MonoBehaviour
             anim.SetInteger("attackAnimID", Random.Range(0, 3));
             anim.SetTrigger("attack");
             enemy.SetDestination(transform.position);
+
+            Collider[] hitPlayer = Physics.OverlapSphere(attackPoint.position, attackRange, playerLyr);
+
+            foreach (Collider player in hitPlayer)
+            {
+                player.gameObject.GetComponent<Health>().IsHit(damage);
+            }
         }        
     }
 
@@ -147,5 +156,12 @@ public class Enemy1 : MonoBehaviour
             isOnWall = false;
     }
 
-  
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+            return; 
+
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange); 
+    }
+
 }

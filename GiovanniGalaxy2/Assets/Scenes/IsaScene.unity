@@ -910,6 +910,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 55621203176282853, guid: 79b150e0d1b87cc4d91eaad2b18d5a24, type: 3}
   m_PrefabInstance: {fileID: 815909902}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &833370424 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8008411901177883353, guid: b5c6b8762db80354b89adf0d3b7bd8f6, type: 3}
+  m_PrefabInstance: {fileID: 9190780470449369428}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &865379023
 GameObject:
   m_ObjectHideFlags: 0
@@ -1649,6 +1654,36 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 55621203176282853, guid: 79b150e0d1b87cc4d91eaad2b18d5a24, type: 3}
   m_PrefabInstance: {fileID: 1494095264}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1520715776
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1520715777}
+  m_Layer: 0
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1520715777
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520715776}
+  m_LocalRotation: {x: 0.0900068, y: -1.0810081e-11, z: 1.870809e-11, w: 0.99594116}
+  m_LocalPosition: {x: -1.138, y: 0.206, z: 0.066}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 833370424}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1570412130
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2762,13 +2797,17 @@ PrefabInstance:
     - target: {fileID: 9190780469981284194, guid: b5c6b8762db80354b89adf0d3b7bd8f6, type: 3}
       propertyPath: attackPoint
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1520715777}
     - target: {fileID: 9190780469981284194, guid: b5c6b8762db80354b89adf0d3b7bd8f6, type: 3}
       propertyPath: attackRange
-      value: 0.3
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 9190780469981284194, guid: b5c6b8762db80354b89adf0d3b7bd8f6, type: 3}
       propertyPath: layer.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 9190780469981284194, guid: b5c6b8762db80354b89adf0d3b7bd8f6, type: 3}
+      propertyPath: playerLyr.m_Bits
       value: 128
       objectReference: {fileID: 0}
     m_RemovedComponents: []
