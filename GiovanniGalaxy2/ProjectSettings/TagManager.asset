@@ -12,6 +12,7 @@ TagManager:
   - SecondCamera
   - Enemy1
   - Enemy2
+  - Enemy
   layers:
   - Default
   - TransparentFX
