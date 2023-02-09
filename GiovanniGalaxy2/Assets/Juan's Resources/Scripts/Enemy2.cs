@@ -24,7 +24,7 @@ public class Enemy2 : MonoBehaviour
     //
     [Header("Navigation")]
     public NavMeshAgent enemy;
-    public Transform player;
+    public Transform player; 
     public LayerMask whatIsGround, whatIsPlayer, whatIsObstruction;
 
     // patrol
@@ -35,7 +35,10 @@ public class Enemy2 : MonoBehaviour
 
 
     //attack
+
     [Header("Enemy Projectile")]
+
+
     public GameObject projectile;
     public GameObject spawnPoint;
     private GameObject cloneProjectile;
@@ -44,16 +47,20 @@ public class Enemy2 : MonoBehaviour
     private Vector3 direction, distanceRunTo, runTo;
     private bool isRunning;
 
-    //health system     
+
 
     [Header("Set Enemy Health Stats")]
     public const float maxHealth = 100;
     public float health;
 
+
+
+
     private GameObject enemy2;
     public bool isDead;
 
     //states
+
     [Header("Set State Ranges")]
     public float sightRange;
     public float attackRange;
@@ -67,11 +74,16 @@ public class Enemy2 : MonoBehaviour
     // anim
     private Animator anim;
 
+   // public GameManager gm;
+
+
     private void Start()
     {
         explosionEffect = GetComponentInChildren<ParticleSystem>();
+       // gm = GameManager.Instance; 
         anim = GetComponent<Animator>();
-        player = GameObject.Find("Player").transform;
+        //player = gm.player.GetComponentInChildren<Transform>();
+        player = GameObject.Find("PlayerMovement").transform;
         enemy = GetComponent<NavMeshAgent>();
         enemy2 = gameObject;
         health = maxHealth;
@@ -79,7 +91,7 @@ public class Enemy2 : MonoBehaviour
 
     private void Update()
     {
-        CheckRanges();
+        CheckRanges();    
     }
 
     private void FixedUpdate()
@@ -237,11 +249,11 @@ public class Enemy2 : MonoBehaviour
     }
     public void IsHit(float damage)
     {
+
         if (playerInSightRange && !playerSpotted)
         {
             enemyAlerted = true;
-        }
-
+        }       
         health -= damage;
         anim.SetTrigger("isHit");
         anim.SetInteger("hitIndex", Random.Range(0, 2));

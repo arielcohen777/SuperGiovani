@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.HID;
 
 public class ShellProjectile : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class ShellProjectile : MonoBehaviour
 
         if (collision.collider.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Health>().IsHit(damagePlayer);
+            collision.gameObject.GetComponentInParent<Health>().IsHit(damagePlayer);
             Destroy(gameObject);
         }     
 
@@ -32,9 +33,14 @@ public class ShellProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Dummie"))
+        Enemy1 enemy = other.GetComponentInParent<Enemy1>();
+        Enemy2 enemy2 = other.GetComponentInParent<Enemy2>();
+
+        if (other.CompareTag("Enemy"))
         {
-            other.gameObject.GetComponent<Enemy2>().IsHit(damageEnemy);            
+            if (enemy != null) enemy.IsHit(damageEnemy);
+            else enemy2.IsHit(damageEnemy);
+                       
         }
     }
 }

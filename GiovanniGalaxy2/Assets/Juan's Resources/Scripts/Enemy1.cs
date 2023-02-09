@@ -5,10 +5,11 @@ using UnityEngine.AI;
 
 public class Enemy1 : MonoBehaviour
 {
-
+    //SAVS - Particle System ref 
+    private ParticleSystem explosionEffect;
 
     [Header("Navigation")]
-    private NavMeshAgent enemy;
+    private NavMeshAgent navMesh;
     public Transform player;
     public LayerMask whatIsGround, whatIsPlayer, whatIsObstruction;
     // anim
@@ -16,7 +17,6 @@ public class Enemy1 : MonoBehaviour
     [SerializeField] private Vector3 rotation;
 
     //checks
-
     public bool isOnWall;
     public bool playerReached;
 
@@ -24,18 +24,30 @@ public class Enemy1 : MonoBehaviour
     [Header("Set Enemy Health Stats")]
     public const float maxHealth = 100;
     public float health;
+    public int damage = 5;
 
-    private GameObject enemy1;
+    private GameObject enemy;
     public bool isDead;
+
+    //attack 
+    public Transform[] attackPoints;
+    public float attackRange = 0.5f;
+    public LayerMask playerLyr;
+
+    private GameManager gm;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        explosionEffect = GetComponentInChildren<ParticleSystem>();
+        gm = GameManager.Instance;
+        //player = gm.player.transform;
+        player = GameObject.Find("PlayerMovement").transform;
         anim = GetComponent<Animator>();
-        player = GameObject.Find("Player").transform;
-        enemy = GetComponent<NavMeshAgent>();
-        enemy1 = gameObject;
+        navMesh = GetComponent<NavMeshAgent>();
         health = maxHealth;
+        enemy = gameObject;
     }
 
     // Update is called once per frame
@@ -48,12 +60,8 @@ public class Enemy1 : MonoBehaviour
 
     public void ReachedPlayer()
     {
-        float distance = Vector3.Distance(gameObject.transform.position, player.transform.position);
-
-        if (distance <= 2.1f)
-            playerReached = true;
-        else
-            playerReached = false;
+        float distance = Vector3.Distance(gameObject.transform.position, player.position);
+        playerReached = distance <= 2.1f;
     }
 
     private void Chase()
@@ -63,10 +71,10 @@ public class Enemy1 : MonoBehaviour
         if (!playerReached)
         {
             anim.SetBool("isFollowing", true);
-            enemy.SetDestination(player.position);
+            navMesh.SetDestination(player.position);
         }
 
-       else
+        else
         {
             anim.SetBool("isFollowing", false);
         }
@@ -74,72 +82,99 @@ public class Enemy1 : MonoBehaviour
 
     private void Climbing()
     {
-        if(isOnWall)
+        if (isOnWall)
         {
             anim.SetBool("isClimbing", true);
-            enemy.baseOffset = 0.3f;
-            transform.Rotate(90,0,0);
+            navMesh.baseOffset = 0.3f;
+            transform.Rotate(90, 0, 0);
         }
-
         else
         {
             anim.SetBool("isClimbing", false);
-            enemy.baseOffset = -0.06f;
+            navMesh.baseOffset = -0.06f;
         }
-       
     }
 
+    // This anim is called from the attack Animation when it hits the player 
     public void PunchAnimationEvent()
     {
+
+        //Debug.Log("player is hit");
+        //player.gameObject.GetComponent<Health>().IsHit(damage);
+
+
+
         // codigo para hacerle dano al jugador 
-        //checar si esta en el area cuando lanza el golpe 
+        // checar si esta en el area cuando lanza el golpe 
     }
     private void Attack()
     {
         if (playerReached)
         {
-            anim.SetTrigger("attacking");
-            transform.LookAt(player);
-            enemy.SetDestination(transform.position);
-           
-        }        
+            //Debug.Log("is attacking works");
+            //anim.SetBool("isAttacking", true);
+            //transform.LookAt(player);
+
+            // plays a random animation for attacking
+            int rndIdx = Random.Range(1, 4);
+            anim.SetInteger("attackAnimID", rndIdx);
+            anim.SetTrigger("attack");
+            navMesh.SetDestination(transform.position);
+
+            Transform hitter = (rndIdx == 1) ? attackPoints[0] : attackPoints[1];
+
+            Collider[] hitPlayer = Physics.OverlapSphere(hitter.position, attackRange, playerLyr);
+
+            foreach (Collider player in hitPlayer)
+            {
+                //Debug.Log(player.tag);
+                player.GetComponentInParent<Health>().IsHit(damage);
+            }
+        }
     }
 
     public void IsHit(float damage)
-    {     
+    {
         health -= damage;
         anim.SetTrigger("isHit");
-    
 
         if (health <= 0)
         {
-                Death();
+            health = 0;
+            Death();
         }
     }
 
     private void Death()
     {
-        enemy.isStopped = true;
+        navMesh.isStopped = true;
         isDead = true;
-        anim.SetTrigger("isDead");       
-        Destroy(enemy1, 4f);
+        anim.SetTrigger("isDead");
+        explosionEffect.Play();
+        GetComponentInChildren<CoinSpawn>().SpawnCoin();
+        Destroy(enemy, 4f);
     }
 
 
     private void OnTriggerStay(Collider other)
     {
-        if(other.CompareTag("Wall"))
-        {
+        if (other.CompareTag("Wall"))
             isOnWall = true;
-        }       
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Wall"))
-        {
             isOnWall = false;
-        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoints == null)
+            return;
+
+        foreach (Transform t in attackPoints)
+            Gizmos.DrawWireSphere(t.position, attackRange);
     }
 
 }
