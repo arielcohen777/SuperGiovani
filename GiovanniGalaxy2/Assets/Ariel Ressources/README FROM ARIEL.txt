@@ -1,10 +1,17 @@
 GameManager:
-Need a UI with a TextMeshPro for the Coins (GameObject -> UI -> Canvas, then UI -> TextMeshPro inside of Canvas)
-Reference a TextMeshPro UI in the GameManager, no need to write anything in there, 
-maybe just "Coins: " for reference.
-And also reference the Player
 ** To get GameManger instance in your script -> GameManager gm; (Global Variable)
-(In Start() or Awake()) -> gm = GameManager.Instance; **
+In Start() add -> gm = GameManager.Instance; **
+Includes a reference for (actual names of variables):
+coins (int)
+player (GameObject)
+playerIsAlive (bool)
+fpc (FirstPersonController)
+cam (Main Camera)
+changeGun (ChangeGun)
+inventory (InventoryObject)
+activeWeapon (WeaponSlot)
+wepUi (Weapon Ui)
+barUi (Bars Ui)
 
 Coin:
 Add CoinSpawn prefab in your Enemy.
@@ -15,6 +22,13 @@ or make CoinSpawn instance and call through there.
 (Check CoinSpawn for better help)
 PS: TESTCoinSpawner Prefab is just to test. It only works if you walk through it.
 
-Player ref:
-(Must have GameManager instance in your script initialized)
-Player player = gm.player;
+Weapon: 
+Right Click -> Create/WeaponSO/Weapon
+In properties, give it a name, the prefab, max ammo and count ammo,
+damage, rate of fire, SKIP Next Time To Fire, give range,
+If you have particles for muzzle flash and a prefab for impact, add it (It can be null)
+
+Inventory:
+The weapons are added by colliding with an object 
+containing the "Weapon.cs" (Pickables/Items/WeaponSO/Script/) and adding
+a weapon to it. Switch weapons in inventory by clicking Q or Left Trigger (GamePad).

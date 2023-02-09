@@ -36,7 +36,7 @@ public class Enemy2 : MonoBehaviour
     private bool walkPointSet;
     
 
-    //attack
+
     [Header("Enemy Projectile")] 
     public GameObject projectile;
     public GameObject spawnPoint;
@@ -44,9 +44,7 @@ public class Enemy2 : MonoBehaviour
 
     //flee
     private Vector3 direction, distanceRunTo, runTo;
-    private bool isRunning;
-
-    //health system     
+    private bool isRunning; 
 
     [Header("Set Enemy Health Stats")]
     public const float maxHealth = 100;
@@ -56,7 +54,6 @@ public class Enemy2 : MonoBehaviour
     public bool isDead;
 
 
-    //states
     [Header("Set State Ranges")]
     public float sightRange;
     public float attackRange;
@@ -66,25 +63,27 @@ public class Enemy2 : MonoBehaviour
     public float walkSpeed;
     public float chasingSpeed;
     public float fleeingSpeed;
+/*
+    public float sightRange, attackRange, fleeRange;
+    public float walkSpeed, chasingSpeed, fleeingSpeed;
+    public bool playerInSightRange, playerInAttackRange, playerInFleeRange;*/
 
   
     // anim
-    private Animator anim;    
+    public Animator anim;
 
+    GameManager gm;
 
-    private void Awake()
-    {
-        explosionEffect = GetComponentInChildren<ParticleSystem>();
-        anim = GetComponent<Animator>();
-        player = GameObject.Find("Player").transform;
-        enemy = GetComponent<NavMeshAgent>();
-        enemy2 = gameObject;
-        health = maxHealth;         
-    }
 
     private void Start()
     {
-        
+        explosionEffect = GetComponentInChildren<ParticleSystem>();
+        gm = GameManager.Instance;
+        anim = GetComponent<Animator>();
+        player = gm.player.transform;
+        enemy = GetComponent<NavMeshAgent>();
+        enemy2 = gameObject;
+        health = maxHealth;         
     }
 
     private void FixedUpdate()
@@ -240,7 +239,6 @@ public class Enemy2 : MonoBehaviour
             isRunning = false;
         }
     }
-    // ->
     public void IsHit(float damage)
     {
         if (playerInSightRange && !playerSpotted)

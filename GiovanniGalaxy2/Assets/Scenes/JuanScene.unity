@@ -485,6 +485,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 263251536}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!1 &266813242
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,6 +597,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 400002, guid: c44def608711374429eb710153657136, type: 3}
   spawnRadius: 3
+=======
+>>>>>>> origin/Ariel
 --- !u!1 &336014058
 GameObject:
   m_ObjectHideFlags: 0
@@ -671,6 +674,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 336014058}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 --- !u!4 &354738374 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3580783270875539505, guid: 2401a6290b3af2a43afae79d2993d4e8, type: 3}
@@ -1040,6 +1044,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2401a6290b3af2a43afae79d2993d4e8, type: 3}
+=======
+>>>>>>> origin/Ariel
 --- !u!1 &608720818
 GameObject:
   m_ObjectHideFlags: 0
@@ -1970,7 +1976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0443b4422c2a8c64984d9f085c5cf1f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthRef: {fileID: 1992994095}
+  healthRef: {fileID: 0}
   fillImage: {fileID: 608720820}
 --- !u!1 &1116570884
 GameObject:
@@ -2138,7 +2144,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+<<<<<<< HEAD
     - target: {fileID: 3580783270875539505, guid: 2401a6290b3af2a43afae79d2993d4e8, type: 3}
+=======
+    - target: {fileID: 5970821122150843166, guid: 1760be6eb2f7c544287afb5e5c5d3785, type: 3}
+      propertyPath: m_Name
+      value: Enemy1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5970821122150843166, guid: 1760be6eb2f7c544287afb5e5c5d3785, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6455714909392148900, guid: 1760be6eb2f7c544287afb5e5c5d3785, type: 3}
+>>>>>>> origin/Ariel
       propertyPath: m_RootOrder
       value: 14
       objectReference: {fileID: 0}
@@ -2420,6 +2438,7 @@ Transform:
   m_Father: {fileID: 182235000}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!114 &1240079917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2623,6 +2642,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2401a6290b3af2a43afae79d2993d4e8, type: 3}
+=======
+>>>>>>> origin/Ariel
 --- !u!1 &1391664695
 GameObject:
   m_ObjectHideFlags: 0
@@ -2734,10 +2755,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f54387a4eb4bf74ba9b6a18436d1114, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   coinText: {fileID: 0}
   coins: 0
   coinAudio: {fileID: 0}
+  playerIsAlive: 1
+  player: {fileID: 0}
+  fpc: {fileID: 0}
+  cam: {fileID: 0}
 --- !u!114 &1391664701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2750,10 +2774,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f54387a4eb4bf74ba9b6a18436d1114, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   coinText: {fileID: 0}
   coins: 0
   coinAudio: {fileID: 0}
+  playerIsAlive: 1
+  player: {fileID: 0}
+  fpc: {fileID: 0}
+  cam: {fileID: 0}
 --- !u!1 &1410995009
 GameObject:
   m_ObjectHideFlags: 0
@@ -3045,6 +3072,7 @@ Transform:
   m_Father: {fileID: 783896905}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!114 &1483781366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3060,6 +3088,66 @@ MonoBehaviour:
   prefabToSpawn: {fileID: 400002, guid: c44def608711374429eb710153657136, type: 3}
   spawnRadius: 3
 --- !u!1 &1516101997
+=======
+--- !u!1001 &1562562505
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6020948907591015871, guid: 5c785789e60e0924b930511d671db6a5, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020948907591015871, guid: 5c785789e60e0924b930511d671db6a5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.9692698
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020948907591015871, guid: 5c785789e60e0924b930511d671db6a5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0000009536743
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020948907591015871, guid: 5c785789e60e0924b930511d671db6a5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -8.357516
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020948907591015871, guid: 5c785789e60e0924b930511d671db6a5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020948907591015871, guid: 5c785789e60e0924b930511d671db6a5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020948907591015871, guid: 5c785789e60e0924b930511d671db6a5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020948907591015871, guid: 5c785789e60e0924b930511d671db6a5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020948907591015871, guid: 5c785789e60e0924b930511d671db6a5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020948907591015871, guid: 5c785789e60e0924b930511d671db6a5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020948907591015871, guid: 5c785789e60e0924b930511d671db6a5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6054004896402600008, guid: 5c785789e60e0924b930511d671db6a5, type: 3}
+      propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5c785789e60e0924b930511d671db6a5, type: 3}
+--- !u!1 &1575507755
+>>>>>>> origin/Ariel
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3692,7 +3780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0443b4422c2a8c64984d9f085c5cf1f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthRef: {fileID: 1992994095}
+  healthRef: {fileID: 0}
   fillImage: {fileID: 1410995011}
 --- !u!114 &1821895573
 MonoBehaviour:
@@ -4105,10 +4193,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f54387a4eb4bf74ba9b6a18436d1114, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 404543636}
   coinText: {fileID: 263251538}
   coins: 0
   coinAudio: {fileID: 1943561763}
+  playerIsAlive: 1
+  player: {fileID: 0}
+  fpc: {fileID: 0}
+  cam: {fileID: 0}
 --- !u!4 &1943561762
 Transform:
   m_ObjectHideFlags: 0
@@ -4121,7 +4212,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1943561763
 AudioSource:
@@ -4219,6 +4310,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+<<<<<<< HEAD
 --- !u!1 &1957734027
 GameObject:
   m_ObjectHideFlags: 0
@@ -4422,6 +4514,8 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2025905531}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+=======
+>>>>>>> origin/Ariel
 --- !u!1 &2048577951
 GameObject:
   m_ObjectHideFlags: 0
@@ -4551,13 +4645,18 @@ RectTransform:
   m_Children:
   - {fileID: 263251537}
   m_Father: {fileID: 0}
+<<<<<<< HEAD
   m_RootOrder: 8
+=======
+  m_RootOrder: 7
+>>>>>>> origin/Ariel
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+<<<<<<< HEAD
 --- !u!1 &2101160056
 GameObject:
   m_ObjectHideFlags: 0
@@ -4685,3 +4784,5 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 023b8acd4530f254a986d14a604a5949, type: 3}
+=======
+>>>>>>> origin/Ariel

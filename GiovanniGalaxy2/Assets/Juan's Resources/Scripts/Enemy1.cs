@@ -7,7 +7,7 @@ public class Enemy1 : MonoBehaviour
 {
 
     [Header("Navigation")]
-    private NavMeshAgent enemy;
+    private NavMeshAgent navMesh;
     public Transform player;
     public LayerMask whatIsGround, whatIsPlayer, whatIsObstruction;
     // anim
@@ -24,22 +24,24 @@ public class Enemy1 : MonoBehaviour
     public float health;
     public int damage = 5; 
 
-    private GameObject enemy1;
+    private GameObject enemy;
     public bool isDead;
 
     //attack 
-    public Transform attackPoint;
+    public Transform[] attackPoints;
     public float attackRange = 0.5f;
-    public LayerMask playerLyr; 
+    public LayerMask playerLyr;
+
+    private GameManager gm;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        gm = GameManager.Instance;
+        player = gm.player.transform;
         anim = GetComponent<Animator>();
-        player = GameObject.Find("Player").transform;
-        enemy = GetComponent<NavMeshAgent>();
-        enemy1 = gameObject;
+        navMesh = GetComponent<NavMeshAgent>();
         health = maxHealth;
     }
 
@@ -53,12 +55,8 @@ public class Enemy1 : MonoBehaviour
 
     public void ReachedPlayer()
     {
-        float distance = Vector3.Distance(gameObject.transform.position, player.transform.position);
-
-        if (distance <= 2.1f)
-            playerReached = true;
-        else
-            playerReached = false;
+        float distance = Vector3.Distance(gameObject.transform.position, player.position);
+        playerReached = distance <= 2.1f;
     }
 
     private void Chase()
@@ -68,10 +66,10 @@ public class Enemy1 : MonoBehaviour
         if (!playerReached)
         {
             anim.SetBool("isFollowing", true);
-            enemy.SetDestination(player.position);
+            navMesh.SetDestination(player.position);
         }
 
-       else
+        else
         {
             anim.SetBool("isFollowing", false);
         }
@@ -82,13 +80,13 @@ public class Enemy1 : MonoBehaviour
         if(isOnWall)
         {
             anim.SetBool("isClimbing", true);
-            enemy.baseOffset = 0.3f;
+            navMesh.baseOffset = 0.3f;
             transform.Rotate(90,0,0);
         }
         else
         {
             anim.SetBool("isClimbing", false);
-            enemy.baseOffset = -0.06f;
+            navMesh.baseOffset = -0.06f;
         }
     }
 
@@ -96,8 +94,8 @@ public class Enemy1 : MonoBehaviour
     public void PunchAnimationEvent()
     {
        
-            Debug.Log("player is hit");
-            //player.gameObject.GetComponent<Health>().IsHit(damage);
+        //Debug.Log("player is hit");
+        //player.gameObject.GetComponent<Health>().IsHit(damage);
        
        
 
@@ -113,15 +111,19 @@ public class Enemy1 : MonoBehaviour
             //transform.LookAt(player);
 
             // plays a random animation for attacking
-            anim.SetInteger("attackAnimID", Random.Range(0, 3));
+            int rndIdx = Random.Range(1, 4);
+            anim.SetInteger("attackAnimID", rndIdx);
             anim.SetTrigger("attack");
-            enemy.SetDestination(transform.position);
+            navMesh.SetDestination(transform.position);
 
-            Collider[] hitPlayer = Physics.OverlapSphere(attackPoint.position, attackRange, playerLyr);
+            Transform hitter = (rndIdx == 1) ? attackPoints[0] : attackPoints[1];
+
+            Collider[] hitPlayer = Physics.OverlapSphere(hitter.position, attackRange, playerLyr);
 
             foreach (Collider player in hitPlayer)
             {
-                player.gameObject.GetComponent<Health>().IsHit(damage);
+                //Debug.Log(player.tag);
+                player.GetComponent<Health>().IsHit(damage);
             }
         }        
     }
@@ -130,17 +132,21 @@ public class Enemy1 : MonoBehaviour
     {     
         health -= damage;
         anim.SetTrigger("isHit");
-    
+
+        Debug.Log(health); 
+
         if (health <= 0)
+        {
             Death();
+        }
     }
 
     private void Death()
     {
-        enemy.isStopped = true;
+        navMesh.isStopped = true;
         isDead = true;
         anim.SetTrigger("isDead");       
-        Destroy(enemy1, 4f);
+        Destroy(enemy, 4f);
     }
 
 
@@ -158,10 +164,11 @@ public class Enemy1 : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        if (attackPoint == null)
+        if (attackPoints == null)
             return; 
 
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange); 
+        foreach(Transform t in attackPoints)
+            Gizmos.DrawWireSphere(t.position, attackRange); 
     }
 
 }
