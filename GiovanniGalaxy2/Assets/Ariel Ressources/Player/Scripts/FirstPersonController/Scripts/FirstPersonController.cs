@@ -66,8 +66,6 @@ namespace StarterAssets
 		// timeout deltatime
 		private float _jumpTimeoutDelta;
 		private float _fallTimeoutDelta;
-		private float _timeBetweenShots = 0;
-
 		// Game Manager
 		private GameManager gm;
 
@@ -130,7 +128,7 @@ namespace StarterAssets
                 Move();
 				if (gm.inventory.Container.Count != 0)
 				{
-					Shoot(gm.activeWeapon);
+					Shoot();
 					Reload();
 				}
 				InteractWithObject();
@@ -284,25 +282,19 @@ namespace StarterAssets
 			}
 		}
 
-		private void Shoot(WeaponSlot wep)
+		private void Shoot()
         {
-			// Fire Rate Calculator
-			if (_timeBetweenShots <= 100)
-			{
-				_timeBetweenShots += Time.deltaTime + 1f * (wep.weapon.rateOfFire / 100);
-			}
-		
 			// When pressing shooting and not sprinting
 			if (_input.shoot && !_input.sprint && _canShoot)
 			{
 				_canChange = false;
-				//If firerate is able to shoot again
-				if (_timeBetweenShots >= wep.weapon.rateOfFire){
-					_timeBetweenShots = 0;
-
-					//Shoot and Update weapon hud
-					gm.shoot.Shooting(_mainCamera);
-					gm.wepUi.UpdateWeaponHud();
+				//Rate of fire check
+				if (Time.time> gm.playerStuff.activeWeapon.weapon.nextFire){
+					gm.playerStuff.activeWeapon.weapon.nextFire = Time.time + (gm.playerStuff.activeWeapon.weapon.rateOfFire / 100);
+					
+				//Shoot and Update weapon hud
+				gm.shoot.Shooting(_mainCamera);
+				gm.wepUi.UpdateWeaponHud();
 				}
 			}
 		}
@@ -311,24 +303,25 @@ namespace StarterAssets
         {
 			if (_input.reload)
 			{
+				_canShoot = false;
 				StartCoroutine(gm.shoot.CanReload());
+				Invoke("CanShootAgain", 0.8f);
 			}
         }
 		
+		private void CanShootAgain()
+        {
+			_canShoot = true;
+        }
+
 		private void ChangeWeapon()
 		{
-
 			if (_input.changeWep && _canChange)
 			{
 				_canShoot = false;
 				gm.changeGun.SwitchWeapons();
 				Invoke("CanShootAgain", 1f);
 			}
-        }
-
-		private void CanShootAgain()
-        {
-			_canShoot = true;
         }
 
 		private void InteractWithObject()

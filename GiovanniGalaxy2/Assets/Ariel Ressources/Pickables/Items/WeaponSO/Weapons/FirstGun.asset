@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acf5a3b0b4638124e87cf2925e7ff9b3, type: 3}
   m_Name: FirstGun
   m_EditorClassIdentifier: 
-  weaponName: MachineGun
+  itemName: Machine Gun
+  price: 30
   prefab: {fileID: 108886, guid: df804c49be2c3cf4a90d773eb9565e13, type: 3}
+  type: Weapon
   maxAmmo: 50
   currentAmmo: 30
   magSize: 30
@@ -21,6 +23,6 @@ MonoBehaviour:
   damage: 10
   rateOfFire: 15
   range: 100
+  nextFire: 0
   impactEffect: {fileID: 0}
   gunshot: {fileID: 0}
-  price: 30

@@ -6,41 +6,48 @@ public class PlayerInventory : MonoBehaviour
 {
     public InventoryObject inventory;
     GameManager gm;
-    WeaponUI ui;
     private void Start()
     {
         gm = GameManager.Instance;
-        ui = gm.wepUi;
     }
 
-    public void BuyItem(GameObject item)
+    public void BuyItem(GameObject objectToBuy)
     {
-        gm.crosshair.SetActive(true);
-        if (item.CompareTag("Weapon"))
+        ItemSO item = objectToBuy.GetComponent<Item>().item;
+        //If not enough money, don't buy
+        if (gm.playerStuff.coins < item.price) return;
+
+        //Weapon
+        if (item.type.Equals("Weapon"))
         {
-            WeaponSO weapon = item.GetComponent<Weapon>().weapon;
-            inventory.AddItem(weapon);
-            ui.UpdateWeaponHud();
-            gm.coins -= weapon.price;
+            gm.inventory.AddItem((WeaponSO) item);
         }
 
-        if (item.CompareTag("Health"))
+        //Health
+        if (item.type.Equals("Health"))
         {
-            HealthSO health = item.GetComponent<HealthItem>().healthSO;
-            gm.player.GetComponent<Health>().Healing(health.healing);
-            gm.coins -= health.price;
+            HealthSO health = (HealthSO) item;
+            Health pHealth = gm.player.GetComponent<Health>();
+            if (pHealth.health != pHealth.maxHealth)
+                pHealth.AddHealth(health.amount);
+            else return;
         }
 
-        if (item.CompareTag("Armor"))        
+        //Armor
+        else if (item.type.Equals("Armor"))
         {
-            ArmorSO armor = item.GetComponent<ArmorItem>().armorSO;
-            gm.player.GetComponent<Health>().AddArmor(armor.amount);
-            gm.coins -= armor.price;
+            ArmorSO armor = (ArmorSO) item;
+            Health pHealth = gm.player.GetComponent<Health>();
+            if (pHealth.armor != pHealth.maxArmor)
+                pHealth.AddArmor(armor.amount);
+            else return;
+
         }
 
-        Destroy(item.gameObject);
-
-        gm.UpdateCoinDisplay();
+        //Destroy item and update coin display
+        gm.playerStuff.coins -= item.price;
+        Destroy(objectToBuy);
+        gm.playerStuff.UpdateCoinDisplay();
     }
 
     private void OnApplicationQuit()

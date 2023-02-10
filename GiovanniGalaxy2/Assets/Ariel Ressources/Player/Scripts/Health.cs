@@ -18,29 +18,35 @@ public class Health : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gm = GameManager.Instance;
         health = maxHealth;
         armor = maxArmor;
     }
 
     public void IsHit(float damage)
     {
+        //If the damage done is less than the amount of armor, reduce armor
         if (damage <= armor)
-            armor -= damage; 
-        else 
+            armor -= damage;
+        //If not, reduce damage to how much damage done to armor, set
+        //armor to 0 and lower health by remaining damage
+        else
         {
-            damage -= armor; 
-            armor = 0; 
-            health -= damage; 
-
+            damage -= armor;
+            armor = 0;
+            health -= damage;
         }
 
+        //Update health and armor sliders
         gm.barUi.ArmorSlider();
         gm.barUi.HealthSlider();
 
-        isAlive = health > 0;
+        //Set isAlive to false if no more health.
+        if (isAlive = health > 0)
+            Death();
     }
 
-    public void Healing(float healingValue)
+    public void AddHealth(float healingValue)
     {
         health += healingValue;
         if (health >= maxHealth)

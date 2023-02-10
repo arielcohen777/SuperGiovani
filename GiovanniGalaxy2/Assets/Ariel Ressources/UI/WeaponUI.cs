@@ -20,7 +20,7 @@ public class WeaponUI : MonoBehaviour
     // Update is called once per frame
     public void UpdateWeaponHud()
     {
-        WeaponSlot wep = gm.activeWeapon;
+        WeaponSlot wep = gm.playerStuff.activeWeapon;
         currentAmmo.text = wep.currentAmmo.ToString();
         maxAmmo.text = wep.maxAmmo.ToString();
         magSize.text = wep.magSize.ToString();

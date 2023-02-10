@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acf5a3b0b4638124e87cf2925e7ff9b3, type: 3}
   m_Name: ThirdWeapon
   m_EditorClassIdentifier: 
-  weaponName: Third Weapon
+  itemName: Boom Boom Pow
+  price: 50
   prefab: {fileID: 138408, guid: a66d64962dad7b441b895147b3616981, type: 3}
+  type: Weapon
   maxAmmo: 150
   currentAmmo: 20
   magSize: 20
@@ -21,6 +23,6 @@ MonoBehaviour:
   damage: 43
   rateOfFire: 10
   range: 100
+  nextFire: 0
   impactEffect: {fileID: 0}
   gunshot: {fileID: 0}
-  price: 50

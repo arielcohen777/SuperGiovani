@@ -23,7 +23,7 @@ public class Shoot : MonoBehaviour
 
 	public void Shooting(Camera _mainCamera)
 	{
-		WeaponSlot wep = gm.activeWeapon;
+		WeaponSlot wep = gm.playerStuff.activeWeapon;
 		
 		//Reduce ammo
 		wep.currentAmmo--;
@@ -53,8 +53,6 @@ public class Shoot : MonoBehaviour
 		//Aiming
 		if (Physics.Raycast(_mainCamera.transform.position, _mainCamera.transform.forward, out RaycastHit hit, wep.weapon.range))
 		{
-			Debug.Log(hit.transform.name);
-
 			//Making sure it's an enemy
 			Enemy2 target = hit.transform.GetComponent<Enemy2>();
 			if (target != null)
@@ -62,13 +60,12 @@ public class Shoot : MonoBehaviour
 				target.IsHit((int)wep.weapon.damage);
 			}
 
-			Debug.Log(hit.transform.gameObject.tag);
 			if (hit.transform.CompareTag("Enemy") || hit.transform.CompareTag("Dummie"))
 			{
 				GameObject impactGO = Instantiate(blood, hit.point, Quaternion.LookRotation(hit.normal));
 				impactGO.GetComponent<ParticleSystem>().Play();
 			}
-			else
+			else if (!hit.transform.CompareTag("Coin"))
             {
 				GameObject impactGO = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
 				Destroy(impactGO, 1f);
@@ -91,36 +88,27 @@ public class Shoot : MonoBehaviour
 
 	public void Reload()
 	{
-		if (canReload) { 
+		if (canReload) 
 			canReload = false;
-		}
 		else
 			return;
 
-		WeaponSlot wep = gm.activeWeapon;
+		WeaponSlot wep = gm.playerStuff.activeWeapon;
 		//If currentAmmo is the same as magsize, don't reload
 		if (wep.currentAmmo == wep.magSize)
-		{
 			return;
-		}
 
 		//If no ammo in maxammo, don't reload
 		if (wep.maxAmmo == 0)
-		{
 			return;
-		}
-
+		
         int toReload;
 		//If there is less ammo than a mag, reload maxAmmo
 		if (wep.magSize > wep.maxAmmo)
-		{
 			toReload = wep.maxAmmo;
-		}
 		//Else reload amount necessary for a full mag
 		else
-		{
 			toReload = wep.magSize - wep.currentAmmo;
-		}
 
         wep.currentAmmo += toReload;
 		

@@ -12,6 +12,8 @@ public class Interact : MonoBehaviour
     GameManager gm;
 
     public TMP_Text uiText;
+
+    Interactable interactable;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +29,6 @@ public class Interact : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, distance, mask))
         {
-            Interactable interactable;
             if ((interactable = hit.collider.GetComponent<Interactable>()) != null)
             {
                 uiText.text = interactable.ShowPrompt();
@@ -43,7 +44,6 @@ public class Interact : MonoBehaviour
 
     public void BuyItem()
     {
-        if (objectToBuy != null)
-            gm.pInv.BuyItem(objectToBuy);
+        if (objectToBuy != null) gm.pInv.BuyItem(objectToBuy);
     }
 }

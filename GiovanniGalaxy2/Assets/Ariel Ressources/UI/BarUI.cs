@@ -7,14 +7,12 @@ public class BarUI : MonoBehaviour
 {
     private GameManager gm;
     private Health healthRef;
-    public Image fillImage;
-    private Slider slider;
 
-    // Start is called before the first frame update
-    void Awake()
-    {
-        slider = GetComponent<Slider>();
-    }
+    [SerializeField] private Image healthFillImage;
+    [SerializeField] private Image armorFillImage;
+
+    [SerializeField] private Slider armorSlider;
+    [SerializeField] private Slider healthSlider;
 
     private void Start()
     {
@@ -22,34 +20,24 @@ public class BarUI : MonoBehaviour
         healthRef = gm.player.GetComponent<Health>();
     }
 
-    /*void UpdateSliders()
-    {
-        if (slider.CompareTag("HealthUIBar"))
-            HealthSlider();
-        else if (slider.CompareTag("ArmorUIBar"))
-            ArmorSlider();
-    }*/
-
     public void HealthSlider()
     {
         float fill = healthRef.health / healthRef.maxHealth;
-        slider.value = fill;
-        ImageEnabling();
+        healthSlider.value = fill;
+        if (healthSlider.value <= healthSlider.minValue)
+            healthFillImage.enabled = false;
+        else if (healthSlider.value > healthSlider.minValue && !healthFillImage.enabled)
+            healthFillImage.enabled = true;
     }
 
     public void ArmorSlider()
     {
         float fill = healthRef.armor / healthRef.maxArmor;
-        slider.value = fill;
-        ImageEnabling();
+        armorSlider.value = fill;
+        if (armorSlider.value <= armorSlider.minValue)
+            armorFillImage.enabled = false;
+        else if (armorSlider.value > healthSlider.minValue && !armorFillImage.enabled)
+            armorFillImage.enabled = true;
     }
 
-    private void ImageEnabling()
-    {
-        if (slider.value <= slider.minValue)
-            fillImage.enabled = false;
-        if (slider.value > slider.minValue && !fillImage.enabled)
-            fillImage.enabled = true;
-
-    }
 }

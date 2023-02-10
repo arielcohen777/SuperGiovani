@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e2133d6d1de3b64ca2a02f1a4541fc7, type: 3}
   m_Name: Armor 20
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
-  armorName: Armor 20
-  amount: 20
+  itemName: Armor 20
   price: 50
+  prefab: {fileID: 0}
+  type: Armor
+  amount: 20

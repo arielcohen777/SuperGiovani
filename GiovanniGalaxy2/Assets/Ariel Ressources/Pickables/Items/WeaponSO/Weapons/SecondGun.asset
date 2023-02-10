@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acf5a3b0b4638124e87cf2925e7ff9b3, type: 3}
   m_Name: SecondGun
   m_EditorClassIdentifier: 
-  weaponName: Some Other
+  itemName: Pistoleta
+  price: 40
   prefab: {fileID: 166328, guid: 4687dbac65c37124e833c08251864ba7, type: 3}
+  type: Weapon
   maxAmmo: 100
   currentAmmo: 30
   magSize: 30
   ogMaxAmmo: 100
   damage: 20
-  rateOfFire: 2
+  rateOfFire: 10
   range: 100
+  nextFire: 0
   impactEffect: {fileID: 0}
   gunshot: {fileID: 0}
-  price: 40

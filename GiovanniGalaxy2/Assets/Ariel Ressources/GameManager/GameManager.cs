@@ -1,39 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using UnityEngine.UIElements;
+
 
 public class GameManager : MonoBehaviour
 {
-    //Instance
-    private static GameManager instance;
     
-    //Coin Variables
-    public TMP_Text coinText;
-    public int coins = 0;
-    private const string DEFAULT_COIN_TEXT = "Coins: ";
-    [SerializeField] private AudioSource coinAudio;
-
     //Player
     public GameObject player;
     public StarterAssets.FirstPersonController fpc;
     public Camera cam;
     public Shoot shoot;
+    public PlayerStuff playerStuff;
 
     //Inventory
     public ChangeGun changeGun;
     public InventoryObject inventory;
-    public WeaponSlot activeWeapon;
-    public GameObject crosshair;
     public PlayerInventory pInv;
     public Interact interact;
 
     //UIs
+    public GameObject crosshair;
     public WeaponUI wepUi;
     public BarUI barUi;
 
     #region Singleton
+
+    //Instance
+    private static GameManager instance;
     private GameManager() { }
 
     public static GameManager Instance
@@ -52,24 +46,9 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    #region Coins
-
     private void Start()
     {
-        UpdateCoinDisplay();
+        fpc = player.GetComponent<StarterAssets.FirstPersonController>();
+        barUi = GetComponent<BarUI>();
     }
-
-    public void UpdateCoin()
-    {
-        coins++;
-        coinAudio.Play();
-        UpdateCoinDisplay();
-    }
-
-    public void UpdateCoinDisplay()
-    {
-        string v = DEFAULT_COIN_TEXT + coins;
-        coinText.text = v;
-    }
-    #endregion
 }

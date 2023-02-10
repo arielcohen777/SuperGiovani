@@ -4,29 +4,24 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-
-    string toReturn;
+    private string toReturn;
+    private GameManager gm;
+    private ItemSO item;
 
     private void Start()
     {
-        if (gameObject.CompareTag("Weapon"))
-        {
-            WeaponSO wep = GetComponent<Weapon>().weapon;
-            toReturn = "Buy " + wep.weaponName + "\n" + wep.price + " Coins";
-        }
-        else if (gameObject.CompareTag("Health"))
-        {
-            HealthSO health = GetComponent<HealthItem>().healthSO;
-            toReturn = "Buy " + health.healthName + "\n" + health.price + " Coins";
-        }
-        else
-        {
-            ArmorSO armor = GetComponent<ArmorItem>().armorSO;
-            toReturn = "Buy " + armor.armorName + "\n" + armor.price + " Coins";
-
-        }
+        item = GetComponent<Item>().item;
+        gm = GameManager.Instance;
     }
 
+    private void Update()
+    {
+        toReturn = "Buy " + item.itemName
+            + "\n" + item.price + " Coins";
+        if (gm.playerStuff.coins < item.price)
+            toReturn += "\nNot Enough Coins!";
+    }
+    
     public string ShowPrompt()
     {
         return toReturn;

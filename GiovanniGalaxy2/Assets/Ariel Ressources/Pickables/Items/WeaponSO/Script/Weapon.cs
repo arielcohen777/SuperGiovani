@@ -10,4 +10,9 @@ public class Weapon : MonoBehaviour
         weapon.currentAmmo = weapon.magSize;
         weapon.ogMaxAmmo = weapon.maxAmmo;  
     }
+
+    private void OnApplicationQuit()
+    {
+        weapon.nextFire = 0;
+    }
 }

@@ -4,10 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Armor", menuName = "Life/Armor")]
 
-public class ArmorSO : ScriptableObject
+public class ArmorSO : ItemSO
 {
-    public GameObject prefab;
-    public string armorName;
     public float amount;
-    public int price;
 }
