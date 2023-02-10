@@ -98,10 +98,10 @@ public class Enemy2 : MonoBehaviour
     {
         CheckIsRunningAway();
         CheckPlayerSpotted();
-        ChechStates();
+        CheckStates();
     }
 
-    private void ChechStates()
+    private void CheckStates()
     {
         if (!isDead)
         {
@@ -234,15 +234,14 @@ public class Enemy2 : MonoBehaviour
         SmoothRotation(0.2f, -1);
         runTo = transform.position + (direction * 9f);
         Debug.DrawRay(transform.position, runTo, Color.red);
-        enemy.SetDestination(runTo);  
-       
+        enemy.SetDestination(runTo);         
     }
 
     private void CheckIsRunningAway()
     {
         distanceRunTo = transform.position - runTo;
         print(distanceRunTo.magnitude);
-        if (distanceRunTo.magnitude < 2.7f)
+        if (distanceRunTo.magnitude < 1f)
         {
             isRunning = false;
         }
@@ -278,7 +277,8 @@ public class Enemy2 : MonoBehaviour
     }
     private void SmoothRotation(float t, int x)
     {
-        //only assign values of 1 o -1 to invert direction
+        //only assign values of 1 o -1 to invert direction for x
+        //assing a value from 0 to 1 depending on how fast you want the object to turn
         direction = (player.transform.position - transform.position).normalized * x;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, t);

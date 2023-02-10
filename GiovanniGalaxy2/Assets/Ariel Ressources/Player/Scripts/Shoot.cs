@@ -75,14 +75,14 @@ public class Shoot : MonoBehaviour
                 GameObject impactGO = Instantiate(blood, hit.point, Quaternion.LookRotation(hit.normal));
 				impactGO.GetComponent<ParticleSystem>().Play();
 			}
-			else
+            else if (!hit.transform.CompareTag("Coin"))
             {
-				GameObject impactGO = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
-				Destroy(impactGO, 1f);
-			}
+                GameObject impactGO = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(impactGO, 1f);
+            }
 
-			//Weapon Sound (NEEDS TESTING)
-			if (wep.weapon.gunshot != null)
+            //Weapon Sound (NEEDS TESTING)
+            if (wep.weapon.gunshot != null)
 			{
 				wep.weapon.gunshot.Play();
 			}

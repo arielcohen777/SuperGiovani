@@ -12,15 +12,14 @@ TagManager:
   - HealthUIBar
   - SecondCamera
   - BulletSpawn
-  - Dummie
   - ArmorUIBar
   - LevelPart
   - Enemy
   - Enemy1
   - Ground
   - Wall
-  - Enemy2
   - wall
+  - Coin
   layers:
   - Default
   - TransparentFX
@@ -33,8 +32,8 @@ TagManager:
   - Player
   - Obstacle
   - Enemy
-  - 
-  - 
+  - Coin
+  - Shell
   - 
   - 
   - 
