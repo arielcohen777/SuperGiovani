@@ -55,27 +55,34 @@ public class Shoot : MonoBehaviour
 		{
 			Debug.Log(hit.transform.name);
 
-			//Making sure it's an enemy
-			Enemy1 target = hit.transform.GetComponent<Enemy1>();
-			if (target != null)
-			{
-				target.IsHit((int)wep.weapon.damage);
-			}
+            Enemy1 enemy = hit.collider.GetComponentInParent<Enemy1>();
+            Enemy2 enemy2 = hit.collider.GetComponentInParent<Enemy2>();
+            //Making sure it's an enemy
+            //Enemy2 target = hit.transform.GetComponent<Enemy2>();
+            //if (target != null)
+            //{
+            //	target.IsHit((int)wep.weapon.damage);
+            //}
 
-			Debug.Log(hit.transform.gameObject.tag);
-			if (hit.transform.CompareTag("Enemy") || hit.transform.CompareTag("Dummie"))
+            //Debug.Log(hit.transform.gameObject.tag);
+            //if (hit.transform.CompareTag("Enemy") || hit.transform.CompareTag("Dummie"))
+            if (hit.transform.CompareTag("Enemy"))
 			{
-				GameObject impactGO = Instantiate(blood, hit.point, Quaternion.LookRotation(hit.normal));
+                
+                if (enemy != null) enemy.IsHit((int)wep.weapon.damage);
+                else enemy2.IsHit((int)wep.weapon.damage);
+
+                GameObject impactGO = Instantiate(blood, hit.point, Quaternion.LookRotation(hit.normal));
 				impactGO.GetComponent<ParticleSystem>().Play();
 			}
-			else
+            else if (!hit.transform.CompareTag("Coin"))
             {
-				GameObject impactGO = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
-				Destroy(impactGO, 1f);
-			}
+                GameObject impactGO = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(impactGO, 1f);
+            }
 
-			//Weapon Sound (NEEDS TESTING)
-			if (wep.weapon.gunshot != null)
+            //Weapon Sound (NEEDS TESTING)
+            if (wep.weapon.gunshot != null)
 			{
 				wep.weapon.gunshot.Play();
 			}

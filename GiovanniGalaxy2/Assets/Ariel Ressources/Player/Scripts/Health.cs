@@ -24,7 +24,6 @@ public class Health : MonoBehaviour
 
     public void IsHit(float damage)
     {
-        Debug.Log("Player is hit for " + damage);
         if (damage <= armor)
             armor -= damage; 
         else 

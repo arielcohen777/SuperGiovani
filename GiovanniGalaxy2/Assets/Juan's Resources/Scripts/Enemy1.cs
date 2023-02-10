@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class Enemy1 : MonoBehaviour
 {
+    //SAVS - Particle System ref 
+    private ParticleSystem explosionEffect;
 
     [Header("Navigation")]
     private NavMeshAgent navMesh;
@@ -22,7 +24,7 @@ public class Enemy1 : MonoBehaviour
     [Header("Set Enemy Health Stats")]
     public const float maxHealth = 100;
     public float health;
-    public int damage = 5; 
+    public int damage = 5;
 
     private GameObject enemy;
     public bool isDead;
@@ -30,6 +32,7 @@ public class Enemy1 : MonoBehaviour
     //attack 
     public Transform[] attackPoints;
     public float attackRange = 0.5f;
+    public LayerMask playerLyr;
 
     private GameManager gm;
 
@@ -37,12 +40,14 @@ public class Enemy1 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        explosionEffect = GetComponentInChildren<ParticleSystem>();
         gm = GameManager.Instance;
-        player = gm.player.transform;
+        //player = gm.player.transform;
+        player = GameObject.Find("PlayerMovement").transform;
         anim = GetComponent<Animator>();
         navMesh = GetComponent<NavMeshAgent>();
         health = maxHealth;
-        enemy = gameObject; 
+        enemy = gameObject;
     }
 
     // Update is called once per frame
@@ -77,11 +82,11 @@ public class Enemy1 : MonoBehaviour
 
     private void Climbing()
     {
-        if(isOnWall)
+        if (isOnWall)
         {
             anim.SetBool("isClimbing", true);
             navMesh.baseOffset = 0.3f;
-            transform.Rotate(90,0,0);
+            transform.Rotate(90, 0, 0);
         }
         else
         {
@@ -93,11 +98,11 @@ public class Enemy1 : MonoBehaviour
     // This anim is called from the attack Animation when it hits the player 
     public void PunchAnimationEvent()
     {
-       
+
         //Debug.Log("player is hit");
         //player.gameObject.GetComponent<Health>().IsHit(damage);
-       
-       
+
+
 
         // codigo para hacerle dano al jugador 
         // checar si esta en el area cuando lanza el golpe 
@@ -118,25 +123,24 @@ public class Enemy1 : MonoBehaviour
 
             Transform hitter = (rndIdx == 1) ? attackPoints[0] : attackPoints[1];
 
-            Collider[] hitPlayer = Physics.OverlapSphere(hitter.position, attackRange, whatIsPlayer);
+            Collider[] hitPlayer = Physics.OverlapSphere(hitter.position, attackRange, playerLyr);
 
             foreach (Collider player in hitPlayer)
             {
                 //Debug.Log(player.tag);
                 player.GetComponentInParent<Health>().IsHit(damage);
             }
-        }        
+        }
     }
 
     public void IsHit(float damage)
-    {     
+    {
         health -= damage;
         anim.SetTrigger("isHit");
 
-        Debug.Log(health); 
-
         if (health <= 0)
         {
+            health = 0;
             Death();
         }
     }
@@ -145,15 +149,17 @@ public class Enemy1 : MonoBehaviour
     {
         navMesh.isStopped = true;
         isDead = true;
-        anim.SetTrigger("isDead");       
-        Destroy(enemy, 0.1f);
+        anim.SetTrigger("isDead");
+        explosionEffect.Play();
+        GetComponentInChildren<CoinSpawn>().SpawnCoin();
+        Destroy(enemy, 4f);
     }
 
 
     private void OnTriggerStay(Collider other)
     {
-        if(other.CompareTag("Wall"))
-            isOnWall = true;  
+        if (other.CompareTag("Wall"))
+            isOnWall = true;
     }
 
     private void OnTriggerExit(Collider other)
@@ -165,10 +171,10 @@ public class Enemy1 : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         if (attackPoints == null)
-            return; 
+            return;
 
-        foreach(Transform t in attackPoints)
-            Gizmos.DrawWireSphere(t.position, attackRange); 
+        foreach (Transform t in attackPoints)
+            Gizmos.DrawWireSphere(t.position, attackRange);
     }
 
 }

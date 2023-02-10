@@ -86,8 +86,9 @@ namespace StarterAssets
 		private Camera _mainCamera;
 
 		[SerializeField]public const float _threshold = 0f;
-		
-		
+
+		//
+		public bool isJumping;
 
         private bool IsCurrentDeviceMouse
 		{
@@ -123,7 +124,7 @@ namespace StarterAssets
 
 		private void Update()
 		{
-			if (gm.playerHealth.GetComponent<Health>().isAlive)
+			if (gm.player.GetComponent<Health>().isAlive)
 			{
 				JumpAndGravity();
 				GroundedCheck();
@@ -139,7 +140,7 @@ namespace StarterAssets
 
         private void LateUpdate()
 		{
-			if (gm.playerHealth.GetComponent<Health>().isAlive)
+			if (gm.player.GetComponent<Health>().isAlive)
 			{
 				CameraRotation();
 				ChangeWeapon();
@@ -252,6 +253,7 @@ namespace StarterAssets
 				// Jump
 				if (_input.jump && _jumpTimeoutDelta <= 0.0f)
 				{
+					isJumping = true;
 					// the square root of H * -2 * G = how much velocity needed to reach desired height
 					_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 				}

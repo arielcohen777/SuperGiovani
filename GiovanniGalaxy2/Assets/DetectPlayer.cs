@@ -6,24 +6,25 @@ public class DetectPlayer : MonoBehaviour
 {
     GameManager gm;
     public bool hasHit = true;
-    public Enemy1 enemy;
-
+    private Enemy1 enemy;
 
     // Start is called before the first frame update
     void Start()
     {
         gm = GameManager.Instance;
-        
+        enemy = GetComponentInParent<Enemy1>();
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") )
+        if (other.CompareTag("Player"))
         {
             if (hasHit)
             {
                 hasHit = false;
-                gm.playerHealth.GetComponent<Health>().IsHit(enemy.damage);
+                //gm.playerHealth.GetComponent<Health>().IsHit(enemy.damage);
+                other.gameObject.GetComponentInParent<Health>().IsHit(enemy.damage);
                 Debug.Log("Player hit");
                 StartCoroutine(CanHitAgain());
             }
@@ -33,12 +34,12 @@ public class DetectPlayer : MonoBehaviour
     IEnumerator CanHitAgain()
     {
         yield return new WaitForSeconds(0.5f);
-        hasHit = true;
+        hasHit = true;         
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

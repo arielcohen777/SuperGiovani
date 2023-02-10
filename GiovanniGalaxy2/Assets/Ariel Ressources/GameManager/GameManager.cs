@@ -17,7 +17,6 @@ public class GameManager : MonoBehaviour
 
     //Player
     public GameObject player;
-    public GameObject playerHealth;
     public StarterAssets.FirstPersonController fpc;
     public Camera cam;
     public Shoot shoot;

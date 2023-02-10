@@ -18,7 +18,7 @@ MonoBehaviour:
   currentAmmo: 30
   magSize: 30
   ogMaxAmmo: 100
-  damage: 20
+  damage: 40
   rateOfFire: 2
   range: 100
   impactEffect: {fileID: 0}

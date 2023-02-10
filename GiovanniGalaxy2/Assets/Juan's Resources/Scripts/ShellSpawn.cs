@@ -5,22 +5,31 @@ using UnityEngine;
 public class ShellSpawn : MonoBehaviour
 {
     [SerializeField] private float force;
+    private float damage;
+    private bool hitJump;
     private GameObject spawn;
     public GameObject shell;
     private GameObject shellClone;
 
-    public bool isDead;
-    public bool isSpawned;
+    private Enemy1 enemy;
+
+   // public bool isDead;
+    private bool isSpawned;
 
     public Transform playerTransform;
 
-    private Vector3 shellDirection;
+    private Vector2 shellDirection;
+
+    GameManager gm;
 
     // Start is called before the first frame update
     void Start()
     {
         spawn = gameObject;
-        playerTransform = GameObject.Find("Player").transform;
+        playerTransform = GameObject.Find("PlayerMovement").transform;
+        enemy = GetComponentInParent<Enemy1>();
+        damage = 100f;
+        gm = GameManager.Instance;
     }
 
     // Update is called once per frame
@@ -32,12 +41,14 @@ public class ShellSpawn : MonoBehaviour
 
     private void CalculateDirection()
     {
-        shellDirection = (transform.position - playerTransform.position).normalized;
+        Vector2 objectTransform = new Vector2(transform.position.x, transform.position.z);
+        Vector2 targetTransform = new Vector2(playerTransform.position.x, playerTransform.position.z);
+        shellDirection = (objectTransform - targetTransform).normalized;
     }
 
     private void SpawnShell()
     {
-        if(isDead && !isSpawned)
+        if(hitJump && enemy.isDead && !isSpawned)
         {          
             shellClone = Instantiate(shell, spawn.transform.position, Quaternion.identity);
             Rigidbody rb = shellClone.GetComponent<Rigidbody>();
@@ -47,6 +58,14 @@ public class ShellSpawn : MonoBehaviour
         }
        
     }
-
-
+    private void OnTriggerEnter(Collider other)
+    {
+        
+        if (!hitJump && other.CompareTag("Player"))
+        {
+           enemy.IsHit(damage);
+           hitJump = true;
+        }      
+    }
+   
 }

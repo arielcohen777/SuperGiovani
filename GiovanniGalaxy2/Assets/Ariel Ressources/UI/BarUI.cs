@@ -22,13 +22,13 @@ public class BarUI : MonoBehaviour
         healthRef = gm.player.GetComponent<Health>();
     }
 
-    /*void UpdateSliders()
-    {
-        if (slider.CompareTag("HealthUIBar"))
-            HealthSlider();
-        else if (slider.CompareTag("ArmorUIBar"))
-            ArmorSlider();
-    }*/
+    //void UpdateSliders()
+    //{
+    //    if (slider.CompareTag("HealthUIBar"))
+    //        HealthSlider();
+    //    else if (slider.CompareTag("ArmorUIBar"))
+    //        ArmorSlider();
+    //}
 
     public void HealthSlider()
     {

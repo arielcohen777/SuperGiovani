@@ -44,18 +44,30 @@ public class BulletScript : MonoBehaviour
 					Destroy(gameObject);
 
 				}
-				if (hit.transform.tag == "Enemy1")
-				{					 
-                    hit.collider.GetComponentInParent<Enemy1>().IsHit(20);
-                    Instantiate(bloodEffect, hit.point, Quaternion.LookRotation(hit.normal));
-					Destroy(gameObject);		
-				}
-                if (hit.transform.tag == "Enemy2")
-                {
-                    hit.collider.GetComponentInParent<Enemy2>().IsHit(20);                     
+				if (hit.transform.CompareTag("Enemy"))
+				{
+					Enemy1 enemy = hit.collider.GetComponentInParent<Enemy1>();
+					Enemy2 enemy2 = hit.collider.GetComponentInParent<Enemy2>();
+					if (enemy != null)
+					{
+						enemy.IsHit(20);                       
+                    }
+
+					else
+					{
+						enemy2.IsHit(20);
+					}
+
                     Instantiate(bloodEffect, hit.point, Quaternion.LookRotation(hit.normal));
                     Destroy(gameObject);
+
                 }
+                //if (hit.transform.CompareTag("Enemy2"))
+                //{
+                //    hit.collider.GetComponentInParent<Enemy2>().IsHit(20);                     
+                //    Instantiate(bloodEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                //    Destroy(gameObject);
+                //}
                 Destroy(gameObject);
 			}
 			Destroy(gameObject, 0.1f);

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9061866645756404310}
   - component: {fileID: 383276672802423686}
   - component: {fileID: 1385951441890333710}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,5 +132,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageEnemy: 100
   damagePlayer: 40
-  speed: 20
+  speed: 50
   rotation: {x: 0, y: 50, z: 0}
