@@ -3333,6 +3333,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5683676985778153666, guid: 58888cbc86140c2438e130091634bec4, type: 3}
+      propertyPath: damage
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5683676985778153666, guid: 58888cbc86140c2438e130091634bec4, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 514612763}

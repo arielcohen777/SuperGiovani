@@ -8,10 +8,11 @@ public class DetectPlayer : MonoBehaviour
     public bool hasHit = true;
     public Enemy1 enemy;
 
+
     // Start is called before the first frame update
     void Start()
     {
-        gm = GameManager.Instance;  
+        gm = GameManager.Instance;
         
     }
 

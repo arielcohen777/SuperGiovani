@@ -30,7 +30,6 @@ public class Enemy1 : MonoBehaviour
     //attack 
     public Transform[] attackPoints;
     public float attackRange = 0.5f;
-    public LayerMask playerLyr;
 
     private GameManager gm;
 
@@ -43,6 +42,7 @@ public class Enemy1 : MonoBehaviour
         anim = GetComponent<Animator>();
         navMesh = GetComponent<NavMeshAgent>();
         health = maxHealth;
+        enemy = gameObject; 
     }
 
     // Update is called once per frame
@@ -118,12 +118,12 @@ public class Enemy1 : MonoBehaviour
 
             Transform hitter = (rndIdx == 1) ? attackPoints[0] : attackPoints[1];
 
-            Collider[] hitPlayer = Physics.OverlapSphere(hitter.position, attackRange, playerLyr);
+            Collider[] hitPlayer = Physics.OverlapSphere(hitter.position, attackRange, whatIsPlayer);
 
             foreach (Collider player in hitPlayer)
             {
                 //Debug.Log(player.tag);
-                player.GetComponent<Health>().IsHit(damage);
+                player.GetComponentInParent<Health>().IsHit(damage);
             }
         }        
     }
@@ -146,7 +146,7 @@ public class Enemy1 : MonoBehaviour
         navMesh.isStopped = true;
         isDead = true;
         anim.SetTrigger("isDead");       
-        Destroy(enemy, 4f);
+        Destroy(enemy, 0.1f);
     }
 
 
