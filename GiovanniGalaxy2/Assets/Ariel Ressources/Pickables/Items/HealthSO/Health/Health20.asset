@@ -15,5 +15,5 @@ MonoBehaviour:
   itemName: Health 20
   price: 40
   prefab: {fileID: 0}
-  type: Health
-  healing: 20
+  type: 2
+  amount: 0

@@ -12,5 +12,12 @@ public abstract class ItemSO : ScriptableObject
     [Header("Prefab of item")]
     public GameObject prefab;
     [Header("Type of item")]
-    public string type;
+    public ItemType type;
+}
+
+public enum ItemType
+{
+    Weapon,
+    Armor,
+    Health
 }

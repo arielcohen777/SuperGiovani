@@ -17,11 +17,12 @@ TagManager:
   - Enemy
   - Health
   - Armor
+  - Coin
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Grounded
   - Water
   - UI
   - Ground

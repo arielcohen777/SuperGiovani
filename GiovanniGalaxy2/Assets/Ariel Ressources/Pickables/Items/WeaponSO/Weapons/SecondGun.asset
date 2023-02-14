@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Pistoleta
   price: 40
   prefab: {fileID: 166328, guid: 4687dbac65c37124e833c08251864ba7, type: 3}
-  type: Weapon
+  type: 0
   maxAmmo: 100
   currentAmmo: 30
   magSize: 30

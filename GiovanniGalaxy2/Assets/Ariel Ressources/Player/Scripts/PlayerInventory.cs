@@ -18,7 +18,7 @@ public class PlayerInventory : MonoBehaviour
         if (gm.playerStuff.coins < item.price) return;
 
         //Weapon
-        if (item.type.Equals("Weapon"))
+        if (item.type.Equals(ItemType.Weapon))
         {
             gm.inventory.AddItem((WeaponSO) item);
         }
@@ -52,6 +52,7 @@ public class PlayerInventory : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        gm.playerStuff.activeWeapon.weapon.nextFire = 0;
         inventory.Container.Clear();
         inventory.nextIdx = 0;
     }

@@ -37,7 +37,7 @@ namespace StarterAssets
 		public float FallTimeout = 0.15f;
 
 		[Header("Player Grounded")]
-		[Tooltip("If the character is grounded or not. Not part of the CharacterController built in grounded check")]
+		[Tooltip("If the character is grounded or not. Not part wof the CharacterController built in grounded check")]
 		public bool Grounded = true;
 		[Tooltip("Useful for rough ground")]
 		public float GroundedOffset = -0.14f;
@@ -252,6 +252,7 @@ namespace StarterAssets
 				{
 					// the square root of H * -2 * G = how much velocity needed to reach desired height
 					_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+					Grounded = false;
 				}
 
 				// jump timeout

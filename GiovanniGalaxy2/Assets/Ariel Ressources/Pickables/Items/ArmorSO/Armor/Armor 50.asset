@@ -15,5 +15,5 @@ MonoBehaviour:
   itemName: Armor 20
   price: 120
   prefab: {fileID: 0}
-  type: Armor
+  type: 1
   amount: 50

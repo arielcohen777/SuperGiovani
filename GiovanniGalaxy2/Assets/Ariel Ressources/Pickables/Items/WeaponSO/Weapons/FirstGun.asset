@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Machine Gun
   price: 30
   prefab: {fileID: 108886, guid: df804c49be2c3cf4a90d773eb9565e13, type: 3}
-  type: Weapon
+  type: 0
   maxAmmo: 50
   currentAmmo: 30
   magSize: 30
