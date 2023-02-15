@@ -18,8 +18,8 @@ TagManager:
   - Enemy1
   - Ground
   - Wall
-  - wall
   - Coin
+  - Enemy2
   layers:
   - Default
   - TransparentFX

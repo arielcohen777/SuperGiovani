@@ -82,7 +82,17 @@ public class Enemy1 : MonoBehaviour
 
     private void Climbing()
     {
-        if (isOnWall)
+        if (navMesh.isOnOffMeshLink)
+        {
+            // 
+            Vector3 direction = (player.transform.position - transform.position).normalized;
+            navMesh.velocity = direction * navMesh.speed;
+
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 1f);
+
+        }
+        if (isOnWall && !navMesh.isOnOffMeshLink)
         {
             anim.SetBool("isClimbing", true);
             navMesh.baseOffset = 0.3f;
@@ -147,12 +157,15 @@ public class Enemy1 : MonoBehaviour
 
     private void Death()
     {
-        navMesh.isStopped = true;
-        isDead = true;
-        anim.SetTrigger("isDead");
-        explosionEffect.Play();
-        GetComponentInChildren<CoinSpawn>().SpawnCoin();
-        Destroy(enemy, 4f);
+        if (!isDead)
+        {
+            navMesh.isStopped = true;
+            isDead = true;
+            anim.SetTrigger("isDead");
+            explosionEffect.Play();
+            GetComponentInChildren<CoinSpawn>().SpawnCoin();
+            Destroy(enemy, 0.1f);
+        }
     }
 
 
