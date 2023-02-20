@@ -25,11 +25,12 @@ public class ShellSpawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gm = GameManager.Instance;
         spawn = gameObject;
-        playerTransform = GameObject.Find("PlayerMovement").transform;
+        playerTransform = gm.player.transform; 
         enemy = GetComponentInParent<Enemy1>();
         damage = 100f;
-        gm = GameManager.Instance;
+        
     }
 
     // Update is called once per frame

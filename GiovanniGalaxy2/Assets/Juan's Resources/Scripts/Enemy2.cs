@@ -24,7 +24,7 @@ public class Enemy2 : MonoBehaviour
     //
     [Header("Navigation")]
     public NavMeshAgent enemy;
-    public Transform player; 
+    public Transform player;
     public LayerMask whatIsGround, whatIsPlayer, whatIsObstruction;
 
     // patrol
@@ -74,16 +74,16 @@ public class Enemy2 : MonoBehaviour
     // anim
     private Animator anim;
 
-   // public GameManager gm;
+    public GameManager gm;
 
 
     private void Start()
     {
         explosionEffect = GetComponentInChildren<ParticleSystem>();
-       // gm = GameManager.Instance; 
+        gm = GameManager.Instance; 
         anim = GetComponent<Animator>();
-        //player = gm.player.GetComponentInChildren<Transform>();
-        player = GameObject.Find("PlayerMovement").transform;
+        player = gm.player.transform; 
+        //player = GameObject.Find("PlayerMovement").transform;
         enemy = GetComponent<NavMeshAgent>();
         enemy2 = gameObject;
         health = maxHealth;
@@ -91,7 +91,7 @@ public class Enemy2 : MonoBehaviour
 
     private void Update()
     {
-        CheckRanges();    
+        CheckRanges();
     }
 
     private void FixedUpdate()
@@ -174,7 +174,7 @@ public class Enemy2 : MonoBehaviour
         enemy.speed = chasingSpeed;
         enemy.SetDestination(player.position);
         SmoothRotation(0.15f, 1);
-    }   
+    }
 
     private void CheckPlayerSpotted()
     {
@@ -209,11 +209,11 @@ public class Enemy2 : MonoBehaviour
     {
         cloneProjectile = Instantiate(projectile, spawnPoint.transform.position, Quaternion.identity);
         Rigidbody rb = cloneProjectile.GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * 32f, ForceMode.Impulse); 
+        rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
     }
     public void Attack()
     {
-       
+
         SmoothRotation(0.5f, 1);
         float distanceToTarget = Vector3.Distance(transform.position, player.position);
         if (!Physics.Raycast(transform.position, direction, distanceToTarget, whatIsObstruction))
@@ -227,21 +227,21 @@ public class Enemy2 : MonoBehaviour
         }
     }
     private void RunAway()
-    {                   
-        isRunning = true;            
-        anim.SetTrigger("fleeing");            
-        enemy.speed = fleeingSpeed;         
+    {
+        isRunning = true;
+        anim.SetTrigger("fleeing");
+        enemy.speed = fleeingSpeed;
         SmoothRotation(0.2f, -1);
         runTo = transform.position + (direction * 9f);
         Debug.DrawRay(transform.position, runTo, Color.red);
-        enemy.SetDestination(runTo);         
+        enemy.SetDestination(runTo);
     }
 
     private void CheckIsRunningAway()
     {
         distanceRunTo = transform.position - runTo;
-        print(distanceRunTo.magnitude);
-        if (distanceRunTo.magnitude < 1f)
+        //print(distanceRunTo.magnitude);
+        if (distanceRunTo.magnitude < 3f)
         {
             isRunning = false;
         }
@@ -252,7 +252,7 @@ public class Enemy2 : MonoBehaviour
         if (playerInSightRange && !playerSpotted)
         {
             enemyAlerted = true;
-        }       
+        }
         health -= damage;
         anim.SetTrigger("isHit");
         anim.SetInteger("hitIndex", Random.Range(0, 2));

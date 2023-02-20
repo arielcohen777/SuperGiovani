@@ -37,7 +37,7 @@ namespace StarterAssets
 		public float FallTimeout = 0.15f;
 
 		[Header("Player Grounded")]
-		[Tooltip("If the character is grounded or not. Not part of the CharacterController built in grounded check")]
+		[Tooltip("If the character is grounded or not. Not part wof the CharacterController built in grounded check")]
 		public bool Grounded = true;
 		[Tooltip("Useful for rough ground")]
 		public float GroundedOffset = -0.14f;
@@ -66,8 +66,6 @@ namespace StarterAssets
 		// timeout deltatime
 		private float _jumpTimeoutDelta;
 		private float _fallTimeoutDelta;
-		private float _timeBetweenShots = 0;
-
 		// Game Manager
 		private GameManager gm;
 
@@ -86,9 +84,8 @@ namespace StarterAssets
 		private Camera _mainCamera;
 
 		[SerializeField]public const float _threshold = 0f;
-
-		//
-		public bool isJumping;
+		
+		
 
         private bool IsCurrentDeviceMouse
 		{
@@ -131,7 +128,7 @@ namespace StarterAssets
                 Move();
 				if (gm.inventory.Container.Count != 0)
 				{
-					Shoot(gm.activeWeapon);
+					Shoot();
 					Reload();
 				}
 				InteractWithObject();
@@ -179,23 +176,15 @@ namespace StarterAssets
 		private void Move()
 		{
 			//If they can change weapons while sprinting
-			_canChange = !_input.sprint;
-			//Sprint Animation
-			gm.shoot.anim.SetBool("Sprinting", _input.sprint);
-			
-			//Disable crosshair if sprinting
-			if (gm.inventory.Container.Count == 0)
-				gm.crosshair.SetActive(false);
-			else
-				gm.crosshair.SetActive(!_input.sprint);
+			_canChange = !_input.sprint;			
 			
 			// set target speed based on move speed, sprint speed and if sprint is pressed
 			float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
 			// a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
-			// note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-			// if there is no input, set the target speed to 0
+				// note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
+				// if there is no input, set the target speed to 0
 			if (_input.move == Vector2.zero) targetSpeed = 0.0f;
 
 			// a reference to the players current horizontal velocity
@@ -225,10 +214,20 @@ namespace StarterAssets
 			// normalise input direction
 			Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
 
+
+
 			// note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
 			// if there is a move input rotate player when the player is moving
 			if (_input.move != Vector2.zero)
 			{
+				if (gm.inventory.Container.Count != 0)
+					gm.crosshair.SetActive(!_input.sprint);
+
+				if (_input.sprint)
+					gm.shoot.anim.SetBool("Sprinting", true);
+                else
+					gm.shoot.anim.SetBool("Sprinting", false);
+				
 				// move
 				inputDirection = transform.right * _input.move.x + transform.forward * _input.move.y;
 			}
@@ -253,9 +252,9 @@ namespace StarterAssets
 				// Jump
 				if (_input.jump && _jumpTimeoutDelta <= 0.0f)
 				{
-					isJumping = true;
 					// the square root of H * -2 * G = how much velocity needed to reach desired height
 					_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+					Grounded = false;
 				}
 
 				// jump timeout
@@ -286,25 +285,19 @@ namespace StarterAssets
 			}
 		}
 
-		private void Shoot(WeaponSlot wep)
+		private void Shoot()
         {
-			// Fire Rate Calculator
-			if (_timeBetweenShots <= 100)
-			{
-				_timeBetweenShots += Time.deltaTime + 1f * (wep.weapon.rateOfFire / 100);
-			}
-		
 			// When pressing shooting and not sprinting
 			if (_input.shoot && !_input.sprint && _canShoot)
 			{
 				_canChange = false;
-				//If firerate is able to shoot again
-				if (_timeBetweenShots >= wep.weapon.rateOfFire){
-					_timeBetweenShots = 0;
-
-					//Shoot and Update weapon hud
-					gm.shoot.Shooting(_mainCamera);
-					gm.wepUi.UpdateWeaponHud();
+				//Rate of fire check
+				if (Time.time> gm.playerStuff.activeWeapon.weapon.nextFire){
+					gm.playerStuff.activeWeapon.weapon.nextFire = Time.time + (gm.playerStuff.activeWeapon.weapon.rateOfFire / 100);
+					
+				//Shoot and Update weapon hud
+				gm.shoot.Shooting(_mainCamera);
+				gm.wepUi.UpdateWeaponHud();
 				}
 			}
 		}
@@ -313,24 +306,25 @@ namespace StarterAssets
         {
 			if (_input.reload)
 			{
+				_canShoot = false;
 				StartCoroutine(gm.shoot.CanReload());
+				Invoke("CanShootAgain", 0.8f);
 			}
         }
 		
+		private void CanShootAgain()
+        {
+			_canShoot = true;
+        }
+
 		private void ChangeWeapon()
 		{
-
 			if (_input.changeWep && _canChange)
 			{
 				_canShoot = false;
 				gm.changeGun.SwitchWeapons();
 				Invoke("CanShootAgain", 1f);
 			}
-        }
-
-		private void CanShootAgain()
-        {
-			_canShoot = true;
         }
 
 		private void InteractWithObject()

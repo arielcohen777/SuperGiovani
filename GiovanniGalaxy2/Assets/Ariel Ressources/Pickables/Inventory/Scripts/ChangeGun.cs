@@ -16,9 +16,8 @@ public class ChangeGun : MonoBehaviour
     {
         if (canChange && gm.inventory.Container.Count > 1)
         {
-            Debug.Log("Switching");
             canChange = false;
-            gm.activeWeapon = gm.inventory.GetNextWeapon();
+            gm.playerStuff.activeWeapon = gm.inventory.GetNextWeapon();
             gm.wepUi.UpdateWeaponHud();
             gm.shoot.anim.SetBool("Switch", true);
             Invoke("UpdateGunMesh", 0.30f);
@@ -28,9 +27,8 @@ public class ChangeGun : MonoBehaviour
 
     public void UpdateGunMesh()
     {
-        Debug.Log("Updating");
         gm.shoot.anim.SetBool("Switch", false);
-        currentWeapon = gm.activeWeapon.weapon.prefab;
+        currentWeapon = gm.playerStuff.activeWeapon.weapon.prefab;
         GetComponent<MeshFilter>().sharedMesh = currentWeapon.GetComponent<MeshFilter>().sharedMesh;
         GetComponent<Renderer>().sharedMaterial = currentWeapon.GetComponent<Renderer>().sharedMaterial;    }
 
