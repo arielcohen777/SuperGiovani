@@ -4,11 +4,22 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - LevelPart
-  - Dummie
+  - Weapon
+  - CinemachineTarget
+  - Armor
+  - Health
+  - Muzzle
+  - HealthUIBar
   - SecondCamera
   - BulletSpawn
-  - HealthUIBar
+  - ArmorUIBar
+  - LevelPart
+  - Enemy
+  - Enemy1
+  - Ground
+  - Wall
+  - Coin
+  - Enemy2
   layers:
   - Default
   - TransparentFX
@@ -17,12 +28,12 @@ TagManager:
   - Water
   - UI
   - Ground
+  - Interactable
   - Player
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Obstacle
+  - Enemy
+  - Coin
+  - Shell
   - 
   - 
   - 
