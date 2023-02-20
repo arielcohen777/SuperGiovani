@@ -43,6 +43,7 @@ public class Shoot : MonoBehaviour
 		int randomNumberForMuzzelFlash = Random.Range(0, 5);
 		holdFlash = Instantiate(flashList[randomNumberForMuzzelFlash], muzzleSpawn.transform.position /*- muzzelPosition*/, muzzleSpawn.transform.rotation * Quaternion.Euler(0, 0, 90));
 		holdFlash.transform.parent = muzzleSpawn.transform;
+		Destroy(holdFlash, 0.05f);
 
 		//Weapon Sound (NEEDS TESTING)
 		if (wep.weapon.gunshot != null)

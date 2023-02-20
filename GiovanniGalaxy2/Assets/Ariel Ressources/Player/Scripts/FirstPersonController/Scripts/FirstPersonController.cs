@@ -177,14 +177,6 @@ namespace StarterAssets
 		{
 			//If they can change weapons while sprinting
 			_canChange = !_input.sprint;
-			//Sprint Animation
-			gm.shoot.anim.SetBool("Sprinting", _input.sprint);
-			
-			//Disable crosshair if sprinting
-			if (gm.inventory.Container.Count == 0)
-				gm.crosshair.SetActive(false);
-			else
-				gm.crosshair.SetActive(!_input.sprint);
 			
 			// set target speed based on move speed, sprint speed and if sprint is pressed
 			float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
@@ -224,8 +216,17 @@ namespace StarterAssets
 
 			// note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
 			// if there is a move input rotate player when the player is moving
+			
 			if (_input.move != Vector2.zero)
 			{
+				if (gm.inventory.Container.Count != 0)
+					gm.crosshair.SetActive(!_input.sprint);
+
+				if (_input.sprint)
+					gm.shoot.anim.SetBool("Sprinting", true);
+				else
+					gm.shoot.anim.SetBool("Sprinting", false);
+
 				// move
 				inputDirection = transform.right * _input.move.x + transform.forward * _input.move.y;
 			}

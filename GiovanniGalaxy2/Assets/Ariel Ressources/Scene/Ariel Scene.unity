@@ -899,6 +899,30 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 4963420619672136228, guid: a6f47592b2753d84492340b3dc6995ba, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4963420619672136228, guid: a6f47592b2753d84492340b3dc6995ba, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4963420619672136228, guid: a6f47592b2753d84492340b3dc6995ba, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4963420619672136228, guid: a6f47592b2753d84492340b3dc6995ba, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4963420619672136228, guid: a6f47592b2753d84492340b3dc6995ba, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4963420619672136228, guid: a6f47592b2753d84492340b3dc6995ba, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 62.19998
+      objectReference: {fileID: 0}
     - target: {fileID: 5224988310523110633, guid: a6f47592b2753d84492340b3dc6995ba, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -909,7 +933,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6070716613515027158, guid: a6f47592b2753d84492340b3dc6995ba, type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.8514191
+      value: 1.3333334
       objectReference: {fileID: 0}
     - target: {fileID: 6070716613515027159, guid: a6f47592b2753d84492340b3dc6995ba, type: 3}
       propertyPath: m_LocalPosition.x

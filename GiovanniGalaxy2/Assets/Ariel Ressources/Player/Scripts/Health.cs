@@ -40,7 +40,7 @@ public class Health : MonoBehaviour
         //Update health and armor sliders
         gm.barUi.ArmorSlider();
         gm.barUi.HealthSlider();
-
+        
         //Set isAlive to false if no more health.
         if (isAlive = health > 0)
             Death();

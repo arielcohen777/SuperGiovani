@@ -22,16 +22,16 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Grounded
+  - 
   - Water
   - UI
   - Ground
-  - Player
   - Interactable
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Obstacle
+  - Enemy
+  - Coin
+  - Shell
   - 
   - 
   - 

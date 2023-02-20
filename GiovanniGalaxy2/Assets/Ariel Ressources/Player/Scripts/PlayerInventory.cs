@@ -21,10 +21,11 @@ public class PlayerInventory : MonoBehaviour
         if (item.type.Equals(ItemType.Weapon))
         {
             gm.inventory.AddItem((WeaponSO) item);
+            if (inventory.Container.Count != 0)
+                gm.crosshair.SetActive(true);
         }
-
         //Health
-        if (item.type.Equals("Health"))
+        else if (item.type.Equals("Health"))
         {
             HealthSO health = (HealthSO) item;
             Health pHealth = gm.player.GetComponent<Health>();
@@ -32,7 +33,6 @@ public class PlayerInventory : MonoBehaviour
                 pHealth.AddHealth(health.amount);
             else return;
         }
-
         //Armor
         else if (item.type.Equals("Armor"))
         {
@@ -52,7 +52,8 @@ public class PlayerInventory : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        gm.playerStuff.activeWeapon.weapon.nextFire = 0;
+        if (!gm.playerStuff.activeWeapon.weaponName.Equals(string.Empty))
+            gm.playerStuff.activeWeapon.weapon.nextFire = 0;
         inventory.Container.Clear();
         inventory.nextIdx = 0;
     }
