@@ -4,10 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Health", menuName = "Life/Health")]
 
-public class HealthSO : ScriptableObject
+public class HealthSO : ItemSO
 {
-    public GameObject prefab;
-    public string healthName;
-    public float healing;
-    public int price;
+    public float amount;
 }

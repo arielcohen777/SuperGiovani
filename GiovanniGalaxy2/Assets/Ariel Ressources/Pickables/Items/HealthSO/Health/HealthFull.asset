@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e055071b34ba234aa1bc5c97e8d0389, type: 3}
   m_Name: HealthFull
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
-  healthName: Full Health
-  healing: 999
+  itemName: Health Full
   price: 200
+  prefab: {fileID: 0}
+  type: 2
+  amount: 999

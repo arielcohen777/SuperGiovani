@@ -43,7 +43,7 @@ public class Enemy1 : MonoBehaviour
         explosionEffect = GetComponentInChildren<ParticleSystem>();
         gm = GameManager.Instance;
         //player = gm.player.transform;
-        player = GameObject.Find("PlayerMovement").transform;
+        player = gm.player.transform; 
         anim = GetComponent<Animator>();
         navMesh = GetComponent<NavMeshAgent>();
         health = maxHealth;
@@ -82,9 +82,9 @@ public class Enemy1 : MonoBehaviour
 
     private void Climbing()
     {
-
         if (navMesh.isOnOffMeshLink)
         {
+            // 
             Vector3 direction = (player.transform.position - transform.position).normalized;
             navMesh.velocity = direction * navMesh.speed;
 
@@ -95,7 +95,7 @@ public class Enemy1 : MonoBehaviour
         if (isOnWall && !navMesh.isOnOffMeshLink)
         {
             anim.SetBool("isClimbing", true);
-            navMesh.baseOffset = 0.3f;             
+            navMesh.baseOffset = 0.3f;
             transform.Rotate(90, 0, 0);
         }
         else
@@ -131,15 +131,9 @@ public class Enemy1 : MonoBehaviour
             anim.SetTrigger("attack");
             navMesh.SetDestination(transform.position);
 
-            Transform hitter = (rndIdx == 1) ? attackPoints[0] : attackPoints[1];
+            //Transform hitter = (rndIdx == 1) ? attackPoints[0] : attackPoints[1];
 
-            Collider[] hitPlayer = Physics.OverlapSphere(hitter.position, attackRange, playerLyr);
-
-            foreach (Collider player in hitPlayer)
-            {
-                //Debug.Log(player.tag);
-                player.GetComponentInParent<Health>().IsHit(damage);
-            }
+            //Collider[] hitPlayer = Physics.OverlapSphere(hitter.position, attackRange, playerLyr);
         }
     }
 
@@ -157,12 +151,15 @@ public class Enemy1 : MonoBehaviour
 
     private void Death()
     {
-        navMesh.isStopped = true;
-        isDead = true;
-        anim.SetTrigger("isDead");
-        explosionEffect.Play();
-        GetComponentInChildren<CoinSpawn>().SpawnCoin();
-        Destroy(enemy, 4f);
+        if (!isDead)
+        {
+            navMesh.isStopped = true;
+            isDead = true;
+            anim.SetTrigger("isDead");
+            explosionEffect.Play();
+            GetComponentInChildren<CoinSpawn>().SpawnCoin();
+            Destroy(enemy, 0.1f);
+        }
     }
 
 

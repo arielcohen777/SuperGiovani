@@ -292,6 +292,7 @@ MonoBehaviour:
   walkSpeed: 3
   chasingSpeed: 5
   fleeingSpeed: 7
+  gm: {fileID: 0}
 --- !u!136 &1324636458185728518
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -320,7 +321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whatIsAlly:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 1024
   alertRange: 35
   alliesInRange: 0
 --- !u!1 &1718313048704500874
@@ -489,7 +490,7 @@ GameObject:
   - component: {fileID: 3627132026927999844}
   m_Layer: 10
   m_Name: Ch50
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -652,7 +653,7 @@ GameObject:
   - component: {fileID: 2271022088287059931}
   m_Layer: 10
   m_Name: SpawnPoint
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -869,7 +870,7 @@ GameObject:
   - component: {fileID: 3008277670520285847}
   m_Layer: 10
   m_Name: CoinSpawnV
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2136,6 +2137,10 @@ PrefabInstance:
     - target: {fileID: 3940036432451144812, guid: e7195681d4821c847a757d5174cae6ab, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3940036432451144812, guid: e7195681d4821c847a757d5174cae6ab, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 3940036432451144813, guid: e7195681d4821c847a757d5174cae6ab, type: 3}
       propertyPath: m_Materials.Array.size

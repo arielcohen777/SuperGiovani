@@ -15,7 +15,7 @@ public class Coin : MonoBehaviour
     {
         if (other.transform.CompareTag("Player") || other.transform.CompareTag("Weapon"))
         {
-            gm.UpdateCoin();
+            gm.playerStuff.UpdateCoin();
             Destroy(gameObject);
         }
     }

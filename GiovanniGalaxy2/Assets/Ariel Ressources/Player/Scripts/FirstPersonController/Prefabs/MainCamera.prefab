@@ -149,7 +149,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4097097922459615341}
   m_Layer: 0
-  m_Name: ActiveWeapon
+  m_Name: Muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -181,6 +181,7 @@ GameObject:
   - component: {fileID: 9005220659476430821}
   - component: {fileID: 9005220659476430820}
   - component: {fileID: 9018249871969862650}
+  - component: {fileID: 2060266564175081261}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -288,3 +289,21 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2060266564175081261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9005220659476430823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c249840ec350b9c48acd114597c04e8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 3
+  mask:
+    serializedVersion: 2
+    m_Bits: 256
+  objectToBuy: {fileID: 0}
+  uiText: {fileID: 0}

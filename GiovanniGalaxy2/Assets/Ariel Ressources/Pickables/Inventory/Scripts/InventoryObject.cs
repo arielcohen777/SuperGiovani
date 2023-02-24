@@ -19,7 +19,7 @@ public class InventoryObject : ScriptableObject
         if (Container.Count == 0)
         {
             Container.Add(toAdd);
-            gm.activeWeapon = GetNextWeapon();
+            gm.playerStuff.activeWeapon = GetNextWeapon();
             gm.wepUi.UpdateWeaponHud();
             gm.changeGun.UpdateGunMesh();
             return;

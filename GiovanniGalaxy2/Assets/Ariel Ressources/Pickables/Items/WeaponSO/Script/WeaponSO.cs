@@ -1,16 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 [CreateAssetMenu(fileName = "New Weapon", menuName = "WeaponSO/Weapon")]
 
-public class WeaponSO : ScriptableObject
+public class WeaponSO : ItemSO
 {
-    [Header("Name of Gun")]
-    [TextArea(1, 1)]
-    public string weaponName;
-
-    [Header("Gun Prefab (Must have texture)")]
-    public GameObject prefab;
     [Header("Ammo")]
     public int maxAmmo;
     public int currentAmmo;
@@ -20,9 +15,8 @@ public class WeaponSO : ScriptableObject
     public float damage;
     public float rateOfFire;
     public float range;
+    public float nextFire;
     [Header("Game Objects")]
     public GameObject impactEffect;
     public AudioSource gunshot;
-    [Header("Price of Gun")]
-    public int price;
 }

@@ -6,45 +6,54 @@ public class PlayerInventory : MonoBehaviour
 {
     public InventoryObject inventory;
     GameManager gm;
-    WeaponUI ui;
     private void Start()
     {
         gm = GameManager.Instance;
-        ui = gm.wepUi;
     }
 
-    public void BuyItem(GameObject item)
+    public void BuyItem(GameObject objectToBuy)
     {
-        gm.crosshair.SetActive(true);
-        if (item.CompareTag("Weapon"))
+        ItemSO item = objectToBuy.GetComponent<Item>().item;
+        //If not enough money, don't buy
+        if (gm.playerStuff.coins < item.price) return;
+
+        //Weapon
+        if (item.type.Equals(ItemType.Weapon))
         {
-            WeaponSO weapon = item.GetComponent<Weapon>().weapon;
-            inventory.AddItem(weapon);
-            ui.UpdateWeaponHud();
-            gm.coins -= weapon.price;
+            gm.inventory.AddItem((WeaponSO) item);
+            if (inventory.Container.Count != 0)
+                gm.crosshair.SetActive(true);
         }
 
-        if (item.CompareTag("Health"))
+        //Health
+        if (item.type.Equals(ItemType.Health))
         {
-            HealthSO health = item.GetComponent<HealthItem>().healthSO;
-            gm.player.GetComponent<Health>().Healing(health.healing);
-            gm.coins -= health.price;
+            HealthSO health = (HealthSO) item;
+            if (gm.player.GetComponent<Health>().health != gm.player.GetComponent<Health>().maxHealth)
+                gm.player.GetComponent<Health>().AddHealth(health.amount);
+            else return;
         }
 
-        if (item.CompareTag("Armor"))        
+        //Armor
+        else if (item.type.Equals(ItemType.Armor))
         {
-            ArmorSO armor = item.GetComponent<ArmorItem>().armorSO;
-            gm.player.GetComponent<Health>().AddArmor(armor.amount);
-            gm.coins -= armor.price;
+            ArmorSO armor = (ArmorSO) item;
+            if (gm.player.GetComponent<Health>().armor != gm.player.GetComponent<Health>().maxArmor)
+                gm.player.GetComponent<Health>().AddArmor(armor.amount);
+            else return;
+
         }
 
-        Destroy(item.gameObject);
-
-        gm.UpdateCoinDisplay();
+        //Destroy item and update coin display
+        gm.playerStuff.coins -= item.price;
+        Destroy(objectToBuy);
+        gm.playerStuff.UpdateCoinDisplay();
     }
 
     private void OnApplicationQuit()
     {
+        if (!gm.playerStuff.activeWeapon.weaponName.Equals(string.Empty))
+            gm.playerStuff.activeWeapon.weapon.nextFire = 0;
         inventory.Container.Clear();
         inventory.nextIdx = 0;
     }

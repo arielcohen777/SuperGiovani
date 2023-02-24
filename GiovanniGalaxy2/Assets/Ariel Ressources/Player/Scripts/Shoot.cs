@@ -5,8 +5,8 @@ using UnityEngine.InputSystem;
 
 public class Shoot : MonoBehaviour
 {
-    private GameManager gm;
-    [SerializeField] private GameObject[] flashList;
+	private GameManager gm;
+	[SerializeField] private GameObject[] flashList;
 	public GameObject muzzleSpawn;
 	private GameObject holdFlash;
 	public Animator anim;
@@ -16,15 +16,15 @@ public class Shoot : MonoBehaviour
 	private bool canReload;
 
 	private void Start()
-    {
-        gm = GameManager.Instance;
+	{
+		gm = GameManager.Instance;
 		anim = GetComponent<Animator>();
-    }
+	}
 
 	public void Shooting(Camera _mainCamera)
 	{
-		WeaponSlot wep = gm.activeWeapon;
-		
+		WeaponSlot wep = gm.playerStuff.activeWeapon;
+
 		//Reduce ammo
 		wep.currentAmmo--;
 
@@ -40,10 +40,11 @@ public class Shoot : MonoBehaviour
 		anim.SetTrigger("Shooting");
 
 		//Muzzle Flash
-		int randomNumberForMuzzelFlash = Random.Range(0, 5);
+		int randomNumberForMuzzelFlash = Random.Range(0, flashList.Length);
 		holdFlash = Instantiate(flashList[randomNumberForMuzzelFlash], muzzleSpawn.transform.position /*- muzzelPosition*/, muzzleSpawn.transform.rotation * Quaternion.Euler(0, 0, 90));
 		holdFlash.transform.parent = muzzleSpawn.transform;
-
+		Destroy(holdFlash, 0.05f);
+		
 		//Weapon Sound (NEEDS TESTING)
 		if (wep.weapon.gunshot != null)
 		{
@@ -53,36 +54,34 @@ public class Shoot : MonoBehaviour
 		//Aiming
 		if (Physics.Raycast(_mainCamera.transform.position, _mainCamera.transform.forward, out RaycastHit hit, wep.weapon.range))
 		{
-			Debug.Log(hit.transform.name);
+			Enemy1 enemy = hit.collider.GetComponentInParent<Enemy1>();
+			Enemy2 enemy2 = hit.collider.GetComponentInParent<Enemy2>();
+			//Making sure it's an enemy
+			//Enemy2 target = hit.transform.GetComponent<Enemy2>();
+			//if (target != null)
+			//{
+			//	target.IsHit((int)wep.weapon.damage);
+			//}
 
-            Enemy1 enemy = hit.collider.GetComponentInParent<Enemy1>();
-            Enemy2 enemy2 = hit.collider.GetComponentInParent<Enemy2>();
-            //Making sure it's an enemy
-            //Enemy2 target = hit.transform.GetComponent<Enemy2>();
-            //if (target != null)
-            //{
-            //	target.IsHit((int)wep.weapon.damage);
-            //}
-
-            //Debug.Log(hit.transform.gameObject.tag);
-            //if (hit.transform.CompareTag("Enemy") || hit.transform.CompareTag("Dummie"))
-            if (hit.transform.CompareTag("Enemy"))
+			//Debug.Log(hit.transform.gameObject.tag);
+			//if (hit.transform.CompareTag("Enemy") || hit.transform.CompareTag("Dummie"))
+			if (hit.transform.CompareTag("Enemy"))
 			{
-                
-                if (enemy != null) enemy.IsHit((int)wep.weapon.damage);
-                else enemy2.IsHit((int)wep.weapon.damage);
 
-                GameObject impactGO = Instantiate(blood, hit.point, Quaternion.LookRotation(hit.normal));
+				if (enemy != null) enemy.IsHit((int)wep.weapon.damage);
+				else enemy2.IsHit((int)wep.weapon.damage);
+
+				GameObject impactGO = Instantiate(blood, hit.point, Quaternion.LookRotation(hit.normal));
 				impactGO.GetComponent<ParticleSystem>().Play();
 			}
-            else if (!hit.transform.CompareTag("Coin"))
-            {
-                GameObject impactGO = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
-                Destroy(impactGO, 1f);
-            }
+			else if (!hit.transform.CompareTag("Coin"))
+			{
+				GameObject impactGO = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
+				Destroy(impactGO, 1f);
+			}
 
-            //Weapon Sound (NEEDS TESTING)
-            if (wep.weapon.gunshot != null)
+			//Weapon Sound (NEEDS TESTING)
+			if (wep.weapon.gunshot != null)
 			{
 				wep.weapon.gunshot.Play();
 			}
@@ -90,21 +89,22 @@ public class Shoot : MonoBehaviour
 	}
 
 	public IEnumerator CanReload()
-    {
+	{
 		canReload = true;
 		Invoke("Reload", 0.5f);
 		yield return new WaitForSeconds(0.5f);
-    }
+	}
 
 	public void Reload()
 	{
-		if (canReload) { 
+		if (canReload)
+		{
 			canReload = false;
 		}
 		else
 			return;
 
-		WeaponSlot wep = gm.activeWeapon;
+		WeaponSlot wep = gm.playerStuff.activeWeapon;
 		//If currentAmmo is the same as magsize, don't reload
 		if (wep.currentAmmo == wep.magSize)
 		{
@@ -117,7 +117,7 @@ public class Shoot : MonoBehaviour
 			return;
 		}
 
-        int toReload;
+		int toReload;
 		//If there is less ammo than a mag, reload maxAmmo
 		if (wep.magSize > wep.maxAmmo)
 		{
@@ -129,8 +129,8 @@ public class Shoot : MonoBehaviour
 			toReload = wep.magSize - wep.currentAmmo;
 		}
 
-        wep.currentAmmo += toReload;
-		
+		wep.currentAmmo += toReload;
+
 		//Set to 0 if it goes lower
 		if ((wep.maxAmmo -= toReload) < 0)
 			wep.maxAmmo = 0;

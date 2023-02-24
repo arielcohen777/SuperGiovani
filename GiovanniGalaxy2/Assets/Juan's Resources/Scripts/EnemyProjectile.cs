@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class EnemyProjectile : MonoBehaviour
 {
+    GameManager gm; 
     public float damage;
+
+    private void Start()
+    {
+        gm = GameManager.Instance; 
+    }
     private void OnCollisionEnter(Collision collision)
     {
         
         if(collision.collider.CompareTag("Player"))
         {
-            collision.gameObject.GetComponentInParent<Health>().IsHit(damage);
+            Debug.Log(collision.gameObject.name);
+            //collision.gameObject.GetComponent<Health>().IsHit(damage);
+            gm.playerHealth.IsHit(damage); 
             Destroy(gameObject);
         }
 
