@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements.Experimental;
 
 public class Health : MonoBehaviour
 {
@@ -14,11 +13,13 @@ public class Health : MonoBehaviour
     public float armor;
 
     private GameManager gm;
+    private FlashScreen flashScreen;
 
     // Start is called before the first frame update
     void Start()
     {
         gm = GameManager.Instance;
+        flashScreen = FindObjectOfType<FlashScreen>();
         health = maxHealth;
         armor = maxArmor;
     }
@@ -27,7 +28,11 @@ public class Health : MonoBehaviour
     {
         //If the damage done is less than the amount of armor, reduce armor
         if (damage <= armor)
+        {
             armor -= damage;
+            flashScreen.FlashRed(0.2f);
+        }
+            
         //If not, reduce damage to how much damage done to armor, set
         //armor to 0 and lower health by remaining damage
         else
@@ -35,6 +40,9 @@ public class Health : MonoBehaviour
             damage -= armor;
             armor = 0;
             health -= damage;
+
+            //Flash the screen red
+            flashScreen.FlashRed(0.2f);
         }
 
         //Update health and armor sliders
@@ -65,6 +73,5 @@ public class Health : MonoBehaviour
     public void Death()
     {
         // code for what happens when player dies
-        
     }
 }
