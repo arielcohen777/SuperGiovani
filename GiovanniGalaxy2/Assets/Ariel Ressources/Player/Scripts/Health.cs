@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
@@ -13,7 +14,9 @@ public class Health : MonoBehaviour
     public float armor;
 
     private GameManager gm;
+    //--------------------s
     private FlashScreen flashScreen;
+    public GameObject panel;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +33,7 @@ public class Health : MonoBehaviour
         if (damage <= armor)
         {
             armor -= damage;
+            //-----------------------s
             flashScreen.FlashRed(0.2f);
         }
             
@@ -41,7 +45,7 @@ public class Health : MonoBehaviour
             armor = 0;
             health -= damage;
 
-            //Flash the screen red
+            //Flash the screen red------------s
             flashScreen.FlashRed(0.2f);
         }
 
@@ -50,7 +54,7 @@ public class Health : MonoBehaviour
         gm.barUi.HealthSlider();
 
         //Set isAlive to false if no more health.
-        if (isAlive = health > 0)
+        if (isAlive = health < 0)
             Death();
     }
 
@@ -72,6 +76,7 @@ public class Health : MonoBehaviour
 
     public void Death()
     {
-        // code for what happens when player dies
+        //-------------------s
+        panel.SetActive(true);
     }
 }
