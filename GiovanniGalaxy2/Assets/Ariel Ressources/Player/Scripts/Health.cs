@@ -54,7 +54,7 @@ public class Health : MonoBehaviour
         gm.barUi.HealthSlider();
 
         //Set isAlive to false if no more health.
-        if (isAlive = health < 0)
+        if (!(isAlive = health >0))
             Death();
     }
 
