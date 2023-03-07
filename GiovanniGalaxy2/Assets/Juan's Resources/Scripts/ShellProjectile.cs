@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,36 +12,36 @@ public class ShellProjectile : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private Vector3 rotation;
 
-
+    Rigidbody rb;
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
     private void Update()
     {
         transform.Rotate(rotation * speed * Time.deltaTime);
     }
     private void OnCollisionEnter(Collision collision)
     {
+        Enemy1 enemy = collision.collider.GetComponentInParent<Enemy1>();
+        Enemy2 enemy2 = collision.collider.GetComponentInParent<Enemy2>();
 
-        if (collision.collider.CompareTag("Player"))
-        {
-            collision.gameObject.GetComponentInParent<Health>().IsHit(damagePlayer);
-            Destroy(gameObject);
-        }     
-
-        else
-        {
-            Destroy(gameObject, 20f);
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        Enemy1 enemy = other.GetComponentInParent<Enemy1>();
-        Enemy2 enemy2 = other.GetComponentInParent<Enemy2>();
-
-        if (other.CompareTag("Enemy"))
+        if (collision.collider.CompareTag("Enemy"))
         {
             if (enemy != null) enemy.IsHit(damageEnemy);
             else enemy2.IsHit(damageEnemy);
-                       
+
+            rb.AddForce(gameObject.transform.forward * 30f, ForceMode.Impulse);
+            Debug.Log("we bouncing against enemies!");
         }
+
+        else if (collision.collider.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponentInParent<Health>().IsHit(damagePlayer);
+            Destroy(gameObject);
+        }
+
+        Destroy(gameObject, 15f);
     }
+
 }
