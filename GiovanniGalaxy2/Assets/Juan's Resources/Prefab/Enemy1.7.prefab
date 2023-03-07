@@ -2150,6 +2150,18 @@ PrefabInstance:
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3940036432451144814, guid: e7195681d4821c847a757d5174cae6ab, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.21568625
+      objectReference: {fileID: 0}
+    - target: {fileID: 3940036432451144814, guid: e7195681d4821c847a757d5174cae6ab, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.8754909
+      objectReference: {fileID: 0}
+    - target: {fileID: 3940036432451144814, guid: e7195681d4821c847a757d5174cae6ab, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.972549
+      objectReference: {fileID: 0}
     - target: {fileID: 3940036432451144815, guid: e7195681d4821c847a757d5174cae6ab, type: 3}
       propertyPath: m_RootOrder
       value: 2

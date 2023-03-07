@@ -16,9 +16,7 @@ public class ShellSpawn : MonoBehaviour
    // public bool isDead;
     private bool isSpawned;
 
-    public Transform playerTransform;
-
-    private Vector2 shellDirection;
+    private Vector3 shellDirection;
 
     GameManager gm;
 
@@ -27,7 +25,6 @@ public class ShellSpawn : MonoBehaviour
     {
         gm = GameManager.Instance;
         spawn = gameObject;
-        playerTransform = gm.player.transform; 
         enemy = GetComponentInParent<Enemy1>();
         damage = 100f;
         
@@ -42,9 +39,7 @@ public class ShellSpawn : MonoBehaviour
 
     private void CalculateDirection()
     {
-        Vector2 objectTransform = new Vector2(transform.position.x, transform.position.z);
-        Vector2 targetTransform = new Vector2(playerTransform.position.x, playerTransform.position.z);
-        shellDirection = (objectTransform - targetTransform).normalized;
+        shellDirection = (gameObject.transform.forward)*-1;
     }
 
     private void SpawnShell()
