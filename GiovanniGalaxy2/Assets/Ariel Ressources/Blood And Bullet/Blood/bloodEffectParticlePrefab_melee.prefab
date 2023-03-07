@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4422897939842062}
   - component: {fileID: 198720034268917042}
   - component: {fileID: 199325509572367008}
+  - component: {fileID: 114145297457417836}
   m_Layer: 0
   m_Name: bloodEffectParticlePrefab_melee
   m_TagString: Untagged
@@ -4772,7 +4773,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 76978bcdab0a96a49ab9489d02297a32, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4818,3 +4820,16 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &114145297457417836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013274939826982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63fcd57c108bbc844ac776aeae523ba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToDestroy: 1

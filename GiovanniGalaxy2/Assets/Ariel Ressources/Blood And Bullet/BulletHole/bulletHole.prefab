@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3339968}
   - component: {fileID: 6556354}
   - component: {fileID: 2326132}
+  - component: {fileID: 114821125757560434}
   m_Layer: 2
   m_Name: bulletHole
   m_TagString: Untagged
@@ -74,7 +75,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4a9b8fb058af6124596b388120eab9f3, type: 2}
+  - {fileID: 2100000, guid: baf17cf72977f4721af5e2617d2f478b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,3 +97,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &114821125757560434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63fcd57c108bbc844ac776aeae523ba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToDestroy: 5

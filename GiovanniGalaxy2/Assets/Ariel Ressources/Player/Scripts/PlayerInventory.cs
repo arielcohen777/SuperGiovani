@@ -52,10 +52,8 @@ public class PlayerInventory : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        foreach(WeaponSlot w in gm.inventory.Container)
-        {
-            w.weapon.nextFire = 0;
-        }
+        if (!gm.playerStuff.activeWeapon.weaponName.Equals(string.Empty))
+            gm.playerStuff.activeWeapon.weapon.nextFire = 0;
         inventory.Container.Clear();
         inventory.nextIdx = 0;
     }

@@ -17,5 +17,6 @@ public class WeaponSO : ItemSO
     public float range;
     public float nextFire;
     [Header("Game Objects")]
+    public GameObject impactEffect;
     public AudioSource gunshot;
 }
