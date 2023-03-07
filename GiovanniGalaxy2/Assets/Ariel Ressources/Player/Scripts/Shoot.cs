@@ -67,14 +67,12 @@ public class Shoot : MonoBehaviour
 			//if (hit.transform.CompareTag("Enemy") || hit.transform.CompareTag("Dummie"))
 			if (hit.transform.CompareTag("Enemy"))
 			{
-
 				if (enemy != null) enemy.IsHit((int)wep.weapon.damage);
 				else enemy2.IsHit((int)wep.weapon.damage);
 
 				GameObject impactGO = Instantiate(blood, hit.point, Quaternion.LookRotation(hit.normal));
 				impactGO.GetComponent<ParticleSystem>().Play();
-                Destroy(impactGO, 1f);//this was missing 
-            }
+			}
 			else if (!hit.transform.CompareTag("Coin"))
 			{
 				GameObject impactGO = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));

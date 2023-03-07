@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -33,7 +32,6 @@ public class Enemy2 : MonoBehaviour
     public float walkPointRange;
     private Vector3 walkPoint;
     private bool walkPointSet;
-    private bool runPointSet;
 
 
     //attack
@@ -76,10 +74,8 @@ public class Enemy2 : MonoBehaviour
     // anim
     private Animator anim;
 
-    // Game Manager reference
     public GameManager gm;
 
-    
 
     private void Start()
     {
@@ -127,7 +123,6 @@ public class Enemy2 : MonoBehaviour
         // check sight, attack , flee ranges 
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-        
         playerInFleeRange = Physics.CheckSphere(transform.position, fleeRange, whatIsPlayer);
     }
 
@@ -173,14 +168,12 @@ public class Enemy2 : MonoBehaviour
             walkPointSet = true;
         }
     }
-
-   
     private void Chase()
     {
         anim.SetTrigger("chasing");
         enemy.speed = chasingSpeed;
         enemy.SetDestination(player.position);
-        SmoothRotation(0.15f, 1, player.position);
+        SmoothRotation(0.15f, 1);
     }
 
     private void CheckPlayerSpotted()
@@ -202,7 +195,7 @@ public class Enemy2 : MonoBehaviour
             }
             else
             {
-               // Debug.DrawRay(transform.position, directionTarget * sightRange, Color.red);
+                Debug.DrawRay(transform.position, directionTarget * sightRange, Color.red);
                 playerSpotted = false;
             }
         }
@@ -220,7 +213,8 @@ public class Enemy2 : MonoBehaviour
     }
     public void Attack()
     {
-        SmoothRotation(0.5f, 1, player.position);
+
+        SmoothRotation(0.5f, 1);
         float distanceToTarget = Vector3.Distance(transform.position, player.position);
         if (!Physics.Raycast(transform.position, direction, distanceToTarget, whatIsObstruction))
         {
@@ -234,63 +228,22 @@ public class Enemy2 : MonoBehaviour
     }
     private void RunAway()
     {
- 
-        if (runPointSet)
-        {
-            isRunning = true;          
-            anim.SetTrigger("fleeing");
-            enemy.speed = fleeingSpeed;
-            //SmoothRotation(0.3f, 1, runTo);
-            enemy.SetDestination(runTo);
-            Debug.DrawRay(transform.position, runTo, Color.cyan);
-        }
-        else
-        {
-            runPointSet = SearchFleePoint(out runTo, 1 << 3);
-        }
-    }
-
-    private bool SearchFleePoint(out Vector3 fleePoint, int navMeshAreaMask)
-    {
-        fleePoint = Vector3.zero;
-        int n = 10;
-
-        NavMeshQueryFilter filter = new NavMeshQueryFilter();
-        filter.areaMask = navMeshAreaMask;
-
-        for (int i = 0; i < n; i++)
-        {
-            float randomZ = Random.Range(-10, -9f);
-            float randomX = Random.Range(-5, 5);
-            Vector3 randomPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-
-
-            NavMeshHit navMeshHit;
-            if (NavMesh.SamplePosition(randomPoint, out navMeshHit, 1f, filter))
-            {
-                if ((navMeshHit.position - player.transform.position).magnitude >= 6)
-                {
-                    fleePoint = navMeshHit.position;
-                    return true;
-                }
-
-            }
-        }
-        return false;
+        isRunning = true;
+        anim.SetTrigger("fleeing");
+        enemy.speed = fleeingSpeed;
+        SmoothRotation(0.2f, -1);
+        runTo = transform.position + (direction * 9f);
+        Debug.DrawRay(transform.position, runTo, Color.red);
+        enemy.SetDestination(runTo);
     }
 
     private void CheckIsRunningAway()
     {
-        if (isRunning)
+        distanceRunTo = transform.position - runTo;
+        //print(distanceRunTo.magnitude);
+        if (distanceRunTo.magnitude < 3f)
         {
-            distanceRunTo = transform.position - runTo;
-           // print(distanceRunTo.magnitude);
-            if (distanceRunTo.magnitude < 0.6f)
-            {
-                isRunning = false;
-                runPointSet = false;
-            }
-       
+            isRunning = false;
         }
     }
     public void IsHit(float damage)
@@ -320,14 +273,13 @@ public class Enemy2 : MonoBehaviour
             explosionEffect.Play();
             GetComponentInChildren<CoinSpawn>().SpawnCoin();
             Destroy(enemy2, 4f);
-            gm.enemySpawner.EnemyDestroyed();
         }
     }
-    private void SmoothRotation(float t, int x, Vector3 target)
+    private void SmoothRotation(float t, int x)
     {
         //only assign values of 1 o -1 to invert direction for x
         //assing a value from 0 to 1 depending on how fast you want the object to turn
-        direction = (target - transform.position).normalized * x;
+        direction = (player.transform.position - transform.position).normalized * x;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, t);
     }

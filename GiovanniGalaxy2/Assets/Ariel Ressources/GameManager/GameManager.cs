@@ -25,9 +25,6 @@ public class GameManager : MonoBehaviour
     public WeaponUI wepUi;
     public BarUI barUi;
 
-    //Spawner
-    public  EnemySpawner enemySpawner;
-
     #region Singleton
 
     //Instance

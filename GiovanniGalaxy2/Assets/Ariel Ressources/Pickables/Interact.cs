@@ -8,7 +8,7 @@ public class Interact : MonoBehaviour
     Camera cam;
     public float distance = 3f;
     [SerializeField] private LayerMask mask;
-    public GameObject objectToBuy;
+    private GameObject objectToBuy;
     GameManager gm;
 
     public TMP_Text uiText;

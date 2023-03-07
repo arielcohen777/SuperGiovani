@@ -30,6 +30,7 @@ public class ShellSpawn : MonoBehaviour
         playerTransform = gm.player.transform; 
         enemy = GetComponentInParent<Enemy1>();
         damage = 100f;
+        
     }
 
     // Update is called once per frame

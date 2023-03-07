@@ -34,7 +34,7 @@ public class Enemy1 : MonoBehaviour
     public float attackRange = 0.5f;
     public LayerMask playerLyr;
 
-    public GameManager gm; // changed this from private to public
+    private GameManager gm;
 
 
     // Start is called before the first frame update
@@ -159,7 +159,6 @@ public class Enemy1 : MonoBehaviour
             explosionEffect.Play();
             GetComponentInChildren<CoinSpawn>().SpawnCoin();
             Destroy(enemy, 0.1f);
-            gm.enemySpawner.EnemyDestroyed();
         }
     }
 

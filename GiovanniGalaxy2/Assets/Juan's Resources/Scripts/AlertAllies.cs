@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
-using UnityEngine.InputSystem.HID;
 using UnityEngine.UI;
 
 public class AlertAllies : MonoBehaviour
@@ -35,13 +34,10 @@ public class AlertAllies : MonoBehaviour
     {
         if (enemyScript.playerSpotted && alliesInRange)
         {
-             
             Collider[] numberAlliesInRange = Physics.OverlapSphere(transform.position, alertRange, whatIsAlly);
             foreach (Collider enemy in numberAlliesInRange)
             {
-                Enemy2 enemy2 = enemy.gameObject.GetComponent<Enemy2>();
-                if (enemy2 != null) enemy2.enemyAlerted = true;
-               
+                enemy.gameObject.GetComponent<Enemy2>().enemyAlerted = true;
             }
         }       
       

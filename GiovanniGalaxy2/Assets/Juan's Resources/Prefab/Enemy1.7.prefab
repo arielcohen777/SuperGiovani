@@ -186,7 +186,6 @@ GameObject:
   - component: {fileID: 2271022089322537145}
   - component: {fileID: 1324636458185728518}
   - component: {fileID: 1324636458185728513}
-  - component: {fileID: 1500218988}
   m_Layer: 10
   m_Name: Enemy1.7
   m_TagString: Enemy
@@ -240,7 +239,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1388554951585785685}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -251,7 +250,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: -0.06
-  m_WalkableMask: 8
+  m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &2271022089322537145
 MonoBehaviour:
@@ -272,27 +271,27 @@ MonoBehaviour:
   playerSpotted: 0
   enemyAlerted: 0
   enemy: {fileID: 2271022089322537144}
-  player: {fileID: 0}
+  player: {fileID: 7038876545104870604, guid: 9f160ec09efe8fa4f9762e00d26bad45, type: 3}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
   whatIsPlayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 128
   whatIsObstruction:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 256
   walkPointRange: 20
   projectile: {fileID: 5943363800072619865, guid: 328ae1c4b631dc84f8e7066c8edcd1b9, type: 3}
   spawnPoint: {fileID: 2271022088287059930}
-  health: 100
+  health: 0
   isDead: 0
   sightRange: 30
   attackRange: 10
   fleeRange: 4
   walkSpeed: 3
   chasingSpeed: 5
-  fleeingSpeed: 8
+  fleeingSpeed: 7
   gm: {fileID: 0}
 --- !u!136 &1324636458185728518
 CapsuleCollider:
@@ -325,43 +324,6 @@ MonoBehaviour:
     m_Bits: 1024
   alertRange: 35
   alliesInRange: 0
---- !u!114 &1500218988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1388554951585785685}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09e65f5e2e0b82c4cb2ff7b049299105, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Method: 3
-  m_Curve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.98332924
-      value: 0.004716765
-      inSlope: -2.452966
-      outSlope: -2.452966
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.08410797
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &1718313048704500874
 GameObject:
   m_ObjectHideFlags: 0
