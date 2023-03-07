@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        playerHealth = player.GetComponent<Health>();
         fpc = player.GetComponent<StarterAssets.FirstPersonController>();
     }
 }

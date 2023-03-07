@@ -67,7 +67,6 @@ public class Shoot : MonoBehaviour
 			//if (hit.transform.CompareTag("Enemy") || hit.transform.CompareTag("Dummie"))
 			if (hit.transform.CompareTag("Enemy"))
 			{
-
 				if (enemy != null) enemy.IsHit((int)wep.weapon.damage);
 				else enemy2.IsHit((int)wep.weapon.damage);
 

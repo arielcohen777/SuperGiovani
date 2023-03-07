@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Machine Gun
   price: 30
-  prefab: {fileID: 108886, guid: df804c49be2c3cf4a90d773eb9565e13, type: 3}
+  prefab: {fileID: 4421430120680691124, guid: 5d14034122868a4408023e002d3934a1, type: 3}
   type: 0
   maxAmmo: 50
   currentAmmo: 30

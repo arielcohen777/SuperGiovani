@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Pistoleta
   price: 40
-  prefab: {fileID: 166328, guid: 4687dbac65c37124e833c08251864ba7, type: 3}
+  prefab: {fileID: 7219596146933246673, guid: 61a614313dccb7b46b9f2b443c77ac81, type: 3}
   type: 0
   maxAmmo: 100
   currentAmmo: 30
@@ -23,6 +23,6 @@ MonoBehaviour:
   damage: 20
   rateOfFire: 10
   range: 100
-  nextFire: 0
+  nextFire: 13.16536
   impactEffect: {fileID: 0}
   gunshot: {fileID: 0}
