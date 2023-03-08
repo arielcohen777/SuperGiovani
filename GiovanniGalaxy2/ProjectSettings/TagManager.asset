@@ -20,6 +20,8 @@ TagManager:
   - Wall
   - Coin
   - Enemy2
+  - wall
+  - Portal
   layers:
   - Default
   - TransparentFX
@@ -34,7 +36,7 @@ TagManager:
   - Enemy
   - Coin
   - Shell
-  - 
+  - Battery
   - 
   - 
   - 

@@ -26,7 +26,15 @@ public class GameManager : MonoBehaviour
     public BarUI barUi;
 
     //Spawner
-    public  EnemySpawner enemySpawner;
+    public EnemySpawner enemySpawner;
+
+    //BatteryCounter
+    public BatteryCounter batteryCounter;
+
+    //Portal
+    public Portal Portal;
+
+
 
     #region Singleton
 
@@ -54,4 +62,5 @@ public class GameManager : MonoBehaviour
     {
         fpc = player.GetComponent<StarterAssets.FirstPersonController>();
     }
+ 
 }

@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class EnemyProjectile : MonoBehaviour
 {
+    private ParticleSystem energySparks;
     GameManager gm; 
     public float damage;
 
     private void Start()
     {
         gm = GameManager.Instance; 
+        energySparks = GetComponentInChildren<ParticleSystem>();
+        energySparks.Play();
     }
     private void OnCollisionEnter(Collision collision)
     {
         
         if(collision.collider.CompareTag("Player"))
-        {
-            //Debug.Log(collision.gameObject.name);
-            //collision.gameObject.GetComponent<Health>().IsHit(damage);
+        {           
             gm.playerHealth.IsHit(damage); 
             Destroy(gameObject);
         }
