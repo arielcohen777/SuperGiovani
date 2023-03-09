@@ -34,7 +34,7 @@ public class Enemy1 : MonoBehaviour
     public float attackRange = 0.5f;
     public LayerMask playerLyr;
 
-    public GameManager gm; // changed this from private to public
+    private GameManager gm;  
 
 
     // Start is called before the first frame update
@@ -84,24 +84,29 @@ public class Enemy1 : MonoBehaviour
     {
         if (navMesh.isOnOffMeshLink)
         {
-            // 
-            Vector3 direction = (player.transform.position - transform.position).normalized;
+            navMesh.speed = 4f;
+            Vector3 direction = (player.transform.position - transform.position).normalized;  
             navMesh.velocity = direction * navMesh.speed;
 
             Quaternion lookRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 1f);
-
+            navMesh.isStopped = true ;
         }
         if (isOnWall && !navMesh.isOnOffMeshLink)
         {
+            navMesh.speed = 6f;
             anim.SetBool("isClimbing", true);
             navMesh.baseOffset = 0.3f;
             transform.Rotate(90, 0, 0);
+            navMesh.isStopped = false;
         }
         else
         {
+            navMesh.speed = 4f;
             anim.SetBool("isClimbing", false);
             navMesh.baseOffset = -0.06f;
+            transform.Rotate(0, 0, 0);
+            navMesh.isStopped = false;
         }
     }
 
