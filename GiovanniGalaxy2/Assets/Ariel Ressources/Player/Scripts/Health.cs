@@ -16,7 +16,7 @@ public class Health : MonoBehaviour
     private GameManager gm;
     //--------------------s
     private FlashScreen flashScreen;
-    public GameObject panel;
+    public GameObject DeathPanel;
 
     // Start is called before the first frame update
     void Start()
@@ -77,6 +77,6 @@ public class Health : MonoBehaviour
     public void Death()
     {
         //-------------------s
-        panel.SetActive(true);
+        DeathPanel.SetActive(true);
     }
 }
