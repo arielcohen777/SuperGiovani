@@ -55,7 +55,7 @@ public class Shoot : MonoBehaviour
 		if (Physics.Raycast(_mainCamera.transform.position, _mainCamera.transform.forward, out RaycastHit hit, wep.weapon.range))
 		{
 			Enemy1 enemy = hit.collider.GetComponentInParent<Enemy1>();
-			Enemy2 enemy2 = hit.collider.GetComponentInParent<Enemy2>();
+            Enemy2_fixed enemy2 = hit.collider.GetComponentInParent<Enemy2_fixed>();
 			 
 			if (hit.transform.CompareTag("Enemy"))
 			{
