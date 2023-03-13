@@ -63,7 +63,9 @@ public class PauseMenuScript : MonoBehaviour
     }
     public void Quit()
     {
+
         Application.Quit();
+        Debug.Log("QUIT");
     }
 
     public void Resume()
