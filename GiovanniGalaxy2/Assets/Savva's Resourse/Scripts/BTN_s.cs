@@ -5,10 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class BTN_s : MonoBehaviour
 {
-    public void Restart()
+    public void LoadGame()
     {
-        
+ 
         SceneManager.LoadScene(1);
+        Debug.Log("Resume Game");
     }
 
     public void Quit()
