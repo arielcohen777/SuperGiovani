@@ -55,9 +55,6 @@ public class Enemy2 : MonoBehaviour
     public const float maxHealth = 100;
     public float health;
 
-
-
-
     private GameObject enemy2;
     public bool isDead;
 
@@ -79,14 +76,14 @@ public class Enemy2 : MonoBehaviour
     // Game Manager reference
     public GameManager gm;
 
-    
+
 
     private void Start()
     {
         explosionEffect = GetComponentInChildren<ParticleSystem>();
-        gm = GameManager.Instance; 
+        gm = GameManager.Instance;
         anim = GetComponent<Animator>();
-        player = gm.player.transform; 
+        player = gm.player.transform;
         //player = GameObject.Find("PlayerMovement").transform;
         enemy = GetComponent<NavMeshAgent>();
         enemy2 = gameObject;
@@ -127,7 +124,7 @@ public class Enemy2 : MonoBehaviour
         // check sight, attack , flee ranges 
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-        
+
         playerInFleeRange = Physics.CheckSphere(transform.position, fleeRange, whatIsPlayer);
     }
 
@@ -174,7 +171,7 @@ public class Enemy2 : MonoBehaviour
         }
     }
 
-   
+
     private void Chase()
     {
         anim.SetTrigger("chasing");
@@ -202,7 +199,7 @@ public class Enemy2 : MonoBehaviour
             }
             else
             {
-               // Debug.DrawRay(transform.position, directionTarget * sightRange, Color.red);
+                // Debug.DrawRay(transform.position, directionTarget * sightRange, Color.red);
                 playerSpotted = false;
             }
         }
@@ -234,10 +231,10 @@ public class Enemy2 : MonoBehaviour
     }
     private void RunAway()
     {
- 
+
         if (runPointSet)
         {
-            isRunning = true;          
+            isRunning = true;
             anim.SetTrigger("fleeing");
             enemy.speed = fleeingSpeed;
             //SmoothRotation(0.3f, 1, runTo);
@@ -284,13 +281,13 @@ public class Enemy2 : MonoBehaviour
         if (isRunning)
         {
             distanceRunTo = transform.position - runTo;
-           // print(distanceRunTo.magnitude);
+            // print(distanceRunTo.magnitude);
             if (distanceRunTo.magnitude < 0.6f)
             {
                 isRunning = false;
                 runPointSet = false;
             }
-       
+
         }
     }
     public void IsHit(float damage)
@@ -309,6 +306,7 @@ public class Enemy2 : MonoBehaviour
             Death();
         }
     }
+
     public void Death()
     {
         if (!isDead)
@@ -320,6 +318,7 @@ public class Enemy2 : MonoBehaviour
             explosionEffect.Play();
             GetComponentInChildren<CoinSpawn>().SpawnCoin();
             Destroy(enemy2, 4f);
+            Debug.Log("Enemy2 Destroyed");
             gm.enemySpawner.EnemyDestroyed();
         }
     }

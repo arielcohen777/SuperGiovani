@@ -244,6 +244,7 @@ MonoBehaviour:
   MoveSpeed: 5
   SprintSpeed: 9
   RotationSpeed: 2
+  RotationSpeedOg: 0
   SpeedChangeRate: 10
   JumpHeight: 2
   Gravity: -15
@@ -260,6 +261,11 @@ MonoBehaviour:
   BottomClamp: -89
   _canChange: 0
   _canShoot: 0
+  _canAim: 0
+  sniperScopeUI: {fileID: 0}
+  heldGun: {fileID: 0}
+  sniperZoomCam: {fileID: 0}
+  aimRotation: 0.5
 --- !u!114 &1978471637655604388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,6 +303,7 @@ MonoBehaviour:
   changeWep: 0
   reload: 0
   interact: 0
+  aim: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
