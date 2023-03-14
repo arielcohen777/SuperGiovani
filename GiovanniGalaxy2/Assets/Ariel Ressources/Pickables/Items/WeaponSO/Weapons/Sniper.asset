@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acf5a3b0b4638124e87cf2925e7ff9b3, type: 3}
+  m_Name: Sniper
+  m_EditorClassIdentifier: 
+  itemName: Sniper
+  price: 40
+  prefab: {fileID: 7219596146933246673, guid: 61a614313dccb7b46b9f2b443c77ac81, type: 3}
+  type: 0
+  wepType: 0
+  maxAmmo: 100
+  ogMaxAmmo: 100
+  currentAmmo: 4
+  magSize: 4
+  damage: 100
+  rateOfFire: 90
+  range: 300
+  nextFire: 0
+  gunshot: {fileID: 0}

@@ -17,6 +17,7 @@ namespace StarterAssets
 		public bool changeWep;
 		public bool reload;
 		public bool interact;
+		public bool aim;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -70,9 +71,12 @@ namespace StarterAssets
 		}
 
 #endif
+		public void OnAim(InputValue value)
+        {
+			AimInput(value.isPressed);
+        }
 
-
-		public void InteractValue(bool newInteractState)
+        public void InteractValue(bool newInteractState)
         {
 			interact = newInteractState;
         }
@@ -112,6 +116,11 @@ namespace StarterAssets
 		{
 			reload = isPressed;
 		}
+
+		public void AimInput(bool isPressed)
+        {
+			aim = isPressed;
+        }
 
 		private void OnApplicationFocus(bool hasFocus)
 		{

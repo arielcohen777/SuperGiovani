@@ -5,17 +5,28 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Weapon", menuName = "WeaponSO/Weapon")]
 
 public class WeaponSO : ItemSO
-{
+{ 
+    [Header("Weapon Type")]
+    public WeaponType wepType;
     [Header("Ammo")]
     public int maxAmmo;
+    public int ogMaxAmmo;
     public int currentAmmo;
     public int magSize;
-    public int ogMaxAmmo;
     [Header("Stats")]
-    public float damage;
+    public int damage;
     public float rateOfFire;
     public float range;
     public float nextFire;
     [Header("Game Objects")]
     public AudioSource gunshot;
+}
+
+public enum WeaponType
+{
+    Sniper,
+    Uzi,
+    Bazooka,
+    Shotgun,
+    MachineGun
 }

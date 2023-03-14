@@ -34,13 +34,16 @@ public class AlertAllies : MonoBehaviour
     {
         if (enemyScript.playerSpotted && alliesInRange)
         {
+
             Collider[] numberAlliesInRange = Physics.OverlapSphere(transform.position, alertRange, whatIsAlly);
             foreach (Collider enemy in numberAlliesInRange)
             {
-                enemy.gameObject.GetComponent<Enemy2>().enemyAlerted = true;
+                Enemy2 enemy2 = enemy.gameObject.GetComponent<Enemy2>();
+                if (enemy2 != null) enemy2.enemyAlerted = true;
+
             }
-        }       
-      
+        }
+
     }
 
     private void OnDrawGizmosSelected()

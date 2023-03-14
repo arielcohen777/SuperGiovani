@@ -21,6 +21,7 @@ namespace StarterAssets
 		public float SprintSpeed = 6.0f;
 		[Tooltip("Rotation speed of the character")]
 		public float RotationSpeed = 1.0f;
+		public float RotationSpeedOg;
 		[Tooltip("Acceleration and deceleration")]
 		public float SpeedChangeRate = 10.0f;
 
@@ -75,6 +76,13 @@ namespace StarterAssets
 		[SerializeField] private bool _canChange;
 		[Tooltip("Shows if the player can shoot")]
 		[SerializeField] private bool _canShoot;
+		[Header("Sniper Score")]
+		[Tooltip("Shows if the player is aiming")]
+		[SerializeField] private bool _canAim;
+		[SerializeField] private GameObject sniperScopeUI;
+		[SerializeField] private GameObject heldGun;
+		[SerializeField] private GameObject sniperZoomCam;
+		[SerializeField] private float aimRotation;
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 		private PlayerInput _playerInput;
@@ -85,8 +93,6 @@ namespace StarterAssets
 
 		[SerializeField]public const float _threshold = 0f;
 		
-		
-
         private bool IsCurrentDeviceMouse
 		{
 			get
@@ -101,8 +107,11 @@ namespace StarterAssets
 
 		private void Start()
 		{
+			sniperScopeUI.SetActive(false);
 			_canChange = true;
 			_canShoot = true;
+			_canAim = true;
+			RotationSpeedOg = RotationSpeed;
 			gm = GameManager.Instance;
 			_mainCamera = gm.cam;
 			_controller = GetComponent<CharacterController>();
@@ -126,12 +135,15 @@ namespace StarterAssets
 				JumpAndGravity();
 				GroundedCheck();
                 Move();
+				InteractWithObject();
 				if (gm.inventory.Container.Count != 0)
 				{
 					Shoot();
 					Reload();
+					if (gm.playerStuff.activeWeapon.weapon.wepType.Equals(WeaponType.Sniper))
+						Aim();
 				}
-				InteractWithObject();
+				
             }
         }
 
@@ -175,11 +187,17 @@ namespace StarterAssets
 
 		private void Move()
 		{
-			//If they can change weapons while sprinting
-			_canChange = !_input.sprint;			
-			
-			// set target speed based on move speed, sprint speed and if sprint is pressed
-			float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+			//If they can change weapons nor aim while sprinting
+			_canChange = _canAim = !_input.sprint;
+
+			// set target speed based on move speed, sprint speed and if sprint is pressed and if aiming
+			float targetSpeed;
+			if (_input.aim)
+				targetSpeed = MoveSpeed;
+			else if (_input.sprint)
+				targetSpeed = SprintSpeed;
+			else 
+				targetSpeed = MoveSpeed;
 
 			// a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
@@ -214,8 +232,6 @@ namespace StarterAssets
 			// normalise input direction
 			Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
 
-
-
 			// note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
 			// if there is a move input rotate player when the player is moving
 			if (_input.move != Vector2.zero)
@@ -223,7 +239,7 @@ namespace StarterAssets
 				if (gm.inventory.Container.Count != 0)
 					gm.crosshair.SetActive(!_input.sprint);
 
-				if (_input.sprint)
+				if (_input.sprint && !_input.aim)
 					gm.shoot.anim.SetBool("Sprinting", true);
                 else
 					gm.shoot.anim.SetBool("Sprinting", false);
@@ -290,23 +306,51 @@ namespace StarterAssets
 			// When pressing shooting and not sprinting
 			if (_input.shoot && !_input.sprint && _canShoot)
 			{
+				_canAim = false;
 				_canChange = false;
 				//Rate of fire check
-				if (Time.time> gm.playerStuff.activeWeapon.weapon.nextFire){
+				if (Time.time > gm.playerStuff.activeWeapon.weapon.nextFire)
+				{
 					gm.playerStuff.activeWeapon.weapon.nextFire = Time.time + (gm.playerStuff.activeWeapon.weapon.rateOfFire / 100);
-					
-				//Shoot and Update weapon hud
-				gm.shoot.Shooting(_mainCamera);
-				gm.wepUi.UpdateWeaponHud();
+
+					//Shoot and Update weapon hud
+					gm.shoot.Shooting(_mainCamera);
+					gm.wepUi.UpdateWeaponHud();
 				}
 			}
+			else
+				_canAim = true;
 		}
 		
+		private void Aim()
+        {
+			if (!_canAim)
+				return;
+			if (_input.aim)
+			{
+				sniperScopeUI.SetActive(true);
+				heldGun.SetActive(false); 
+				RotationSpeed = aimRotation;
+				sniperZoomCam.SetActive(true);
+				gm.crosshair.SetActive(false);
+			}
+			else
+			{
+				sniperScopeUI.SetActive(false);
+				RotationSpeed = RotationSpeedOg;
+				heldGun.SetActive(true);
+				gm.cam.fieldOfView = 40;
+				sniperZoomCam.SetActive(false);
+				gm.crosshair.SetActive(true);
+			}
+		}
+
 		private void Reload()
         {
 			if (_input.reload)
 			{
 				_canShoot = false;
+				_canAim = false;
 				StartCoroutine(gm.shoot.CanReload());
 				Invoke("CanShootAgain", 0.8f);
 			}
@@ -315,12 +359,14 @@ namespace StarterAssets
 		private void CanShootAgain()
         {
 			_canShoot = true;
+			_canAim = true;
         }
 
 		private void ChangeWeapon()
 		{
 			if (_input.changeWep && _canChange)
 			{
+				_canAim = false;
 				_canShoot = false;
 				gm.changeGun.SwitchWeapons();
 				Invoke("CanShootAgain", 1f);
@@ -331,8 +377,11 @@ namespace StarterAssets
 		{
 			if (_input.interact)
 			{
+				_canAim = false;
 				gm.interact.BuyItem();
 			}
+			else
+				_canAim = true;
 		}
 
 		private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
