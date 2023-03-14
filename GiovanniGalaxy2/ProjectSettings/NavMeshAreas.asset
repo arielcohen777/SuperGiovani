@@ -12,7 +12,7 @@ NavMeshProjectSettings:
   - name: Jump
     cost: 2
   - name: Floor
-    cost: 50
+    cost: 26
   - name: Test
     cost: 25
   - name: 

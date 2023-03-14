@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.InputSystem.HID;
 using UnityEngine.UI;
 
 public class AlertAllies : MonoBehaviour
 {
-    private Enemy2 enemyScript;
+    private Enemy2_fixed enemyScript;
     private GameObject enemy;
     public LayerMask whatIsAlly;
     public float alertRange;
@@ -16,7 +17,7 @@ public class AlertAllies : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        enemyScript = GetComponent<Enemy2>();
+        enemyScript = GetComponent<Enemy2_fixed>();
         //enemy = gameObject;
     }
 
@@ -34,10 +35,13 @@ public class AlertAllies : MonoBehaviour
     {
         if (enemyScript.playerSpotted && alliesInRange)
         {
+             
             Collider[] numberAlliesInRange = Physics.OverlapSphere(transform.position, alertRange, whatIsAlly);
             foreach (Collider enemy in numberAlliesInRange)
             {
-                enemy.gameObject.GetComponent<Enemy2>().enemyAlerted = true;
+                Enemy2_fixed enemy2 = enemy.gameObject.GetComponent<Enemy2_fixed>();
+                if (enemy2 != null) enemy2.enemyAlerted = true;
+               
             }
         }       
       

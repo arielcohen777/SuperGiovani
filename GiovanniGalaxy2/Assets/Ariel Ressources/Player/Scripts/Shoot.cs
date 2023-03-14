@@ -55,16 +55,8 @@ public class Shoot : MonoBehaviour
 		if (Physics.Raycast(_mainCamera.transform.position, _mainCamera.transform.forward, out RaycastHit hit, wep.weapon.range))
 		{
 			Enemy1 enemy = hit.collider.GetComponentInParent<Enemy1>();
-			Enemy2 enemy2 = hit.collider.GetComponentInParent<Enemy2>();
-			//Making sure it's an enemy
-			//Enemy2 target = hit.transform.GetComponent<Enemy2>();
-			//if (target != null)
-			//{
-			//	target.IsHit((int)wep.weapon.damage);
-			//}
-
-			//Debug.Log(hit.transform.gameObject.tag);
-			//if (hit.transform.CompareTag("Enemy") || hit.transform.CompareTag("Dummie"))
+            Enemy2_fixed enemy2 = hit.collider.GetComponentInParent<Enemy2_fixed>();
+			 
 			if (hit.transform.CompareTag("Enemy"))
 			{
 
@@ -73,7 +65,8 @@ public class Shoot : MonoBehaviour
 
 				GameObject impactGO = Instantiate(blood, hit.point, Quaternion.LookRotation(hit.normal));
 				impactGO.GetComponent<ParticleSystem>().Play();
-			}
+                Destroy(impactGO, 1f);//this was missing 
+            }
 			else if (!hit.transform.CompareTag("Coin"))
 			{
 				GameObject impactGO = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
