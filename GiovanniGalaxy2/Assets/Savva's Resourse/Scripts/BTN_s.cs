@@ -36,6 +36,7 @@ public class BTN_s : MonoBehaviour
     }
     public void LoadGame()
     {
-        SceneManager.LoadScene(1);
+        Debug.Log("loading game");
+
     }
 }
