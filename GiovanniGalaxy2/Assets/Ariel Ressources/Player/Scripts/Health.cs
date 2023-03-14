@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Health : MonoBehaviour
@@ -17,7 +18,9 @@ public class Health : MonoBehaviour
     //--------------------s
     private FlashScreen flashScreen;
     public GameObject DeathPanel;
-    
+    public float delayTime = 5f;
+    public string sceneName = "Main Menu";
+
 
     // Start is called before the first frame update
     void Start()
@@ -80,10 +83,16 @@ public class Health : MonoBehaviour
             armor = maxArmor;
         gm.barUi.ArmorSlider();
     }
-
+    private void LoadScene()
+    {
+        SceneManager.LoadScene(sceneName);
+    }
     public void Death()
     {
         //-------------------s
         DeathPanel.SetActive(true);
+        Invoke("LoadScene", delayTime);
+
+
     }
 }

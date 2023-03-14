@@ -28,18 +28,6 @@ public class PauseMenuScript : MonoBehaviour
                 PauseGame();
             }
         }
-
-        //until the button/ curoser is fixed
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-           SceneManager.LoadScene(1);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Q  ))
-        {
-            Application.Quit();
-        }
     }
 
     public void PauseGame()
