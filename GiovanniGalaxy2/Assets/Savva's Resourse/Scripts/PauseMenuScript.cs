@@ -70,7 +70,8 @@ public class PauseMenuScript : MonoBehaviour
 
     public void Resume()
     {
-        Debug.Log("Resuming Game");
+        Debug.Log("Resume");
+        ResumeGame();
     }
 
     public void Settings()

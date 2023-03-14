@@ -5,16 +5,37 @@ using UnityEngine.SceneManagement;
 
 public class BTN_s : MonoBehaviour
 {
-    public void LoadGame()
+
+
+    public void KeyPress()
     {
- 
-        SceneManager.LoadScene(1);
-        Debug.Log("Resume Game");
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+        
+            Debug.Log("Restart");
+            //SceneManager.LoadScene(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+       
+            Debug.Log("Quit");
+            // Application.Quit();
+        }
+    }
+    public void Restart()
+    {
+        //SceneManager.LoadScene(1);
+        Debug.Log("Restart");
     }
 
     public void Quit()
     {
-
-        Application.Quit();
+        Debug.Log("Quit");
+        //Application.Quit();
+    }
+    public void LoadGame()
+    {
+        SceneManager.LoadScene(1);
     }
 }

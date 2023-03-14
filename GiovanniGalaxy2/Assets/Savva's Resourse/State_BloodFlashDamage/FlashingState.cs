@@ -10,6 +10,7 @@ public class FlashingState : IFlashScreenState
     private readonly Color originalColor;
     private readonly Color flashColor;
     private float startTime;
+    public bool isFlashing;
 
     public FlashingState(FlashScreen flashScreen, float duration)
     {
@@ -26,6 +27,7 @@ public class FlashingState : IFlashScreenState
 
     public void UpdateState()
     {
+      
         // Check if the duration has passed
         if (Time.time >= startTime + duration)
         {
@@ -43,6 +45,7 @@ public class FlashingState : IFlashScreenState
         {
             flashScreen.GetComponent<Image>().color = originalColor;
         }
+
     }
 }
 

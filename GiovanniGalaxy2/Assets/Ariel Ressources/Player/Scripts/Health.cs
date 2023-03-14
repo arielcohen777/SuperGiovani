@@ -17,6 +17,7 @@ public class Health : MonoBehaviour
     //--------------------s
     private FlashScreen flashScreen;
     public GameObject DeathPanel;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -26,15 +27,24 @@ public class Health : MonoBehaviour
         health = maxHealth;
         armor = maxArmor;
     }
+    public void Update()
+    {
+        //diabled for now because of armor problem with flash screen UI
+       /* if(armor > 0 || health > 50)
+        {
+            flashScreen.StopFlashing();
+        }else flashScreen.FlashRed(0.1f);*/
+       
+    }
 
     public void IsHit(float damage)
     {
-        //If the damage done is less than the amount of armor, reduce armor
+      
         if (damage <= armor)
         {
             armor -= damage;
             //-----------------------s
-            flashScreen.FlashRed(0.2f);
+            
         }
             
         //If not, reduce damage to how much damage done to armor, set
@@ -43,10 +53,7 @@ public class Health : MonoBehaviour
         {
             damage -= armor;
             armor = 0;
-            health -= damage;
-
-            //Flash the screen red------------s
-            flashScreen.FlashRed(0.2f);
+            health -= damage;        
         }
 
         //Update health and armor sliders

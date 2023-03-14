@@ -21,4 +21,6 @@ public class IdleState : IFlashScreenState
     {
         // Do nothing
     }
+
+
 }
