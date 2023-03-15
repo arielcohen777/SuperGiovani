@@ -69,7 +69,7 @@ public class Shoot : MonoBehaviour
 				if (hit.transform.CompareTag("Enemy"))
 				{
 					Enemy1 enemy = hit.collider.GetComponentInParent<Enemy1>();
-					Enemy2 enemy2 = hit.collider.GetComponentInParent<Enemy2>();
+					Enemy2_fixed enemy2 = hit.collider.GetComponentInParent<Enemy2_fixed>();
 
 					if (enemy != null) enemy.IsHit(wep.weapon.damage);
 					else enemy2.IsHit(wep.weapon.damage);

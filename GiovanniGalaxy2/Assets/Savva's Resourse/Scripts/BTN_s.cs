@@ -37,6 +37,11 @@ public class BTN_s : MonoBehaviour
     public void LoadGame()
     {
         Debug.Log("loading game");
-
+        SceneManager.LoadScene("Level01");
     }
+    
+    public void Test() {
+        Debug.Log("Test DeathBtn"); 
+    }
+    
 }

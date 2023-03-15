@@ -309,8 +309,10 @@ namespace StarterAssets
 
 		private void Shoot()
         {
-			// When pressing shooting and not sprinting
-			if (_input.shoot && !_input.sprint && _canShoot)
+			if (PauseMenuScript.isPaused)
+				return; 
+				// When pressing shooting and not sprinting
+				if (_input.shoot && !_input.sprint && _canShoot)
 			{
 				_canAim = false;
 				_canChange = false;
