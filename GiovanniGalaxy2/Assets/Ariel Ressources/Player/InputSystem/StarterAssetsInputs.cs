@@ -18,6 +18,7 @@ namespace StarterAssets
 		public bool reload;
 		public bool interact;
 		public bool aim;
+		public bool die;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -70,6 +71,11 @@ namespace StarterAssets
 			InteractValue(value.isPressed);
 		}
 
+		public void OnDie(InputValue value)
+        {
+			DieValue(value.isPressed);
+        }
+
 #endif
 		public void OnAim(InputValue value)
         {
@@ -81,6 +87,10 @@ namespace StarterAssets
 			interact = newInteractState;
         }
 
+		public void DieValue(bool newDieValue)
+		{
+			die = newDieValue;
+		}
 
 		public void MoveInput(Vector2 newMoveDirection)
 		{

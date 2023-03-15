@@ -64,8 +64,8 @@ public class Projectile : MonoBehaviour
 
             if (hit.GetComponentInParent<Enemy1>() != null)
                 hit.GetComponentInParent<Enemy1>().IsHit(100);
-            else
-                hit.GetComponentInParent<Enemy2>().IsHit(100);
+            else 
+                hit.GetComponentInParent<Enemy2_fixed>().IsHit(100);
         }
 
     }

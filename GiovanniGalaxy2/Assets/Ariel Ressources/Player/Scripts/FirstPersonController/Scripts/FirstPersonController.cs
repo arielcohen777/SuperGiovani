@@ -130,9 +130,9 @@ namespace StarterAssets
 
 		private void Update()
 		{
-
 			if (gm.player.GetComponent<Health>().isAlive)
 			{
+				KillPlayer();
 				JumpAndGravity();
 				GroundedCheck();
                 Move();
@@ -146,6 +146,12 @@ namespace StarterAssets
 				}
 				
             }
+        }
+
+        private void KillPlayer()
+        {
+			if (_input.die)
+				gm.playerHealth.IsHit(600);
         }
 
         private void LateUpdate()
