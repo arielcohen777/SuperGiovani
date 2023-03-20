@@ -28,6 +28,7 @@ public class EnemySpawner : MonoBehaviour
         yield return new WaitForSeconds(2);
         isSpawning =false;
     }
+    
     public void EnemyDestroyed()
     {
         enemyCtr--;

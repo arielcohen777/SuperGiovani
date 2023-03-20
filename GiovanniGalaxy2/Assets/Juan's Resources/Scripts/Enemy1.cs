@@ -163,6 +163,7 @@ public class Enemy1 : MonoBehaviour
             anim.SetTrigger("isDead");
             explosionEffect.Play();
             GetComponentInChildren<CoinSpawn>().SpawnCoin();
+            gm.enemySpawner.EnemyDestroyed();
             Destroy(enemy, 0.1f);
             gm.enemySpawner.EnemyDestroyed();
         }

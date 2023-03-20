@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements.Experimental;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
@@ -14,27 +15,48 @@ public class Health : MonoBehaviour
     public float armor;
 
     private GameManager gm;
+    //--------------------s
+    private FlashScreen flashScreen;
+    public GameObject DeathPanel;
+    public float delayTime = 5f;
+    public string sceneName = "Main Menu";
+
 
     // Start is called before the first frame update
     void Start()
     {
         gm = GameManager.Instance;
+        flashScreen = FindObjectOfType<FlashScreen>();
         health = maxHealth;
         armor = maxArmor;
+    }
+    public void Update()
+    {
+        //diabled for now because of armor problem with flash screen UI
+       /* if(armor > 0 || health > 50)
+        {
+            flashScreen.StopFlashing();
+        }else flashScreen.FlashRed(0.1f);*/
+       
     }
 
     public void IsHit(float damage)
     {
-        //If the damage done is less than the amount of armor, reduce armor
+      
         if (damage <= armor)
+        {
             armor -= damage;
+            //-----------------------s
+            
+        }
+            
         //If not, reduce damage to how much damage done to armor, set
         //armor to 0 and lower health by remaining damage
         else
         {
             damage -= armor;
             armor = 0;
-            health -= damage;
+            health -= damage;        
         }
 
         //Update health and armor sliders
@@ -42,7 +64,7 @@ public class Health : MonoBehaviour
         gm.barUi.HealthSlider();
 
         //Set isAlive to false if no more health.
-        if (isAlive = health > 0)
+        if (!(isAlive = health >0))
             Death();
     }
 
@@ -61,10 +83,16 @@ public class Health : MonoBehaviour
             armor = maxArmor;
         gm.barUi.ArmorSlider();
     }
-
+    private void LoadScene()
+    {
+        SceneManager.LoadScene(sceneName);
+    }
     public void Death()
     {
-        // code for what happens when player dies
-        
+        //-------------------
+        //gm.playerStuff.coins = 0;
+        gm.inventory.Container.Clear();
+        DeathPanel.SetActive(true);
+        Invoke("LoadScene", delayTime);
     }
 }

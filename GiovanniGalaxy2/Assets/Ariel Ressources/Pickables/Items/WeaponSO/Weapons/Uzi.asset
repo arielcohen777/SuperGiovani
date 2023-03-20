@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acf5a3b0b4638124e87cf2925e7ff9b3, type: 3}
+  m_Name: Uzi
+  m_EditorClassIdentifier: 
+  itemName: Grim Brand
+  price: 30
+  prefab: {fileID: 1409847431567078516, guid: c8489c9e5d750554fbb9401020c6bb2f, type: 3}
+  type: 0
+  wepType: 1
+  maxAmmo: 500
+  ogMaxAmmo: 500
+  currentAmmo: 35
+  magSize: 35
+  damage: 10
+  rateOfFire: 3
+  range: 20
+  nextFire: 0
+  gunshot: {fileID: 0}
