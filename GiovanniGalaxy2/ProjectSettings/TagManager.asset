@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Weapon
+  - CinemachineTarget
+  - Armor
+  - Health
+  - Muzzle
+  - HealthUIBar
+  - SecondCamera
+  - BulletSpawn
+  - ArmorUIBar
+  - LevelPart
+  - Enemy
+  - Enemy1
+  - Ground
+  - Wall
+  - Coin
+  - Enemy2
+  - wall
+  - Portal
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Ground
+  - Interactable
+  - Player
+  - Obstacle
+  - Enemy
+  - Coin
+  - Shell
+  - Battery
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
