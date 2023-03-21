@@ -17,6 +17,8 @@ namespace StarterAssets
 		public bool changeWep;
 		public bool reload;
 		public bool interact;
+		public bool aim;
+		public bool die;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -69,14 +71,26 @@ namespace StarterAssets
 			InteractValue(value.isPressed);
 		}
 
+		public void OnDie(InputValue value)
+        {
+			DieValue(value.isPressed);
+        }
+
 #endif
+		public void OnAim(InputValue value)
+        {
+			AimInput(value.isPressed);
+        }
 
-
-		public void InteractValue(bool newInteractState)
+        public void InteractValue(bool newInteractState)
         {
 			interact = newInteractState;
         }
 
+		public void DieValue(bool newDieValue)
+		{
+			die = newDieValue;
+		}
 
 		public void MoveInput(Vector2 newMoveDirection)
 		{
@@ -112,6 +126,11 @@ namespace StarterAssets
 		{
 			reload = isPressed;
 		}
+
+		public void AimInput(bool isPressed)
+        {
+			aim = isPressed;
+        }
 
 		private void OnApplicationFocus(bool hasFocus)
 		{

@@ -36,7 +36,7 @@ public class FighterMovement : MonoBehaviour
         }
 
         transform.Translate((waypoints[i].position - shipTransform.position).normalized * moveSpeed * Time.deltaTime);
-        print((waypoints[i].position - shipTransform.position).magnitude);
+        //print((waypoints[i].position - shipTransform.position).magnitude);
     }
 
     

@@ -25,31 +25,31 @@ public class AlertAllies : MonoBehaviour
     void FixedUpdate()
     {
         alliesInRange = Physics.CheckSphere(transform.position, alertRange, whatIsAlly);
-    
+
         AlertArea();
 
-         
+
     }
 
     public void AlertArea()
     {
         if (enemyScript.playerSpotted && alliesInRange)
         {
-             
+
             Collider[] numberAlliesInRange = Physics.OverlapSphere(transform.position, alertRange, whatIsAlly);
             foreach (Collider enemy in numberAlliesInRange)
             {
                 Enemy2_fixed enemy2 = enemy.gameObject.GetComponent<Enemy2_fixed>();
                 if (enemy2 != null) enemy2.enemyAlerted = true;
-               
+
             }
-        }       
-      
+        }
+
     }
 
     private void OnDrawGizmosSelected()
     {
-       if (!alliesInRange)
+        if (!alliesInRange)
         {
             Gizmos.color = Color.magenta;
             Gizmos.DrawWireSphere(transform.position, alertRange);
@@ -58,7 +58,7 @@ public class AlertAllies : MonoBehaviour
         {
             Gizmos.color = Color.white;
             Gizmos.DrawWireSphere(transform.position, alertRange);
-        }        
+        }
 
     }
 }

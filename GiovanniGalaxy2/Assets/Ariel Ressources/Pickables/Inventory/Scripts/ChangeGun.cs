@@ -24,13 +24,28 @@ public class ChangeGun : MonoBehaviour
             StartCoroutine(CanChangeAgain());
         }
     }
-
-    public void UpdateGunMesh()
+    
+    //Updates the mesh
+    /*public void UpdateGunMesh()
     {
         gm.shoot.anim.SetBool("Switch", false);
         currentWeapon = gm.playerStuff.activeWeapon.weapon.prefab;
         GetComponent<MeshFilter>().sharedMesh = currentWeapon.GetComponent<MeshFilter>().sharedMesh;
-        GetComponent<Renderer>().sharedMaterial = currentWeapon.GetComponent<Renderer>().sharedMaterial;    }
+        GetComponent<Renderer>().sharedMaterial = currentWeapon.GetComponent<Renderer>().sharedMaterial;    
+    }*/
+
+    //Adds weapon as a child
+    public void UpdateGunMesh()
+    {
+        gm.shoot.anim.SetBool("Switch", false);
+        currentWeapon = gm.playerStuff.activeWeapon.weapon.prefab;
+
+        if (transform.childCount > 0)
+            Object.Destroy(gameObject.transform.GetChild(0).gameObject);
+
+        GameObject newGun = Instantiate(currentWeapon, gameObject.transform);
+        newGun.transform.parent = gameObject.transform;
+    }
 
     IEnumerator CanChangeAgain()
     {

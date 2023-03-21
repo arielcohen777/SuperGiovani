@@ -27,6 +27,7 @@ public class ShellSpawn : MonoBehaviour
         spawn = gameObject;
         enemy = GetComponentInParent<Enemy1>();
         damage = 100f;
+        
     }
 
     // Update is called once per frame

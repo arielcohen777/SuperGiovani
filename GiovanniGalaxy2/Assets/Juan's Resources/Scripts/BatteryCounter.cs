@@ -13,7 +13,7 @@ public class BatteryCounter : MonoBehaviour
     public List<Battery> items = new List<Battery>();
 
     public int batteryCtr = 0;
-    public float timeValue = 0;   
+    public float timeValue = 0;
     public string mssgText = "";
 
     public bool increasedTime;
@@ -26,6 +26,7 @@ public class BatteryCounter : MonoBehaviour
         timerText.gameObject.SetActive(false);
         RefreshUI();
         gm = GameManager.Instance;
+
     }
     private void Update()
     {
@@ -33,7 +34,7 @@ public class BatteryCounter : MonoBehaviour
 
         if (timeValue > 0)
         {
-            if ((batteryCtr == 1 || gm.Portal.BatteriesAdded == 1)  && !increasedTime)
+            if ((batteryCtr == 1 || gm.Portal.BatteriesAdded == 1) && !increasedTime)
             {
                 timeValue = timeValue * 2;
                 increasedTime = true;
@@ -46,7 +47,7 @@ public class BatteryCounter : MonoBehaviour
 
             isCharging = true;
             timerText.gameObject.SetActive(true);
-            timeValue -= Time.deltaTime;           
+            timeValue -= Time.deltaTime;
         }
         else
         {
@@ -69,7 +70,7 @@ public class BatteryCounter : MonoBehaviour
     public void Remove(Battery item)
     {
         items.Remove(item);
-        batteryCtr--;
+        //batteryCtr--;
         RefreshUI();
     }
 
