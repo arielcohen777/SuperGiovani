@@ -89,10 +89,10 @@ public class Health : MonoBehaviour
     }
     public void Death()
     {
-        //-------------------s
+        //-------------------
+        //gm.playerStuff.coins = 0;
+        gm.inventory.Container.Clear();
         DeathPanel.SetActive(true);
         Invoke("LoadScene", delayTime);
-
-
     }
 }

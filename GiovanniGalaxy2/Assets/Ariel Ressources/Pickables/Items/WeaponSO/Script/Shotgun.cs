@@ -37,7 +37,7 @@ public class Shotgun : MonoBehaviour
                 if (hit.transform.CompareTag("Enemy"))
                 {
                     if (hit.collider.GetComponentInParent<Enemy1>() != null) hit.collider.GetComponentInParent<Enemy1>().IsHit(wep.weapon.damage);
-                    else hit.collider.GetComponentInParent<Enemy2>().IsHit(wep.weapon.damage);
+                    else hit.collider.GetComponentInParent<Enemy2_fixed>().IsHit(wep.weapon.damage);
                 }
                 else if (!hit.transform.CompareTag("Coin"))
                 {

@@ -130,9 +130,9 @@ namespace StarterAssets
 
 		private void Update()
 		{
-
 			if (gm.player.GetComponent<Health>().isAlive)
 			{
+				KillPlayer();
 				JumpAndGravity();
 				GroundedCheck();
                 Move();
@@ -146,6 +146,12 @@ namespace StarterAssets
 				}
 				
             }
+        }
+
+        private void KillPlayer()
+        {
+			if (_input.die)
+				gm.playerHealth.IsHit(600);
         }
 
         private void LateUpdate()
@@ -187,9 +193,7 @@ namespace StarterAssets
 				}
 			}
 				
-			}
-		
-		
+		}
 
 		private void Move()
 		{
@@ -253,6 +257,9 @@ namespace StarterAssets
 				// move
 				inputDirection = transform.right * _input.move.x + transform.forward * _input.move.y;
 			}
+			else
+				gm.shoot.anim.SetBool("Sprinting", false);
+
 
 			// move the player
 			_controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
@@ -309,8 +316,10 @@ namespace StarterAssets
 
 		private void Shoot()
         {
-			// When pressing shooting and not sprinting
-			if (_input.shoot && !_input.sprint && _canShoot)
+			if (PauseMenuScript.isPaused)
+				return; 
+				// When pressing shooting and not sprinting
+				if (_input.shoot && !_input.sprint && _canShoot)
 			{
 				_canAim = false;
 				_canChange = false;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.InputSystem.HID;
 using UnityEngine.UI;
 
 public class AlertAllies : MonoBehaviour
@@ -24,10 +25,10 @@ public class AlertAllies : MonoBehaviour
     void FixedUpdate()
     {
         alliesInRange = Physics.CheckSphere(transform.position, alertRange, whatIsAlly);
-    
+
         AlertArea();
 
-         
+
     }
 
     public void AlertArea()
@@ -48,7 +49,7 @@ public class AlertAllies : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-       if (!alliesInRange)
+        if (!alliesInRange)
         {
             Gizmos.color = Color.magenta;
             Gizmos.DrawWireSphere(transform.position, alertRange);
@@ -57,7 +58,7 @@ public class AlertAllies : MonoBehaviour
         {
             Gizmos.color = Color.white;
             Gizmos.DrawWireSphere(transform.position, alertRange);
-        }        
+        }
 
     }
 }

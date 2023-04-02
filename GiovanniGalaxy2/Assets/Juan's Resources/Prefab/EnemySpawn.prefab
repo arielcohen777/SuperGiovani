@@ -106,7 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2890234876681482287}
-  - component: {fileID: 2890234876681482286}
+  - component: {fileID: 7471769930895918764}
   m_Layer: 0
   m_Name: EnemySpawn
   m_TagString: Untagged
@@ -131,7 +131,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2890234876681482286
+--- !u!114 &7471769930895918764
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,19 +140,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2890234876681482284}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6701165d63296b4e8309e15269a0743, type: 3}
+  m_Script: {fileID: 11500000, guid: 4895e851fc3e38a45af032a81925d641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy:
-  - {fileID: 1388554951585785685, guid: 33f2652ff2a91d1409af98fa0ff14a1e, type: 3}
-  - {fileID: 6286622324600212324, guid: 1314da50e5e7fb2448f22c92da5dcaad, type: 3}
-  - {fileID: 6286622324600212324, guid: 1314da50e5e7fb2448f22c92da5dcaad, type: 3}
-  spawnPoint:
-  - {fileID: 2890234877623785080}
-  - {fileID: 2890234877056666214}
-  - {fileID: 2890234876435726571}
+  enemy: []
+  spawnPoint: []
   enemyCtr: 0
-  maxEnemy: 10
+  maxEnemy: 0
 --- !u!1 &2890234877056666215
 GameObject:
   m_ObjectHideFlags: 0

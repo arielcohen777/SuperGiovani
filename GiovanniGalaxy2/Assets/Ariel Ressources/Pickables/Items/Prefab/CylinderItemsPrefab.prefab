@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 8979382899229146615}
   - component: {fileID: 5012565472828953564}
   - component: {fileID: 663303345891827263}
-  - component: {fileID: 635553852}
   m_Layer: 7
   m_Name: CylinderItemsPrefab
   m_TagString: Untagged
@@ -141,25 +140,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   rotation: {x: 0, y: 40, z: 0}
---- !u!95 &635553852
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3522383435526113869}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: fa0a723e3534aca47bcf60641f2f3a8d, type: 3}
-  m_Controller: {fileID: 9100000, guid: 4719684e4a69faf49af7390e8e360928, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &6603996184089754810
 PrefabInstance:
   m_ObjectHideFlags: 0
