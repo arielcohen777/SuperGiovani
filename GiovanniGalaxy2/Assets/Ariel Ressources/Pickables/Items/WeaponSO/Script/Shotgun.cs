@@ -9,6 +9,8 @@ public class Shotgun : MonoBehaviour
 
     static GameManager gm;
 
+    bool haveKilled;
+
     private void Start()
     {
         gm = GameManager.Instance;
@@ -32,23 +34,23 @@ public class Shotgun : MonoBehaviour
                                 out RaycastHit hit,
                                 wep.weapon.range))
             {
-                Debug.Log("Shotgun");
-                Debug.DrawLine(cam.transform.position, hit.point, Color.red, 1f);
-                if (hit.transform.CompareTag("Enemy"))
+                if (hit.transform.CompareTag("Enemy") && !haveKilled)
                 {
-                    if (hit.collider.GetComponentInParent<Enemy1>() != null) hit.collider.GetComponentInParent<Enemy1>().IsHit(wep.weapon.damage);
-                    else hit.collider.GetComponentInParent<Enemy2_fixed>().IsHit(wep.weapon.damage);
+                    haveKilled = true;
+                    if (hit.collider.GetComponentInParent<Enemy1>() != null)
+                        hit.collider.GetComponentInParent<Enemy1>().IsHit(wep.weapon.damage);
+                    else
+                        hit.collider.GetComponentInParent<Enemy2_fixed>().IsHit(wep.weapon.damage);
+                    break;
                 }
+
                 else if (!hit.transform.CompareTag("Coin"))
                 {
                     GameObject impactGO = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
-                    Destroy(impactGO, 1f);
+                    Destroy(impactGO, 5f);
                 }
             }
-            else
-            {
-                Debug.DrawLine(cam.transform.position, cam.transform.position + direction * wep.weapon.range, Color.green, 1f);
-            }
         }
+        haveKilled = false;
     }
 }

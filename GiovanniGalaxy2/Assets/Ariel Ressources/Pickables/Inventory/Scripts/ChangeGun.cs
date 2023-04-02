@@ -6,6 +6,8 @@ public class ChangeGun : MonoBehaviour
 {
     GameManager gm;
     GameObject currentWeapon;
+    public GameObject gunshotSound;
+
     bool canChange = true;
     void Start()
     {
@@ -18,21 +20,19 @@ public class ChangeGun : MonoBehaviour
         {
             canChange = false;
             gm.playerStuff.activeWeapon = gm.inventory.GetNextWeapon();
+            
+            if (gm.playerStuff.activeWeapon.gunshot != null) {
+                gm.cam.GetComponent<AudioSource>().clip = gm.playerStuff.activeWeapon.gunshot.GetComponent<AudioSource>().clip;
+                gm.cam.GetComponent<AudioSource>().clip.LoadAudioData();
+            }
+
             gm.wepUi.UpdateWeaponHud();
             gm.shoot.anim.SetBool("Switch", true);
             Invoke("UpdateGunMesh", 0.30f);
             StartCoroutine(CanChangeAgain());
         }
     }
-    
-    //Updates the mesh
-    /*public void UpdateGunMesh()
-    {
-        gm.shoot.anim.SetBool("Switch", false);
-        currentWeapon = gm.playerStuff.activeWeapon.weapon.prefab;
-        GetComponent<MeshFilter>().sharedMesh = currentWeapon.GetComponent<MeshFilter>().sharedMesh;
-        GetComponent<Renderer>().sharedMaterial = currentWeapon.GetComponent<Renderer>().sharedMaterial;    
-    }*/
+
 
     //Adds weapon as a child
     public void UpdateGunMesh()
@@ -45,6 +45,13 @@ public class ChangeGun : MonoBehaviour
 
         GameObject newGun = Instantiate(currentWeapon, gameObject.transform);
         newGun.transform.parent = gameObject.transform;
+        
+        if (gm.playerStuff.activeWeapon.gunshot != null)
+        {
+            gm.cam.GetComponent<AudioSource>().clip = gm.playerStuff.activeWeapon.gunshot.GetComponent<AudioSource>().clip;
+            gm.cam.GetComponent<AudioSource>().clip.LoadAudioData();
+        }
+
     }
 
     IEnumerator CanChangeAgain()

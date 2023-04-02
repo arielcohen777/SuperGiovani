@@ -11,7 +11,6 @@ public class EnemySpawner : MonoBehaviour
     public int maxEnemy;
     private bool isSpawning;
  
- 
     // Update is called once per frame
     void Update()
     {
@@ -20,6 +19,7 @@ public class EnemySpawner : MonoBehaviour
             StartCoroutine(SpawnEnemies());
         }        
     }
+
     private IEnumerator SpawnEnemies()
     {
         isSpawning = true;

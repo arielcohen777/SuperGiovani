@@ -12,6 +12,8 @@ public class Shoot : MonoBehaviour
 	public Animator anim;
 	[SerializeField] private GameObject impact;
 	[SerializeField] private GameObject blood;
+	
+	public AudioSource gunshot;
 
 	public LayerMask collisionLayerMask;
 
@@ -23,6 +25,7 @@ public class Shoot : MonoBehaviour
 	private void Start()
 	{
 		gm = GameManager.Instance;
+		gunshot = gm.cam.GetComponent<AudioSource>();
 		anim = GetComponent<Animator>();
 		sg = GetComponent<Shotgun>();
 	}
@@ -39,6 +42,13 @@ public class Shoot : MonoBehaviour
 			return;
 		}
 
+		//Gunshot Sound
+		if (gm.playerStuff.activeWeapon.gunshot != null)
+		{
+			Debug.Log("Play sound");
+			gunshot.Play();
+		}
+
 		//Gun anim
 		anim.SetTrigger("Shooting");
 
@@ -48,19 +58,17 @@ public class Shoot : MonoBehaviour
 		holdFlash.transform.parent = muzzleSpawn.transform;
 		Destroy(holdFlash, 0.05f);
 
-		//Weapon Sound (NEEDS TESTING)
-		if (wep.weapon.gunshot != null)
-			wep.weapon.gunshot.Play();
-
 		//Shotgun
 		if (wep.weapon.wepType.Equals(WeaponType.Shotgun))
 		{
 			sg.Shoot(_mainCamera, impact);
 		}
+		// Bazooka
 		else if (wep.weapon.wepType.Equals(WeaponType.Bazooka))
         {
 			Instantiate(rocket, muzzleSpawn.transform.position, muzzleSpawn.transform.rotation);
 		}
+		// Rest of guns  (UZI, Rifle, Sniper)
 		else
 		{
 			//Aiming
@@ -84,14 +92,9 @@ public class Shoot : MonoBehaviour
 					GameObject impactGO = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
 					Destroy(impactGO, 1f);
 				}
-
-				//Weapon Sound (NEEDS TESTING)
-				if (wep.weapon.gunshot != null)
-				{
-					wep.weapon.gunshot.Play();
-				}
 			}
 		}
+
 		//Reduce ammo
 		wep.currentAmmo--;
 	}

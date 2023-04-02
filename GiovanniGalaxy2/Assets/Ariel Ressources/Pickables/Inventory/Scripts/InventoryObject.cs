@@ -20,6 +20,8 @@ public class InventoryObject : ScriptableObject
         {
             Container.Add(toAdd);
             gm.playerStuff.activeWeapon = GetNextWeapon();
+            if (toAdd.gunshot != null)
+                gm.shoot.gunshot.clip = toAdd.gunshot.GetComponent<AudioSource>().clip;
             gm.wepUi.UpdateWeaponHud();
             gm.changeGun.UpdateGunMesh();
             return;
@@ -36,13 +38,10 @@ public class InventoryObject : ScriptableObject
         }
 
         if(!hasItem)
-        {
             Container.Add(toAdd);
-        }
         else
-        {
             Container[idx].AddAmmo(wep);
-        }
+        
     }
 
     public WeaponSlot GetNextWeapon()
@@ -57,6 +56,8 @@ public class InventoryObject : ScriptableObject
         if (nextIdx == Container.Count)
             nextIdx = 0;
         return Container[nextIdx];
+
+        
     }
 
 }
@@ -71,6 +72,7 @@ public class WeaponSlot
     public float nextFire;
     public string weaponName;
     public int ogMaxAmmo;
+    public GameObject gunshot;
 
     public WeaponSlot(WeaponSO wep)
     {
@@ -80,20 +82,11 @@ public class WeaponSlot
         maxAmmo = wep.maxAmmo;
         ogMaxAmmo = wep.maxAmmo;
         weaponName = wep.name;
+        gunshot = wep.gunshot;
     }
 
     public void AddAmmo(WeaponSO wep)
     {
         maxAmmo = wep.ogMaxAmmo;
-    }
-
-    public bool Equals(WeaponSO obj)
-    {
-        return obj.name.Equals(weaponName);
-    }
-
-    public override int GetHashCode()
-    {
-        return base.GetHashCode();
     }
 }
