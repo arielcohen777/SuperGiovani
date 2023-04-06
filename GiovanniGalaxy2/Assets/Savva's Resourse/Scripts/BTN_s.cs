@@ -36,8 +36,9 @@ public class BTN_s : MonoBehaviour
     }
     public void LoadGame()
     {
-        Debug.Log("loading game");
-        SceneManager.LoadScene("Level01");
+        // Load the next scene
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex + 1);
     }
     
     public void Test() {
