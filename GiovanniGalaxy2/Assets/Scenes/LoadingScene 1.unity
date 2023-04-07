@@ -297,8 +297,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "NEED TO BUY WEAPONS ? \nLOOK OUT FOR THESE WEAPON BOXES, THE PACKED WITH
-    LOADS  OF FUN!"
+  m_text: "NEED TO BUY WEAPONS ? \nLOOK OUT FOR THESE WEAPON BOXES, THERE PACKED
+    WITH LOADS  OF FUN!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d01f30c50246ef64181a1048a4afa91b, type: 2}
   m_sharedMaterial: {fileID: -798265351765809639, guid: d01f30c50246ef64181a1048a4afa91b, type: 2}
@@ -1333,7 +1333,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &438886912
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3769,7 +3769,7 @@ GameObject:
   - component: {fileID: 1344169285}
   - component: {fileID: 1344169289}
   m_Layer: 5
-  m_Name: Loading Screen UI
+  m_Name: Loading Screen UI(s)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
