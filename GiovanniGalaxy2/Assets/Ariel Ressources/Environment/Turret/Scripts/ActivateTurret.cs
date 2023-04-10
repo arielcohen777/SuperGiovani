@@ -9,12 +9,9 @@ public class ActivateTurret : MonoBehaviour
     public TurretBehaviour tb;
 
     public GameObject interact;
-
-
-
-    bool canBeActivated = true;
-
+ 
     GameManager gm;
+
     private void Start()
     {
         gm = GameManager.Instance;

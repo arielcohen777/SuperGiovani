@@ -1345,6 +1345,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 5996316022739286187, guid: c3cb45c96be59aa4baf079febcd05e38, type: 3}
+      propertyPath: cooldownExtra
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7140636483592660173, guid: c3cb45c96be59aa4baf079febcd05e38, type: 3}
       propertyPath: m_RootOrder
       value: 15
