@@ -59,12 +59,12 @@ public class Shoot : MonoBehaviour
 		Destroy(holdFlash, 0.05f);
 
 		//Shotgun
-		if (wep.weapon.wepType.Equals(WeaponType.Shotgun))
+		if (wep.weaponSo.wepType.Equals(WeaponType.Shotgun))
 		{
 			sg.Shoot(_mainCamera, impact);
 		}
 		// Bazooka
-		else if (wep.weapon.wepType.Equals(WeaponType.Bazooka))
+		else if (wep.weaponSo.wepType.Equals(WeaponType.Bazooka))
         {
 			Instantiate(rocket, muzzleSpawn.transform.position, muzzleSpawn.transform.rotation);
 		}
@@ -72,15 +72,15 @@ public class Shoot : MonoBehaviour
 		else
 		{
 			//Aiming
-			if (Physics.Raycast(_mainCamera.transform.position, _mainCamera.transform.forward, out RaycastHit hit, wep.weapon.range))
+			if (Physics.Raycast(_mainCamera.transform.position, _mainCamera.transform.forward, out RaycastHit hit, wep.range))
 			{
 				if (hit.transform.CompareTag("Enemy"))
 				{
 					Enemy1 enemy = hit.collider.GetComponentInParent<Enemy1>();
 					Enemy2_fixed enemy2 = hit.collider.GetComponentInParent<Enemy2_fixed>();
 
-					if (enemy != null) enemy.IsHit(wep.weapon.damage);
-					else enemy2.IsHit(wep.weapon.damage);
+					if (enemy != null) enemy.IsHit(wep.damage);
+					else enemy2.IsHit(wep.damage);
 
 					GameObject impactGO = Instantiate(blood, hit.point, Quaternion.LookRotation(hit.normal));
 					impactGO.GetComponent<ParticleSystem>().Play();

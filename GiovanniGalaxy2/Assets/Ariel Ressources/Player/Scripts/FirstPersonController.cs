@@ -91,6 +91,8 @@ namespace StarterAssets
 		private StarterAssetsInputs _input;
 		private Camera _mainCamera;
 
+		[SerializeField] private MeshFilter gunMesh;
+
 		[SerializeField]public const float _threshold = 0f;
 		
         private bool IsCurrentDeviceMouse
@@ -139,7 +141,7 @@ namespace StarterAssets
 				InteractWithObject();
 				if (gm.inventory.Container.Count != 0)
 				{
-					if (gm.playerStuff.activeWeapon.weapon.wepType.Equals(WeaponType.Sniper))
+					if (gm.playerStuff.activeWeapon.wepType.Equals(WeaponType.Sniper))
 						Aim();
 					Shoot();
 					Reload();
@@ -205,8 +207,11 @@ namespace StarterAssets
 			if (_input.aim)
 				targetSpeed = MoveSpeed;
 			else if (_input.sprint)
+			{
+				_canAim = false;
 				targetSpeed = SprintSpeed;
-			else 
+			}
+			else
 				targetSpeed = MoveSpeed;
 
 			// a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
@@ -325,16 +330,14 @@ namespace StarterAssets
 			// When pressing shooting and not sprinting
 			if (!_input.sprint && _canShoot)
 			{
-
 				_canAim = false;
 				_canChange = false;
 				//Rate of fire check
-				if (Time.time > gm.playerStuff.activeWeapon.weapon.nextFire)
+				if (Time.time > gm.playerStuff.activeWeapon.nextFire)
 				{
-					gm.playerStuff.activeWeapon.weapon.nextFire = Time.time + (gm.playerStuff.activeWeapon.weapon.rateOfFire / 100);
+					gm.playerStuff.activeWeapon.nextFire = Time.time + (gm.playerStuff.activeWeapon.rateOfFire / 100);
 
 					//Shoot and Update weapon hud
-					Debug.Log("Shooting");
 					gm.shoot.Shooting(_mainCamera);
 					gm.wepUi.UpdateWeaponHud();
 				}
@@ -347,10 +350,10 @@ namespace StarterAssets
         {
 			if (!_canAim)
 				return;
-			if (_input.aim)
+			else if (_input.aim)
 			{
 				sniperScopeUI.SetActive(true);
-				heldGun.SetActive(false); 
+				heldGun.GetComponent<MeshFilter>().mesh = null; 
 				RotationSpeed = aimRotation;
 				sniperZoomCam.SetActive(true);
 				gm.crosshair.SetActive(false);
@@ -359,7 +362,7 @@ namespace StarterAssets
 			{
 				sniperScopeUI.SetActive(false);
 				RotationSpeed = RotationSpeedOg;
-				heldGun.SetActive(true);
+				heldGun.GetComponent<MeshFilter>().mesh = gm.playerStuff.activeWeapon.weaponSo.prefab.GetComponentInChildren<MeshFilter>().mesh;
 				gm.cam.fieldOfView = 40;
 				sniperZoomCam.SetActive(false);
 				gm.crosshair.SetActive(true);

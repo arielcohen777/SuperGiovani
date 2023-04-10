@@ -38,7 +38,7 @@ public class ChangeGun : MonoBehaviour
     public void UpdateGunMesh()
     {
         gm.shoot.anim.SetBool("Switch", false);
-        currentWeapon = gm.playerStuff.activeWeapon.weapon.prefab;
+        currentWeapon = gm.playerStuff.activeWeapon.weaponSo.prefab;
 
         if (transform.childCount > 0)
             Object.Destroy(gameObject.transform.GetChild(0).gameObject);

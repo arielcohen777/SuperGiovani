@@ -32,15 +32,15 @@ public class Shotgun : MonoBehaviour
             if (Physics.Raycast(cam.transform.position, 
                                 direction,
                                 out RaycastHit hit,
-                                wep.weapon.range))
+                                wep.weaponSo.range))
             {
                 if (hit.transform.CompareTag("Enemy") && !haveKilled)
                 {
                     haveKilled = true;
                     if (hit.collider.GetComponentInParent<Enemy1>() != null)
-                        hit.collider.GetComponentInParent<Enemy1>().IsHit(wep.weapon.damage);
+                        hit.collider.GetComponentInParent<Enemy1>().IsHit(wep.damage);
                     else
-                        hit.collider.GetComponentInParent<Enemy2_fixed>().IsHit(wep.weapon.damage);
+                        hit.collider.GetComponentInParent<Enemy2_fixed>().IsHit(wep.damage);
                     break;
                 }
 

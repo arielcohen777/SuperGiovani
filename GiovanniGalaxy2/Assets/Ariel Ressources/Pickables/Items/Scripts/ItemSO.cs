@@ -13,6 +13,8 @@ public abstract class ItemSO : ScriptableObject
     public GameObject prefab;
     [Header("Type of item")]
     public ItemType type;
+    [Header("ONLY FOR LEVER! Time of use")]
+    public int timer;
 }
 
 public enum ItemType
@@ -20,5 +22,6 @@ public enum ItemType
     Weapon,
     Armor,
     Health,
-    Battery
+    Battery,
+    Lever
 }

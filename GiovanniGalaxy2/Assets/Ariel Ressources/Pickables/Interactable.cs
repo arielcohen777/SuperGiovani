@@ -16,12 +16,20 @@ public class Interactable : MonoBehaviour
 
     private void Update()
     {
-        toReturn = "Buy " + item.itemName
-            + "\n" + item.price + " Coins";
+        if (item.type != ItemType.Lever)
+            toReturn = "Buy " + item.itemName
+                + "\n" + item.price + " Coins";
+        else
+            toReturn = "Pay " + item.itemName +
+                "\n" + item.price + " Coins" +
+                "\nThis will last for " + item.timer + " seconds";
+
         if (gm.playerStuff.coins < item.price)
             toReturn += "\nNot Enough Coins!";
+
+
     }
-    
+
     public string ShowPrompt()
     {
         return toReturn;
