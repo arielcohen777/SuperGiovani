@@ -34,7 +34,7 @@ public class Shoot : MonoBehaviour
 	{
 		WeaponSlot wep = gm.playerStuff.activeWeapon;
 
-		//If out of ammo, reload
+		// If out of ammo, reload
 		if (wep.currentAmmo <= 0)
 		{
 			wep.currentAmmo = 0;
@@ -42,23 +42,22 @@ public class Shoot : MonoBehaviour
 			return;
 		}
 
-		//Gunshot Sound
+		// Gunshot Sound
 		if (gm.playerStuff.activeWeapon.gunshot != null)
 		{
-			Debug.Log("Play sound");
 			gunshot.Play();
 		}
 
-		//Gun anim
+		// Shooting Anim
 		anim.SetTrigger("Shooting");
 
-		//Muzzle Flash
+		// Muzzle Flash
 		int randomNumberForMuzzelFlash = Random.Range(0, flashList.Length);
 		holdFlash = Instantiate(flashList[randomNumberForMuzzelFlash], muzzleSpawn.transform.position /*- muzzelPosition*/, muzzleSpawn.transform.rotation * Quaternion.Euler(0, 0, 90));
 		holdFlash.transform.parent = muzzleSpawn.transform;
 		Destroy(holdFlash, 0.05f);
 
-		//Shotgun
+		// Shotgun
 		if (wep.weaponSo.wepType.Equals(WeaponType.Shotgun))
 		{
 			sg.Shoot(_mainCamera, impact);

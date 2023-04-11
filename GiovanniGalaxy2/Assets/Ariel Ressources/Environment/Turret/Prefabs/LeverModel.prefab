@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2376047871326637750}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LeverModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 1469308502875464259}
   - component: {fileID: 8619557962037550013}
   - component: {fileID: 9058098662364292504}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pCylinder7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 7373960478292353463}
   - component: {fileID: 2562998987567083123}
   - component: {fileID: 7245635821656254856}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pSphere2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

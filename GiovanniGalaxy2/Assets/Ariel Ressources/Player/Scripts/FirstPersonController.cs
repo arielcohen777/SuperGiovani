@@ -350,10 +350,12 @@ namespace StarterAssets
         {
 			if (!_canAim)
 				return;
-			else if (_input.aim)
+
+			if (_input.aim)
 			{
+				Debug.Log("Aiming");
 				sniperScopeUI.SetActive(true);
-				heldGun.GetComponent<MeshFilter>().mesh = null; 
+				heldGun.GetComponent<MeshFilter>().sharedMesh = null; 
 				RotationSpeed = aimRotation;
 				sniperZoomCam.SetActive(true);
 				gm.crosshair.SetActive(false);
@@ -362,7 +364,7 @@ namespace StarterAssets
 			{
 				sniperScopeUI.SetActive(false);
 				RotationSpeed = RotationSpeedOg;
-				heldGun.GetComponent<MeshFilter>().mesh = gm.playerStuff.activeWeapon.weaponSo.prefab.GetComponentInChildren<MeshFilter>().mesh;
+				heldGun.GetComponent<MeshFilter>().sharedMesh = gm.playerStuff.activeWeapon.weaponSo.prefab.GetComponentInChildren<MeshFilter>().sharedMesh;
 				gm.cam.fieldOfView = 40;
 				sniperZoomCam.SetActive(false);
 				gm.crosshair.SetActive(true);

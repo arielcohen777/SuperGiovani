@@ -47,10 +47,13 @@ public class Interact : MonoBehaviour
 
     public void BuyItem()
     {
+        if (objectToBuy == null)
+            return;
+
         if (boughtWait)
             return;
 
-        if (!objectToBuy.GetComponent<Item>().item.type.Equals(ItemType.Lever))
+        if (!objectToBuy.CompareTag("Lever"))
         {
             if (objectToBuy != null) gm.pInv.BuyItem(objectToBuy);
         }

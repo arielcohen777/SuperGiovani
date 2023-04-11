@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6801394930538903318}
   m_Layer: 7
   m_Name: Lever
-  m_TagString: Untagged
+  m_TagString: Lever
   m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 8062033847290221264}
   m_Layer: 7
   m_Name: Interact
-  m_TagString: Untagged
+  m_TagString: Lever
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -80,6 +80,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lever: {fileID: 11400000, guid: 06308663d3576574a8cde01ff5003d14, type: 2}
   tb: {fileID: 0}
+  interact: {fileID: 0}
 --- !u!114 &89827581233921929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,6 +192,30 @@ PrefabInstance:
     - target: {fileID: 3148784009372177420, guid: df8ad2accce544243a13486e7d54ef8f, type: 3}
       propertyPath: m_Name
       value: Lever_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 3148784009372177420, guid: df8ad2accce544243a13486e7d54ef8f, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3148784009372177420, guid: df8ad2accce544243a13486e7d54ef8f, type: 3}
+      propertyPath: m_TagString
+      value: Lever
+      objectReference: {fileID: 0}
+    - target: {fileID: 4504683288693336447, guid: df8ad2accce544243a13486e7d54ef8f, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4504683288693336447, guid: df8ad2accce544243a13486e7d54ef8f, type: 3}
+      propertyPath: m_TagString
+      value: Lever
+      objectReference: {fileID: 0}
+    - target: {fileID: 8802551649960646186, guid: df8ad2accce544243a13486e7d54ef8f, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8802551649960646186, guid: df8ad2accce544243a13486e7d54ef8f, type: 3}
+      propertyPath: m_TagString
+      value: Lever
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df8ad2accce544243a13486e7d54ef8f, type: 3}

@@ -23,6 +23,7 @@ TagManager:
   - wall
   - Portal
   - Turret
+  - Lever
   layers:
   - Default
   - TransparentFX
