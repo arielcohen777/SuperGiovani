@@ -70,7 +70,7 @@ public class BatteryCounter : MonoBehaviour
     public void Remove(Battery item)
     {
         items.Remove(item);
-        //batteryCtr--;
+        batteryCtr--;
         RefreshUI();
     }
 

@@ -59,6 +59,7 @@ public class ShellSpawn : MonoBehaviour
         
         if (!hitJump && other.CompareTag("Player"))
         {
+           enemy.hitByJump = true;
            enemy.IsHit(damage);
            hitJump = true;
         }      

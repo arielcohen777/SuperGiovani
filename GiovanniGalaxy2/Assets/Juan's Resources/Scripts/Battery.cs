@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
-using UnityEditor.VersionControl;
+//using UnityEditor.VersionControl;
 using UnityEngine;
 using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
 using UnityEngine.InputSystem;
+using UnityEngine.AI;
 
 public class Battery : MonoBehaviour
 {
@@ -19,9 +20,13 @@ public class Battery : MonoBehaviour
 
     private bool inactive, charging, charged, inTrigger;
 
-    // Start is called before the first frame update
+    private AudioSource audioSource;
+    public AudioClip[] batterySFX;
+
+    //Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponentInParent<AudioSource>();
         battery = gameObject;
         gm = GameManager.Instance;
         state = State.inactive;
@@ -53,7 +58,7 @@ public class Battery : MonoBehaviour
         charging,
         charged
     }
-    private void Inactive()
+    public void Inactive()
     {
         if (!inactive)
         {
@@ -70,10 +75,13 @@ public class Battery : MonoBehaviour
         }
           
     }
-    private void Charging()
+    public void Charging()
     {         
         if (!charging)
         {
+            audioSource.clip = batterySFX[0];
+            audioSource.Play();
+
             gm.batteryCounter.timeValue = 20;
             children[0].GetComponentInChildren<MeshRenderer>().material = batteryColor[1];            
             chargeEffect.Play();
@@ -85,10 +93,14 @@ public class Battery : MonoBehaviour
             state = State.charged;
         }   
     }
-    private void Charged()
+    public void Charged()
     {
         if (!charged)
-        {          
+        {
+            audioSource.clip = batterySFX[1];
+            audioSource.loop = false;
+            audioSource.Play();
+
             children[0].GetComponentInChildren<MeshRenderer>().material = batteryColor[2];            
             chargeEffect.gameObject.SetActive(false);
             gm.batteryCounter.mssgText = "Ready!";
@@ -125,7 +137,10 @@ public class Battery : MonoBehaviour
 
         if (other.CompareTag("Player") && state == State.charged)
         {
-            gm.batteryCounter.Add(this);
+            audioSource.clip = batterySFX[2];             
+            audioSource.Play();
+
+            gm.batteryCounter.Add(this);          
             battery.SetActive(false);
             gm.batteryCounter.mssgText = "";
         }
