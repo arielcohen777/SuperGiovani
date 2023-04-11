@@ -13,6 +13,8 @@ public class Interact : MonoBehaviour
 
     public TMP_Text uiText;
 
+    private bool boughtWait;
+
     Interactable interactable;
     // Start is called before the first frame update
     void Start()
@@ -27,6 +29,7 @@ public class Interact : MonoBehaviour
         Ray ray = new Ray(cam.transform.position, cam.transform.forward);
         Debug.DrawRay(ray.origin, ray.direction * distance);
         RaycastHit hit;
+        
         if (Physics.Raycast(ray, out hit, distance, mask))
         {
             if ((interactable = hit.collider.GetComponent<Interactable>()) != null)
@@ -44,6 +47,25 @@ public class Interact : MonoBehaviour
 
     public void BuyItem()
     {
-        if (objectToBuy != null) gm.pInv.BuyItem(objectToBuy);
+        if (boughtWait)
+            return;
+
+        if (!objectToBuy.GetComponent<Item>().item.type.Equals(ItemType.Lever))
+        {
+            if (objectToBuy != null) gm.pInv.BuyItem(objectToBuy);
+        }
+        else
+        {
+            objectToBuy.GetComponent<ActivateTurret>().Activate();
+        }
+        StartCoroutine(BoughtWait());
+
+    }
+
+    IEnumerator BoughtWait()
+    {
+        boughtWait = true;
+        yield return new WaitForSeconds(0.3f);
+        boughtWait = false;
     }
 }

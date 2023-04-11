@@ -26,7 +26,6 @@ public class BatteryCounter : MonoBehaviour
         timerText.gameObject.SetActive(false);
         RefreshUI();
         gm = GameManager.Instance;
-
     }
     private void Update()
     {

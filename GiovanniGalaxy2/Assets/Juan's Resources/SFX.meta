@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:GiovanniGalaxy2/Assets/Juan's Resources/SFX.meta
 guid: 230cc6f839c96cd4a923a97cb8ac3815
 folderAsset: yes
 DefaultImporter:
+========
+guid: 92c87ee944c128945b47809f4d25b2be
+PrefabImporter:
+>>>>>>>> origin/ArielThirdSprint:GiovanniGalaxy2/Assets/Ariel Ressources/Environment/Turret/Prefabs/Lever.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

@@ -26,3 +26,6 @@ MonoBehaviour:
   range: 200
   nextFire: 0
   gunshot: {fileID: 0}
+  recoilX: 0
+  recoilY: 0
+  recoilZ: 0

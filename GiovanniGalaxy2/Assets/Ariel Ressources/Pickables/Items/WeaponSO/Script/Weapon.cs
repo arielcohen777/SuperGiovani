@@ -8,7 +8,7 @@ public class Weapon : MonoBehaviour
     private void Start()
     {
         weapon.currentAmmo = weapon.magSize;
-        weapon.ogMaxAmmo = weapon.maxAmmo;  
+        weapon.ogMaxAmmo = weapon.maxAmmo;
     }
 
     private void OnApplicationQuit()

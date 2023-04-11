@@ -33,30 +33,24 @@ public class Health : MonoBehaviour
     public void Update()
     {
         //diabled for now because of armor problem with flash screen UI
-       /* if(armor > 0 || health > 50)
-        {
-            flashScreen.StopFlashing();
-        }else flashScreen.FlashRed(0.1f);*/
-       
+        /* if(armor > 0 || health > 50)
+         {
+             flashScreen.StopFlashing();
+         }else flashScreen.FlashRed(0.1f);*/
+
     }
 
     public void IsHit(float damage)
     {
-      
         if (damage <= armor)
         {
             armor -= damage;
-            //-----------------------s
-            
         }
-            
-        //If not, reduce damage to how much damage done to armor, set
-        //armor to 0 and lower health by remaining damage
         else
         {
             damage -= armor;
             armor = 0;
-            health -= damage;        
+            health -= damage;
         }
 
         //Update health and armor sliders
@@ -64,7 +58,7 @@ public class Health : MonoBehaviour
         gm.barUi.HealthSlider();
 
         //Set isAlive to false if no more health.
-        if (!(isAlive = health >0))
+        if (!(isAlive = health > 0))
             Death();
     }
 

@@ -54,7 +54,7 @@ public class Enemy1 : MonoBehaviour
         explosionEffect = GetComponentInChildren<ParticleSystem>();
         gm = GameManager.Instance;
         //player = gm.player.transform;
-        player = gm.player.transform; 
+        player = gm.player.transform;
         anim = GetComponent<Animator>();
         navMesh = GetComponent<NavMeshAgent>();
         health = maxHealth;

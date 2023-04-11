@@ -19,7 +19,11 @@ public class WeaponSO : ItemSO
     public float range;
     public float nextFire;
     [Header("Game Objects")]
-    public AudioSource gunshot;
+    public GameObject gunshot;
+    [Header("Recoil")]
+    public float recoilX;
+    public float recoilY;
+    public float recoilZ;
 }
 
 public enum WeaponType

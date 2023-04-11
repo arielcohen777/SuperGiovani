@@ -22,7 +22,7 @@ TagManager:
   - Enemy2
   - wall
   - Portal
-  - Dummie
+  - Turret
   layers:
   - Default
   - TransparentFX
@@ -41,7 +41,7 @@ TagManager:
   - Camera
   - GameManager
   - NoNavMesh
-  - Skybox
+  - 
   - 
   - 
   - 

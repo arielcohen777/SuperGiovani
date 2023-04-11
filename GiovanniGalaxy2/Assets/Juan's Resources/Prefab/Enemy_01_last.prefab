@@ -3106,6 +3106,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScifiTris 3 (collapse)
       objectReference: {fileID: 0}
+    - target: {fileID: 3940036432451144812, guid: 5d2bec7b5ea48464cb69686a2e0ba406, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 3940036432451144813, guid: 5d2bec7b5ea48464cb69686a2e0ba406, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1

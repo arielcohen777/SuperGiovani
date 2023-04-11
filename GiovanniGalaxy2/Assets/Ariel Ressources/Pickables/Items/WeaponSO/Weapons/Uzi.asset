@@ -22,7 +22,10 @@ MonoBehaviour:
   currentAmmo: 35
   magSize: 35
   damage: 10
-  rateOfFire: 3
+  rateOfFire: 6
   range: 20
   nextFire: 0
-  gunshot: {fileID: 0}
+  gunshot: {fileID: 4074527768957465622, guid: f5097bac69b92654db0ea16f20db8fbb, type: 3}
+  recoilX: 0
+  recoilY: 0
+  recoilZ: 0

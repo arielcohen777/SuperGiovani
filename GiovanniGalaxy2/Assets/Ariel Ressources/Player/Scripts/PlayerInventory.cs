@@ -54,7 +54,7 @@ public class PlayerInventory : MonoBehaviour
     {
         foreach(WeaponSlot w in gm.inventory.Container)
         {
-            w.weapon.nextFire = 0;
+            w.weaponSo.nextFire = 0;
         }
         inventory.Container.Clear();
         inventory.nextIdx = 0;

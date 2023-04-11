@@ -25,4 +25,7 @@ MonoBehaviour:
   rateOfFire: 90
   range: 300
   nextFire: 0
-  gunshot: {fileID: 0}
+  gunshot: {fileID: 4074527768957465622, guid: c58ec9b1b19ba7a41bb1279a0af3c0bc, type: 3}
+  recoilX: 0
+  recoilY: 0
+  recoilZ: 0

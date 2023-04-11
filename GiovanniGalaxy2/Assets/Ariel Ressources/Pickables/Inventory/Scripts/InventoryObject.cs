@@ -20,6 +20,8 @@ public class InventoryObject : ScriptableObject
         {
             Container.Add(toAdd);
             gm.playerStuff.activeWeapon = GetNextWeapon();
+            if (toAdd.gunshot != null)
+                gm.shoot.gunshot.clip = toAdd.gunshot.GetComponent<AudioSource>().clip;
             gm.wepUi.UpdateWeaponHud();
             gm.changeGun.UpdateGunMesh();
             return;
@@ -36,13 +38,10 @@ public class InventoryObject : ScriptableObject
         }
 
         if(!hasItem)
-        {
             Container.Add(toAdd);
-        }
         else
-        {
             Container[idx].AddAmmo(wep);
-        }
+        
     }
 
     public WeaponSlot GetNextWeapon()
@@ -57,6 +56,8 @@ public class InventoryObject : ScriptableObject
         if (nextIdx == Container.Count)
             nextIdx = 0;
         return Container[nextIdx];
+
+        
     }
 
 }
@@ -64,36 +65,36 @@ public class InventoryObject : ScriptableObject
 [System.Serializable]
 public class WeaponSlot
 {
-    public WeaponSO weapon;
+    public WeaponSO weaponSo;
+    public float damage;
+    public float range;
     public int currentAmmo;
     public int maxAmmo;
     public int magSize;
     public float nextFire;
     public string weaponName;
+    public float rateOfFire;
     public int ogMaxAmmo;
+    public GameObject gunshot;
+    public WeaponType wepType;
 
     public WeaponSlot(WeaponSO wep)
     {
-        weapon = wep;
+        weaponSo = wep;
         currentAmmo = wep.currentAmmo;
         magSize = wep.magSize;
         maxAmmo = wep.maxAmmo;
         ogMaxAmmo = wep.maxAmmo;
         weaponName = wep.name;
+        gunshot = wep.gunshot;
+        damage = wep.damage;
+        range = wep.range;
+        rateOfFire = wep.rateOfFire;
+        wepType = wep.wepType;
     }
 
     public void AddAmmo(WeaponSO wep)
     {
         maxAmmo = wep.ogMaxAmmo;
-    }
-
-    public bool Equals(WeaponSO obj)
-    {
-        return obj.name.Equals(weaponName);
-    }
-
-    public override int GetHashCode()
-    {
-        return base.GetHashCode();
     }
 }
