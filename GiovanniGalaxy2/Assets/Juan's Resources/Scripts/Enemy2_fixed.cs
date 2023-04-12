@@ -55,9 +55,6 @@ public class Enemy2_fixed : MonoBehaviour
     public const float maxHealth = 100;
     public float health;
 
-
-
-
     private GameObject enemy2;
     public bool isDead;
 
@@ -81,10 +78,19 @@ public class Enemy2_fixed : MonoBehaviour
 
     // states
     private State state;
+    
+    // audiosource
 
+    private AudioSource audioSource;
+    public AudioClip chargeShot;
+    public AudioClip explosion;
+    public AudioClip [] hit;
+    public AudioClip[] runAway;
+    public AudioClip[] chase;
 
     private void Start()
     {
+        audioSource = GetComponentInChildren<AudioSource>();
         explosionEffect = GetComponentInChildren<ParticleSystem>();
         gm = GameManager.Instance; 
         anim = GetComponent<Animator>();
@@ -168,8 +174,6 @@ public class Enemy2_fixed : MonoBehaviour
             StartCoroutine(Idle());
             walkPointSet = false;
         }
-
-      
     }
     private IEnumerator Idle()
     {
@@ -199,6 +203,13 @@ public class Enemy2_fixed : MonoBehaviour
    
     private void Chase()
     {
+        if (!audioSource.isPlaying)
+        {
+            audioSource.clip = chase[Random.Range(0, chase.Length)];
+            audioSource.volume = 1f;
+            audioSource.PlayDelayed(Random.Range(3f, 10f));
+        }
+
         anim.SetTrigger("chasing");
         enemy.speed = chasingSpeed;
         enemy.SetDestination(player.position);
@@ -228,8 +239,7 @@ public class Enemy2_fixed : MonoBehaviour
                 }
             }
             else
-            {
-               // Debug.DrawRay(transform.position, directionTarget * sightRange, Color.red);
+            {              
                 playerSpotted = false;
             }
         }
@@ -241,6 +251,8 @@ public class Enemy2_fixed : MonoBehaviour
 
     public void AttackAnimationEvent()
     {
+        audioSource.clip = chargeShot;
+        audioSource.Play();
         cloneProjectile = Instantiate(projectile, spawnPoint.transform.position, Quaternion.identity);
         Rigidbody rb = cloneProjectile.GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
@@ -252,12 +264,8 @@ public class Enemy2_fixed : MonoBehaviour
         if (!Physics.Raycast(transform.position, direction, distanceToTarget, whatIsObstruction))
         {
             enemy.SetDestination(transform.position);
-            anim.SetTrigger("attacking");
+            anim.SetTrigger("attacking");           
         }
-        //else
-        //{
-        //    Chase();
-        //}
 
         if (!playerInAttackRange){
             state = State.chase;
@@ -271,10 +279,19 @@ public class Enemy2_fixed : MonoBehaviour
     }
     private void RunAway()
     {
- 
+        
+
         if (runPointSet)
         {
-            isRunning = true;          
+            isRunning = true;
+            if (!audioSource.isPlaying)
+            {
+                audioSource.clip = runAway[Random.Range(0, runAway.Length)];
+                audioSource.volume = 0.4f;
+                audioSource.Play();
+            }
+            
+
             anim.SetTrigger("fleeing");
             enemy.speed = fleeingSpeed;
             //SmoothRotation(0.3f, 1, runTo);
@@ -325,7 +342,7 @@ public class Enemy2_fixed : MonoBehaviour
     private void CheckIsRunningAway()
     {
         if (isRunning)
-        {
+        {         
             distanceRunTo = transform.position - runTo;
            // print(distanceRunTo.magnitude);
             if (distanceRunTo.magnitude < 0.6f)
@@ -344,8 +361,15 @@ public class Enemy2_fixed : MonoBehaviour
             enemyAlerted = true;
         }
         health -= damage;
-        anim.SetTrigger("isHit");
-        anim.SetInteger("hitIndex", Random.Range(0, 2));
+        if(health > 0)
+        {
+            anim.SetTrigger("isHit");
+            anim.SetInteger("hitIndex", Random.Range(0, 2));
+            audioSource.clip = hit[Random.Range(0, hit.Length)];
+            audioSource.volume = 0.4f;
+            audioSource.Play();
+        }
+     
 
         if (health <= 0)
         {
@@ -358,6 +382,12 @@ public class Enemy2_fixed : MonoBehaviour
         {
             enemy.isStopped = true;
             isDead = true;
+
+            audioSource.clip = explosion;
+            audioSource.maxDistance = 50;
+            audioSource.volume = 1;
+            audioSource.Play();
+
             anim.SetBool("isDead", true);
             anim.SetInteger("deadIndex", Random.Range(0, 2));
             explosionEffect.Play();

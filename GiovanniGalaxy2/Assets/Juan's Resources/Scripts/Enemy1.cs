@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -25,6 +26,7 @@ public class Enemy1 : MonoBehaviour
     public const float maxHealth = 100;
     public float health;
     public int damage = 5;
+    public bool hitByJump = false;
 
     private GameObject enemy;
     public bool isDead;
@@ -33,13 +35,22 @@ public class Enemy1 : MonoBehaviour
     public Transform[] attackPoints;
     public float attackRange = 0.5f;
     public LayerMask playerLyr;
-
     private GameManager gm;
 
+    //audiosource
+    private AudioSource audioSource;
+    public AudioClip explosion;
+    public AudioClip killJump;
+    public AudioClip attack;
+    public AudioClip [] chase;
+    public AudioClip[] hit; 
+    
 
     // Start is called before the first frame update
     void Start()
     {
+       
+        audioSource = GetComponentInChildren<AudioSource>();
         explosionEffect = GetComponentInChildren<ParticleSystem>();
         gm = GameManager.Instance;
         //player = gm.player.transform;
@@ -70,8 +81,17 @@ public class Enemy1 : MonoBehaviour
 
         if (!playerReached)
         {
+
             anim.SetBool("isFollowing", true);
             navMesh.SetDestination(player.position);
+
+            if (!audioSource.isPlaying)
+            {
+                audioSource.clip = chase[Random.Range(0, chase.Length)];
+                audioSource.volume = 0.3f;
+                audioSource.maxDistance = 15f;
+                audioSource.PlayDelayed(Random.Range(3f, 10f));
+            }
         }
 
         else
@@ -111,16 +131,16 @@ public class Enemy1 : MonoBehaviour
 
         //Debug.Log("player is hit");
         //player.gameObject.GetComponent<Health>().IsHit(damage);
-
-
-
-        // codigo para hacerle dano al jugador 
-        // checar si esta en el area cuando lanza el golpe 
+            audioSource.clip = attack;
+            audioSource.volume = 0.5f;
+            audioSource.Play();
+        
     }
     private void Attack()
     {
         if (playerReached)
         {
+           
             //Debug.Log("is attacking works");
             //anim.SetBool("isAttacking", true);
             //transform.LookAt(player);
@@ -140,26 +160,52 @@ public class Enemy1 : MonoBehaviour
     public void IsHit(float damage)
     {
         health -= damage;
-        anim.SetTrigger("isHit");
+        if (health > 0)
+        {
+            anim.SetTrigger("isHit");
+            audioSource.clip = hit[Random.Range(0, hit.Length)];
+            audioSource.volume = 0.4f;             
+            audioSource.Play();
+        }     
 
         if (health <= 0)
         {
             health = 0;
             Death();
         }
+
     }
 
     private void Death()
     {
         if (!isDead)
         {
+            
             navMesh.isStopped = true;
-            isDead = true;
-            anim.SetTrigger("isDead");
+            audioSource.volume = 1f;
+
+            if (hitByJump)
+            {
+                audioSource.clip = killJump;
+                audioSource.Play();
+            }
+
+            else
+            {
+                audioSource.clip = explosion;
+                audioSource.maxDistance = 50;
+                audioSource.Play();
+            }
+
             explosionEffect.Play();
+
+            anim.SetTrigger("isDead");           
             GetComponentInChildren<CoinSpawn>().SpawnCoin();
             gm.enemySpawner.EnemyDestroyed();
+ 
             Destroy(enemy, 0.1f);
+
+            isDead = true;
         }
     }
 

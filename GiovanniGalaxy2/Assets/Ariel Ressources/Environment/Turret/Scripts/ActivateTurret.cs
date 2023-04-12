@@ -7,8 +7,6 @@ public class ActivateTurret : MonoBehaviour
     public LeverSO lever;
 
     public TurretBehaviour tb;
-
-    public GameObject interact;
  
     GameManager gm;
 

@@ -7,6 +7,8 @@ public class FighterMovement : MonoBehaviour
     public Transform [] waypoints;
     private Transform shipTransform;
     private int i  = 0;
+
+    private AudioSource audioSource;
     
     public float moveSpeed = 10f;   
 
@@ -14,6 +16,7 @@ public class FighterMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         shipTransform = transform;
     }
 
@@ -39,5 +42,11 @@ public class FighterMovement : MonoBehaviour
         //print((waypoints[i].position - shipTransform.position).magnitude);
     }
 
-    
+    private void OnTriggerEnter(Collider other)
+    {
+        audioSource.Play();
+    }
+
+
+
 }
