@@ -46,6 +46,7 @@ namespace StarterAssets
 		public float GroundedRadius = 0.5f;
 		[Tooltip("What layers the character uses as ground")]
 		public LayerMask GroundLayers;
+		public GameObject jumpSoundsGO;
 
 		[Header("Cinemachine")]
 		[Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
@@ -70,14 +71,14 @@ namespace StarterAssets
 		// Game Manager
 		private GameManager gm;
 
-		// weapons
+		// Weapons
 		[Header("Weapon Interactions")]
 		[Tooltip("Shows if the player can change weapons")]
 		[SerializeField] private bool _canChange;
 		[Tooltip("Shows if the player can shoot")]
 		[SerializeField] private bool _canShoot;
-		[Header("Sniper Score")]
-		[Tooltip("Shows if the player is aiming")]
+		[Header("Sniper Scope")]
+		[Tooltip("Shows if the player can aim down the scope of the sniper depending on the actions they are doing.")]
 		[SerializeField] private bool _canAim;
 		[SerializeField] private GameObject sniperScopeUI;
 		[SerializeField] private GameObject heldGun;
@@ -127,14 +128,11 @@ namespace StarterAssets
 			// reset our timeouts on start
 			_jumpTimeoutDelta = JumpTimeout;
 			_fallTimeoutDelta = FallTimeout;
-			
 		}
-
 		private void Update()
 		{
 			if (gm.player.GetComponent<Health>().isAlive)
 			{
-				KillPlayer();
 				JumpAndGravity();
 				GroundedCheck();
                 Move();
@@ -145,15 +143,8 @@ namespace StarterAssets
 						Aim();
 					Shoot();
 					Reload();
-					
 				}
             }
-        }
-
-        private void KillPlayer()
-        {
-			if (_input.die)
-				gm.playerHealth.IsHit(600);
         }
 
         private void LateUpdate()
@@ -289,6 +280,7 @@ namespace StarterAssets
 					// the square root of H * -2 * G = how much velocity needed to reach desired height
 					_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 					Grounded = false;
+					jumpSoundsGO.GetComponent<PlayerRandomSounds>().PlayRandomSound();
 				}
 
 				// jump timeout

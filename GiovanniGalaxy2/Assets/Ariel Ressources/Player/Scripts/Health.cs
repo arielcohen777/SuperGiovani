@@ -22,6 +22,8 @@ public class Health : MonoBehaviour
     public float delayTime = 5f;
     public string sceneName = "Main Menu";
 
+    public PlayerRandomSounds hurtSounds;
+
 
     // Start is called before the first frame update
     void Start()
@@ -38,14 +40,9 @@ public class Health : MonoBehaviour
 
     public void IsHit(float damage)
     {
-
+        //If more the amount of damage is less than armor, reduce armor
         if (damage <= armor)
-        {
             armor -= damage;
-            //-----------------------s
-
-        }
-
         //If not, reduce damage to how much damage done to armor, set
         //armor to 0 and lower health by remaining damage
         else
@@ -57,6 +54,9 @@ public class Health : MonoBehaviour
 
         // Trigger the red flash
         flashScreen.FlashRed(30f);
+
+        //Play a sound
+        hurtSounds.PlayRandomSound();
 
         //Update health and armor sliders
         gm.barUi.ArmorSlider();
@@ -82,10 +82,7 @@ public class Health : MonoBehaviour
             armor = maxArmor;
         gm.barUi.ArmorSlider();
     }
-    private void LoadScene()
-    {
-        SceneManager.LoadScene(sceneName);
-    }
+
     public void Death()
     {
         //-------------------
@@ -93,5 +90,10 @@ public class Health : MonoBehaviour
         gm.inventory.Container.Clear();
         DeathPanel.SetActive(true);
         Invoke("LoadScene", delayTime);
+    }
+
+    private void LoadScene()
+    {
+        SceneManager.LoadScene(sceneName);
     }
 }

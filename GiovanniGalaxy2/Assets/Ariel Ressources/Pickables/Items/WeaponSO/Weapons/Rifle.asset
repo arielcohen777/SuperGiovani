@@ -16,9 +16,10 @@ MonoBehaviour:
   price: 30
   prefab: {fileID: 4617221206048961677, guid: 9d9d3feeaa700d3409fd029f1ab3b073, type: 3}
   type: 0
+  timer: 0
   wepType: 4
-  maxAmmo: 50
-  ogMaxAmmo: 50
+  maxAmmo: 200
+  ogMaxAmmo: 200
   currentAmmo: 30
   magSize: 30
   damage: 30

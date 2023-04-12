@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3905069475176941445}
   m_Layer: 0
-  m_Name: Muzzel
+  m_Name: Muzzle
   m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -135,7 +135,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6179640115486450948}
   m_Layer: 0
-  m_Name: TurretAssembled
+  m_Name: TurretAssembly
   m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -16,4 +16,4 @@ MonoBehaviour:
   price: 50
   prefab: {fileID: 0}
   type: 4
-  timer: 20
+  timer: 30

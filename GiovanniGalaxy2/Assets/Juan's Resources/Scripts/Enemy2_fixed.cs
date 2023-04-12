@@ -279,8 +279,6 @@ public class Enemy2_fixed : MonoBehaviour
     }
     private void RunAway()
     {
-        
-
         if (runPointSet)
         {
             isRunning = true;
