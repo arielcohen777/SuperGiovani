@@ -80,6 +80,7 @@ public class Battery : MonoBehaviour
         if (!charging)
         {
             audioSource.clip = batterySFX[0];
+            audioSource.loop = true;
             audioSource.Play();
 
             gm.batteryCounter.timeValue = 20;

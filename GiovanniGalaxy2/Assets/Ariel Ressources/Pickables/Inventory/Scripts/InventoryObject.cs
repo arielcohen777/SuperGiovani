@@ -21,7 +21,7 @@ public class InventoryObject : ScriptableObject
             Container.Add(toAdd);
             gm.playerStuff.activeWeapon = GetNextWeapon();
             if (toAdd.gunshot != null)
-                gm.shoot.gunshot.clip = toAdd.gunshot.GetComponent<AudioSource>().clip;
+            gm.shoot.gunshot.clip = toAdd.gunshot.GetComponent<AudioSource>().clip;
             gm.wepUi.UpdateWeaponHud();
             gm.changeGun.UpdateGunMesh();
             return;

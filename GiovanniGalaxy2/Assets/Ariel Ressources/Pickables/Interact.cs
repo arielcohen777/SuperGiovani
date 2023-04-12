@@ -47,6 +47,10 @@ public class Interact : MonoBehaviour
 
     public void BuyItem()
     {
+        if(objectToBuy == null)
+        {
+            return;
+        }
         if (boughtWait)
             return;
 

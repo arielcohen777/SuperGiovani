@@ -154,7 +154,7 @@ public class Enemy2_fixed : MonoBehaviour
 
     private void Patrol()
     {
-        if (playerInSightRange && (enemyAlerted || playerSpotted))
+        if (playerInSightRange && (enemyAlerted || playerSpotted) || enemyAlerted)
         {
             state = State.chase;
         }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5943363800072619864}
   - component: {fileID: -8061540654657707237}
   - component: {fileID: 5877961643041925097}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,6 +236,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Instability (loop)
       objectReference: {fileID: 0}
+    - target: {fileID: 483918908983999528, guid: 2111d2eee3769bf45925d85467473212, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 483918908983999530, guid: 2111d2eee3769bf45925d85467473212, type: 3}
       propertyPath: InitialModule.startSizeZ.scalar
       value: 1
@@ -315,6 +319,10 @@ PrefabInstance:
     - target: {fileID: 483918908983999531, guid: 2111d2eee3769bf45925d85467473212, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 483918910038387716, guid: 2111d2eee3769bf45925d85467473212, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 483918910038387716, guid: 2111d2eee3769bf45925d85467473212, type: 3}
       propertyPath: m_IsActive
