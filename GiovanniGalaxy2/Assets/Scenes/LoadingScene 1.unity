@@ -896,14 +896,13 @@ GameObject:
   - component: {fileID: 213445196}
   - component: {fileID: 213445199}
   - component: {fileID: 213445198}
-  - component: {fileID: 213445197}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &213445196
 RectTransform:
   m_ObjectHideFlags: 0
@@ -924,21 +923,6 @@ RectTransform:
   m_AnchoredPosition: {x: 29, y: -397}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &213445197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 213445195}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f0a13a98d33b1b488364af9a6b439eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startDelay: 5
-  continueKey: 13
-  promptText: {fileID: 912016209}
 --- !u!114 &213445198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2564,6 +2548,7 @@ GameObject:
   - component: {fileID: 632112511}
   - component: {fileID: 632112510}
   - component: {fileID: 632112509}
+  - component: {fileID: 632112513}
   m_Layer: 5
   m_Name: Continue UI
   m_TagString: Untagged
@@ -2652,6 +2637,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &632112513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 632112508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f0a13a98d33b1b488364af9a6b439eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 5
+  panel: {fileID: 213445195}
 --- !u!1001 &636134157
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5522,7 +5521,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2579552003333631421, guid: d0f99b4c33546684ca8662fad1d81fb5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2579552003337448004, guid: d0f99b4c33546684ca8662fad1d81fb5, type: 3}
       propertyPath: m_AnchoredPosition.y
