@@ -7,40 +7,29 @@ using TMPro;
 
 public class BlinkingPrompt : MonoBehaviour
 {
-    public float startDelay = 5f; // The delay before the prompt appears
-    public KeyCode continueKey = KeyCode.Return; // The key to press to continue
+    public float delay = 5f;  // The delay before the panel appears
+    public GameObject panel; // The panel to activate
 
-    public TextMeshProUGUI promptText;
     private bool isActive = false;
 
     void Start()
     {
-        promptText = GetComponent<TextMeshProUGUI>();
-        promptText.alpha = 0f;
-        StartCoroutine(ActivatePrompt());
+        panel.SetActive(false);
+        Invoke("ActivatePanel", delay);
     }
 
     void Update()
     {
-        if (isActive && Input.GetKeyDown(continueKey))
+        if (isActive && Input.GetKeyDown(KeyCode.Return))
         {
-            int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-            SceneManager.LoadScene(nextSceneIndex);
+            int nextSceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex + 1;
+            UnityEngine.SceneManagement.SceneManager.LoadScene(nextSceneIndex);
         }
     }
-    IEnumerator ActivatePrompt()
+
+    void ActivatePanel()
     {
-        Debug.Log("ActivatePrompt coroutine started");
-
-        yield return new WaitForSeconds(startDelay);
-
         isActive = true;
-        promptText.alpha = 1f;
-        promptText.gameObject.SetActive(true);
-
-        while (isActive)
-        {
-            yield return null;
-        }
+        panel.SetActive(true);
     }
 }
