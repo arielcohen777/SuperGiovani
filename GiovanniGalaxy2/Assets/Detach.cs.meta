@@ -1,9 +1,9 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:GiovanniGalaxy2/Assets/Ariel Ressources/Environment/Turret/Scripts/ActivateTurret.cs.meta
-guid: fd13cd07e6d99274f9183d989602274c
-========
+<<<<<<<< HEAD:GiovanniGalaxy2/Assets/Detach.cs.meta
 guid: 41efe5faf61d0c94dbdd6b4457401428
->>>>>>>> Juan:GiovanniGalaxy2/Assets/Detach.cs.meta
+========
+guid: a7bcc1c52e6a7e94da4981c0e34c1d00
+>>>>>>>> origin/ArielThirdSprint:GiovanniGalaxy2/Assets/Ariel Ressources/Environment/Turret/Scripts/ActivateTurret.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

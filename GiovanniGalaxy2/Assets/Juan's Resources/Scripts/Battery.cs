@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
-using UnityEditor.VersionControl;
+//using UnityEditor.VersionControl;
 using UnityEngine;
 using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
 using UnityEngine.InputSystem;
@@ -80,6 +80,7 @@ public class Battery : MonoBehaviour
         if (!charging)
         {
             audioSource.clip = batterySFX[0];
+            audioSource.loop = true;
             audioSource.Play();
 
             gm.batteryCounter.timeValue = 20;

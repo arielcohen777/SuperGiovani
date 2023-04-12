@@ -251,7 +251,7 @@ MonoBehaviour:
   whatIsAlly:
     serializedVersion: 2
     m_Bits: 1024
-  alertRange: 35
+  alertRange: 80
   alliesInRange: 0
 --- !u!114 &1382625972096939205
 MonoBehaviour:
