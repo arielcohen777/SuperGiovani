@@ -4,24 +4,27 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Enemy
+  - Coin
+  - Lever
   - Weapon
   - CinemachineTarget
+  - Turret
+  - HealthUIBar
+  - ArmorUIBar
+  - Portal
+  - LevelPart
+  - Dummie
   - Armor
   - Health
+  - Wall
   - Muzzle
-  - HealthUIBar
   - SecondCamera
-  - BulletSpawn
-  - ArmorUIBar
-  - LevelPart
-  - Enemy
   - Enemy1
   - Ground
-  - Wall
-  - Coin
-  - Enemy2
   - wall
-  - Portal
+  - Enemy2
+  - BulletSpawn
   layers:
   - Default
   - TransparentFX
@@ -40,7 +43,7 @@ TagManager:
   - Camera
   - GameManager
   - NoNavMesh
-  - 
+  - PostProcessingLayer
   - 
   - 
   - 

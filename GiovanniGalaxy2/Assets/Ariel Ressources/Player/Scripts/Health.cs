@@ -15,56 +15,55 @@ public class Health : MonoBehaviour
     public float armor;
 
     private GameManager gm;
+    private FlashScreenPostProcessing flashScreen;
     //--------------------s
-    private FlashScreen flashScreen;
+
     public GameObject DeathPanel;
     public float delayTime = 5f;
     public string sceneName = "Main Menu";
+
+    public PlayerRandomSounds hurtSounds;
 
 
     // Start is called before the first frame update
     void Start()
     {
         gm = GameManager.Instance;
-        flashScreen = FindObjectOfType<FlashScreen>();
+        flashScreen = FindObjectOfType<FlashScreenPostProcessing>();
         health = maxHealth;
         armor = maxArmor;
     }
     public void Update()
     {
-        //diabled for now because of armor problem with flash screen UI
-       /* if(armor > 0 || health > 50)
-        {
-            flashScreen.StopFlashing();
-        }else flashScreen.FlashRed(0.1f);*/
-       
+
     }
 
     public void IsHit(float damage)
     {
-      
+        //If more the amount of damage is less than armor, reduce armor
         if (damage <= armor)
-        {
             armor -= damage;
-            //-----------------------s
-            
-        }
-            
         //If not, reduce damage to how much damage done to armor, set
         //armor to 0 and lower health by remaining damage
         else
         {
             damage -= armor;
             armor = 0;
-            health -= damage;        
+            health -= damage;
         }
+
+        // Trigger the red flash
+        flashScreen.FlashRed(30f);
+
+        //Play a sound
+        hurtSounds.PlayRandomSound();
 
         //Update health and armor sliders
         gm.barUi.ArmorSlider();
         gm.barUi.HealthSlider();
 
         //Set isAlive to false if no more health.
-        if (!(isAlive = health >0))
+        if (!(isAlive = health > 0))
             Death();
     }
 
@@ -83,10 +82,7 @@ public class Health : MonoBehaviour
             armor = maxArmor;
         gm.barUi.ArmorSlider();
     }
-    private void LoadScene()
-    {
-        SceneManager.LoadScene(sceneName);
-    }
+
     public void Death()
     {
         //-------------------
@@ -94,5 +90,10 @@ public class Health : MonoBehaviour
         gm.inventory.Container.Clear();
         DeathPanel.SetActive(true);
         Invoke("LoadScene", delayTime);
+    }
+
+    private void LoadScene()
+    {
+        SceneManager.LoadScene(sceneName);
     }
 }

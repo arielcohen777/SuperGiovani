@@ -16,13 +16,18 @@ MonoBehaviour:
   price: 30
   prefab: {fileID: 4617221206048961677, guid: 9d9d3feeaa700d3409fd029f1ab3b073, type: 3}
   type: 0
+  timer: 0
   wepType: 4
-  maxAmmo: 50
-  ogMaxAmmo: 50
+  maxAmmo: 200
+  ogMaxAmmo: 200
   currentAmmo: 30
   magSize: 30
-  damage: 25
+  damage: 30
   rateOfFire: 15
   range: 30
   nextFire: 0
-  gunshot: {fileID: 0}
+  gunshot: {fileID: 4074527768957465622, guid: 500e5f229eea1e44f9b845f6a9cbc33f, type: 3}
+  reload: {fileID: 1675306833945458271, guid: 0785b82a5d9843c4d8d8f18c6c594f62, type: 3}
+  recoilX: 0
+  recoilY: 0
+  recoilZ: 0

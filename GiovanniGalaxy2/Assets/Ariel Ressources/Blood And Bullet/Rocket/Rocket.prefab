@@ -128,8 +128,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.27
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.42
+  m_Center: {x: 0, y: 0, z: 0.45}
 --- !u!114 &4283836074694732643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,8 +143,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   power: 100
-  radius: 5
+  radius: 10
   lifespan: 5
+  f: 0.01
+  launchedSound: {fileID: 4074527768957465622, guid: 2afa424c6f1a8374ab23e3914ba63b5a, type: 3}
+  explosion: {fileID: 4074527768957465622, guid: 56721c8e5bfc6874c8958e10c3ee5f46, type: 3}
   smokeTrailPS: {fileID: 1533137119399529522}
   explosionPS: {fileID: 2312591318274358132, guid: 77da29788f3010e4396994ea52057980, type: 3}
 --- !u!54 &-4996145190821977140
@@ -162,7 +165,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 96
-  m_CollisionDetection: 1
+  m_CollisionDetection: 3
 --- !u!1001 &5599232335274223383
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -229,6 +232,10 @@ PrefabInstance:
     - target: {fileID: 6409383349883824935, guid: 4f3fbc2ee3f540a469cda95159007469, type: 3}
       propertyPath: m_Name
       value: SmokeTrail 3d
+      objectReference: {fileID: 0}
+    - target: {fileID: 6409383349883824935, guid: 4f3fbc2ee3f540a469cda95159007469, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f3fbc2ee3f540a469cda95159007469, type: 3}

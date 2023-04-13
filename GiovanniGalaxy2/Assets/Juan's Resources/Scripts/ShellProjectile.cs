@@ -13,10 +13,10 @@ public class ShellProjectile : MonoBehaviour
     [SerializeField] private Vector3 rotation;
 
     private ParticleSystem smokeTrail;
-    Rigidbody rb;
+    public Rigidbody rb;
   
     private void Start()
-    {
+    {       
         rb = GetComponent<Rigidbody>();
         smokeTrail = GetComponentInChildren<ParticleSystem>();
         smokeTrail.Play();
