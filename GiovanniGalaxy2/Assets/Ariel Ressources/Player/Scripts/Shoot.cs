@@ -92,7 +92,6 @@ public class Shoot : MonoBehaviour
 				}
 				else if (!hit.transform.CompareTag("Coin") && !hit.transform.CompareTag("Turret"))
 				{
-					Debug.Log(hit.transform.tag);
 					GameObject impactGO = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
 					Destroy(impactGO, 1f);
 				}

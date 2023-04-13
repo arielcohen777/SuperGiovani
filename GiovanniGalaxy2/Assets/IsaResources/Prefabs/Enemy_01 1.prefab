@@ -2281,7 +2281,19 @@ MonoBehaviour:
   playerReached: 0
   health: 0
   damage: 5
+  hitByJump: 0
   isDead: 0
+  attackPoints: []
+  attackRange: 0.5
+  playerLyr:
+    serializedVersion: 2
+    m_Bits: 0
+  explosion: {fileID: 0}
+  killJump: {fileID: 0}
+  attack: {fileID: 0}
+  chase: []
+  hit: []
+  playerSounds: {fileID: 5105848485304600016, guid: 0368465c93f74874792fddf4ed8d607b, type: 3}
 --- !u!1 &8699872383917257500
 GameObject:
   m_ObjectHideFlags: 0

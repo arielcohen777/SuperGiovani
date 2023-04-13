@@ -1211,6 +1211,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Muzzle
       objectReference: {fileID: 0}
+    - target: {fileID: 3962978076210541938, guid: 8f685d9781def5d4e8c19af638136897, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4743481473223627454, guid: 8f685d9781def5d4e8c19af638136897, type: 3}
       propertyPath: m_IsActive
       value: 0

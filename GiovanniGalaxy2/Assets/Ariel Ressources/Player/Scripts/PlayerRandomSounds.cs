@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PlayerRandomSounds : MonoBehaviour
 {
-    public string[] sounds;
+    public AudioClip[] sounds;
     [SerializeField] private float delayTime;
-    private int lastPlayedString;
+    [SerializeField] private int lastPlayedSoundIndex;
 
-    [SerializeField] private AudioSource source;
+    private AudioSource source;
 
     bool canPlayAgain = true;
     static bool soundIsPlaying = false;
@@ -29,11 +29,10 @@ public class PlayerRandomSounds : MonoBehaviour
             do
             {
                 index = Random.Range(0, sounds.Length);
-            } while (index == lastPlayedString);
+            } while (index == lastPlayedSoundIndex);
 
-            lastPlayedString = index;
-            string toPlay = sounds[index];
-            Debug.Log(toPlay);
+            lastPlayedSoundIndex = index;
+            source.clip = sounds[index];
             if (source.clip != null)
                 source.Play();
             StartCoroutine(CanPlayAgain());
