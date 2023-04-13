@@ -12,7 +12,11 @@ public class Shoot : MonoBehaviour
 	public Animator anim;
 	[SerializeField] private GameObject impact;
 	[SerializeField] private GameObject blood;
-	
+	[SerializeField] private ReloadSound reloadSound;
+	public float reloadTimer;
+	private bool reloading = false;
+
+
 	public AudioSource gunshot;
 
 	public LayerMask collisionLayerMask;
@@ -86,8 +90,9 @@ public class Shoot : MonoBehaviour
 					Destroy(impactGO, 1f);
 
 				}
-				else if (!hit.transform.CompareTag("Coin"))
+				else if (!hit.transform.CompareTag("Coin") && !hit.transform.CompareTag("Turret"))
 				{
+					Debug.Log(hit.transform.tag);
 					GameObject impactGO = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
 					Destroy(impactGO, 1f);
 				}
@@ -100,9 +105,19 @@ public class Shoot : MonoBehaviour
 
 	public IEnumerator CanReload()
 	{
+		
 		canReload = true;
-		Invoke("Reload", 0.5f);
-		yield return new WaitForSeconds(0.5f);
+		reloadTimer = reloadSound.GetReloadTime();
+		if (!reloading)
+		{
+			reloadSound.PlayReload();
+			anim.SetBool("Reloading", true);
+			reloading = true;
+		}
+		yield return new WaitForSeconds(reloadTimer);
+		reloading = false;
+		anim.SetBool("Reloading", false);
+		Reload();
 	}
 
 	public void Reload()
