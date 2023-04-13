@@ -344,6 +344,7 @@ MonoBehaviour:
   chase:
   - {fileID: 8300000, guid: 3a6f53d90f8b09448beea83a4359b982, type: 3}
   - {fileID: 8300000, guid: c98cbcb96e0127544944e7619caaddf0, type: 3}
+  playerSounds: {fileID: 5105848485304600016, guid: 0368465c93f74874792fddf4ed8d607b, type: 3}
 --- !u!1 &353741900970849827
 GameObject:
   m_ObjectHideFlags: 0

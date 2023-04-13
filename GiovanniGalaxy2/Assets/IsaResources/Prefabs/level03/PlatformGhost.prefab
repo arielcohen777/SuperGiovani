@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1204857458635966216}
   - component: {fileID: 1204857458635966217}
   - component: {fileID: 86085704}
-  - component: {fileID: 1647154135}
+  - component: {fileID: 746401749}
   m_Layer: 0
   m_Name: PlatformGhost
   m_TagString: Untagged
@@ -164,7 +164,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &1647154135
+--- !u!114 &746401749
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
