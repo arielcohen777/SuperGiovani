@@ -5,13 +5,9 @@ using System.Collections;
 public class TextWriter : MonoBehaviour
 {
     public string[] paragraphs = new string[] {
-        " You ever have that feeling where you’re not sure if you’re awake or still dreaming?",
-        "The Matrix is everywhere. It is all around us. Even now, in this very room",
-        "You can see it when you look out your window or when you turn on your television",
-        "You can feel it when you go to work... when you go to class... when you have to do school assignments. It is the world that has been pulled over your eyes to blind you from the truth.",
-        "There's a difference between knowing the path and walking the path.",
-        "Have you ever stood and stared at it, marveled at its beauty, its genius? Billions of people just living out their lives, oblivious.",
-        "The answer is out there, and it's looking for you, and it will find you if you want it to." };
+        "You have successfully navigated through the challenging levels and defeated the monsters. " +
+        "Giovani finally finds his way back home " +
+        "eager to reunite with his family and share the story of his incredible journey through the vast and perilous expanse of space." };
 
     public TextMeshProUGUI promptText;
     public float wordDelay = 0.5f;
