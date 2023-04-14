@@ -16,14 +16,11 @@ EditorBuildSettings:
     guid: 4ae5e75b7c728b14e9791e250a04a88e
   - enabled: 1
     path: Assets/Scenes/LoadingScene 2.unity
-    guid: 25179ca8b71ed2d4494ff49db1352629
+    guid: 5e4a2b3b7da93c3429131bd2660e8401
   - enabled: 1
     path: Assets/Scenes/Level02.unity
     guid: f442b472a2d2fad4c9868ed55f02c8ca
   - enabled: 1
-    path: Assets/Scenes/LoadingScene 3.unity
-    guid: 24107d44f90c76648a8a67952a1a1655
-  - enabled: 1
-    path: Assets/Scenes/Level03.unity
-    guid: cf0aca76ce8919d42bd9cd84c0e03f45
+    path: Assets/Scenes/WinScene.unity
+    guid: 1743cbd4be389af4da9063957e49ef23
   m_configObjects: {}
