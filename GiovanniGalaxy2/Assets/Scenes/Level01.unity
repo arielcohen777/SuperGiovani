@@ -29986,6 +29986,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6974890809844041111, guid: 8f685d9781def5d4e8c19af638136897, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208682421048784577, guid: 8f685d9781def5d4e8c19af638136897, type: 3}
+      propertyPath: DeathPanel
+      value: 
+      objectReference: {fileID: 1726947977}
     - target: {fileID: 7208682421048784577, guid: 8f685d9781def5d4e8c19af638136897, type: 3}
       propertyPath: hurtSounds
       value: 
@@ -29996,6 +30004,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f685d9781def5d4e8c19af638136897, type: 3}
+--- !u!1 &1726947977 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6974890810860605399, guid: 8f685d9781def5d4e8c19af638136897, type: 3}
+  m_PrefabInstance: {fileID: 1726947976}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1739119972
 GameObject:
   m_ObjectHideFlags: 0

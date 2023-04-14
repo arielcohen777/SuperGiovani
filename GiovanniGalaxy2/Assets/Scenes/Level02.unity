@@ -10423,11 +10423,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -5259319833471910769, guid: ee48e1e2d473dd04380d74e732d2456c, type: 3}
---- !u!1 &963857725 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6974890809844041111, guid: 8f685d9781def5d4e8c19af638136897, type: 3}
-  m_PrefabInstance: {fileID: 1188052182}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &967140394
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13520,14 +13515,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6974890810860605399, guid: 8f685d9781def5d4e8c19af638136897, type: 3}
+    - target: {fileID: 6974890809844041111, guid: 8f685d9781def5d4e8c19af638136897, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6974890810860605399, guid: 8f685d9781def5d4e8c19af638136897, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7208682421048784577, guid: 8f685d9781def5d4e8c19af638136897, type: 3}
       propertyPath: DeathPanel
       value: 
-      objectReference: {fileID: 963857725}
+      objectReference: {fileID: 1188052183}
     - target: {fileID: 9196214267262737463, guid: 8f685d9781def5d4e8c19af638136897, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -13535,6 +13534,11 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 5536935428401523966, guid: 8f685d9781def5d4e8c19af638136897, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8f685d9781def5d4e8c19af638136897, type: 3}
+--- !u!1 &1188052183 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6974890810860605399, guid: 8f685d9781def5d4e8c19af638136897, type: 3}
+  m_PrefabInstance: {fileID: 1188052182}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1188877703 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6632558670719015629, guid: 492a2c433bb663b47b65b15cbb3bc95c, type: 3}
