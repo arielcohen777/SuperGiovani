@@ -6,7 +6,7 @@ public class StickerPlatform : MonoBehaviour
 {
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "Player")
+        if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.transform.SetParent(transform); 
         }
@@ -14,7 +14,7 @@ public class StickerPlatform : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.name == "Player")
+        if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.transform.SetParent(null);
         }
