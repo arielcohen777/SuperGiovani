@@ -9,8 +9,9 @@ public class EnemySpawner : MonoBehaviour
 
     public int enemyCtr = 0;
     public int maxEnemy;
+    public float delay;
+
     private bool isSpawning;
- 
  
     // Update is called once per frame
     void Update()
@@ -20,12 +21,13 @@ public class EnemySpawner : MonoBehaviour
             StartCoroutine(SpawnEnemies());
         }        
     }
+
     private IEnumerator SpawnEnemies()
     {
         isSpawning = true;
         Instantiate(enemy[Random.Range(0, enemy.Length)], spawnPoint[Random.Range(0, spawnPoint.Length)].position, spawnPoint[Random.Range(0, spawnPoint.Length)].rotation);
         enemyCtr++;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(delay);
         isSpawning =false;
     }
     

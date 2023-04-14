@@ -1213,6 +1213,7 @@ MonoBehaviour:
   playerReached: 0
   health: 0
   damage: 5
+  hitByJump: 0
   isDead: 0
   attackPoints:
   - {fileID: 5683676984907225269}
@@ -1223,6 +1224,12 @@ MonoBehaviour:
   playerLyr:
     serializedVersion: 2
     m_Bits: 128
+  explosion: {fileID: 0}
+  killJump: {fileID: 0}
+  attack: {fileID: 0}
+  chase: []
+  hit: []
+  playerSounds: {fileID: 5105848485304600016, guid: 0368465c93f74874792fddf4ed8d607b, type: 3}
 --- !u!1 &5318869807055363260
 GameObject:
   m_ObjectHideFlags: 0

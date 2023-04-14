@@ -25,14 +25,19 @@ public class Portal : MonoBehaviour
     private ParticleSystem currentPortal;
     private ParticleSystem newPortal;
 
+    private AudioSource audioSource;
+    public int soundDistanceMod;
+    public AudioClip[] portalSFX;
 
+    private SphereCollider[] sphereCols; 
+   
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();  
         gm = GameManager.Instance;
         state = State.inactive;
-          
-
+        sphereCols = GetComponents<SphereCollider>();
     }
 
     // Update is called once per frame
@@ -89,9 +94,12 @@ public class Portal : MonoBehaviour
     {
         if (!active)
         {
-           currentPortal = InstantiatePortal(BatteriesAdded);
-           currentPortal.transform.localScale = new Vector3(0.25f, 0.5f, 5f);
-           active = true;
+            audioSource.clip = portalSFX[0];
+            audioSource.Play();
+
+            currentPortal = InstantiatePortal(BatteriesAdded);
+            currentPortal.transform.localScale = new Vector3(0.25f, 0.5f, 5f);
+            active = true;
         }
 
         else if (BatteriesAdded == 1)
@@ -99,11 +107,18 @@ public class Portal : MonoBehaviour
             state = State.fist_Stage;
         }
 
+        BackupSFX();
+
     }
+
+    
+
     private void FirstStage()
     {
         if (!firstS)
         {
+            audioSource.maxDistance += soundDistanceMod;
+            audioSource.volume = 0.65f;
             newPortal = SwapPortal(BatteriesAdded, currentPortal);
             newPortal.transform.localScale = new Vector3(0.4f, 0.7f, 10f);
             currentPortal = newPortal;
@@ -115,12 +130,16 @@ public class Portal : MonoBehaviour
             state = State.second_Stage;
         }
 
+        BackupSFX();
+
     }
 
     private void SecondStage()
     {
         if (!secondS)
         {
+            audioSource.maxDistance += soundDistanceMod;
+            audioSource.volume = 0.85f;
             newPortal = SwapPortal(BatteriesAdded, currentPortal);
             newPortal.transform.localScale = new Vector3(0.55f, 0.85f, 13f);
             currentPortal = newPortal;
@@ -130,17 +149,26 @@ public class Portal : MonoBehaviour
         {
             state = State.third_Stage;
         }
+
+
+        BackupSFX();
     }
 
     private void ThirdStage()
     {
         if (!thirdS)
         {
+            audioSource.maxDistance += soundDistanceMod;
+            audioSource.volume = 1.0f;
             newPortal = SwapPortal(BatteriesAdded, currentPortal);
             newPortal.transform.localScale = new Vector3(1.2f, 1.2f, 15f);
             currentPortal = newPortal;
+            sphereCols[1].enabled = false;
             thirdS = true;
+
         }
+
+        BackupSFX();
     }
 
     private ParticleSystem InstantiatePortal(int i)
@@ -171,6 +199,16 @@ public class Portal : MonoBehaviour
         }
     }
 
+    private void BackupSFX()
+    {
+        if (!audioSource.isPlaying)
+        {
+            audioSource.clip = portalSFX[1];
+            audioSource.Play();
+            audioSource.loop = true;
+        }
+    }
+
 
     private void OnTriggerStay(Collider other)
     {
@@ -181,8 +219,15 @@ public class Portal : MonoBehaviour
         }
         if (other.CompareTag("Player") && state != State.inactive)
         {
-            mssgText = "ADD BATTERIES" + " " + BatteriesAdded + "/3";
-            inTrigger = true;          
+            if (state == State.third_Stage) {
+                mssgText = "JUMP IN!!!";
+            }
+            else
+            {
+                mssgText = "ADD BATTERIES" + " " + BatteriesAdded + "/3";
+                inTrigger = true;
+            }
+                   
         }       
 
     }

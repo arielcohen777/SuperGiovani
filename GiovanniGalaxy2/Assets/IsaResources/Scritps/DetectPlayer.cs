@@ -22,7 +22,6 @@ public class DetectPlayer : MonoBehaviour
             if (hasHit)
             {
                 hasHit = false;
-                Debug.Log("has hit");
                 //gm.playerHealth.GetComponent<Health>().IsHit(enemy.damage);
                 //other.gameObject.GetComponent<Health>().IsHit(enemy.damage);
                 gm.player.GetComponent<Health>().IsHit(enemy.damage);

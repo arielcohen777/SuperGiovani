@@ -7,10 +7,13 @@ public class EnemyProjectile : MonoBehaviour
     private ParticleSystem energySparks;
     GameManager gm; 
     public float damage;
+    private AudioSource audioSource;
 
     private void Start()
-    {
-        gm = GameManager.Instance; 
+    {       
+        gm = GameManager.Instance;
+        audioSource = GetComponent<AudioSource>();
+        audioSource.Play();
         energySparks = GetComponentInChildren<ParticleSystem>();
         energySparks.Play();
     }

@@ -12,6 +12,12 @@ public class Shoot : MonoBehaviour
 	public Animator anim;
 	[SerializeField] private GameObject impact;
 	[SerializeField] private GameObject blood;
+	[SerializeField] private ReloadSound reloadSound;
+	public float reloadTimer;
+	private bool reloading = false;
+
+
+	public AudioSource gunshot;
 
 	public LayerMask collisionLayerMask;
 
@@ -23,6 +29,7 @@ public class Shoot : MonoBehaviour
 	private void Start()
 	{
 		gm = GameManager.Instance;
+		gunshot = gm.cam.GetComponent<AudioSource>();
 		anim = GetComponent<Animator>();
 		sg = GetComponent<Shotgun>();
 	}
@@ -31,7 +38,7 @@ public class Shoot : MonoBehaviour
 	{
 		WeaponSlot wep = gm.playerStuff.activeWeapon;
 
-		//If out of ammo, reload
+		// If out of ammo, reload
 		if (wep.currentAmmo <= 0)
 		{
 			wep.currentAmmo = 0;
@@ -39,68 +46,77 @@ public class Shoot : MonoBehaviour
 			return;
 		}
 
-		//Gun anim
+		// Gunshot Sound
+		if (gm.playerStuff.activeWeapon.gunshot != null)
+		{
+			gunshot.Play();
+		}
+
+		// Shooting Anim
 		anim.SetTrigger("Shooting");
 
-		//Muzzle Flash
+		// Muzzle Flash
 		int randomNumberForMuzzelFlash = Random.Range(0, flashList.Length);
 		holdFlash = Instantiate(flashList[randomNumberForMuzzelFlash], muzzleSpawn.transform.position /*- muzzelPosition*/, muzzleSpawn.transform.rotation * Quaternion.Euler(0, 0, 90));
 		holdFlash.transform.parent = muzzleSpawn.transform;
 		Destroy(holdFlash, 0.05f);
 
-		//Weapon Sound (NEEDS TESTING)
-		if (wep.weapon.gunshot != null)
-			wep.weapon.gunshot.Play();
-
-		//Shotgun
-		if (wep.weapon.wepType.Equals(WeaponType.Shotgun))
+		// Shotgun
+		if (wep.weaponSo.wepType.Equals(WeaponType.Shotgun))
 		{
 			sg.Shoot(_mainCamera, impact);
 		}
-		else if (wep.weapon.wepType.Equals(WeaponType.Bazooka))
+		// Bazooka
+		else if (wep.weaponSo.wepType.Equals(WeaponType.Bazooka))
         {
 			Instantiate(rocket, muzzleSpawn.transform.position, muzzleSpawn.transform.rotation);
 		}
+		// Rest of guns  (UZI, Rifle, Sniper)
 		else
 		{
 			//Aiming
-			if (Physics.Raycast(_mainCamera.transform.position, _mainCamera.transform.forward, out RaycastHit hit, wep.weapon.range))
+			if (Physics.Raycast(_mainCamera.transform.position, _mainCamera.transform.forward, out RaycastHit hit, wep.range))
 			{
 				if (hit.transform.CompareTag("Enemy"))
 				{
 					Enemy1 enemy = hit.collider.GetComponentInParent<Enemy1>();
 					Enemy2_fixed enemy2 = hit.collider.GetComponentInParent<Enemy2_fixed>();
 
-					if (enemy != null) enemy.IsHit(wep.weapon.damage);
-					else enemy2.IsHit(wep.weapon.damage);
+					if (enemy != null) enemy.IsHit(wep.damage);
+					else enemy2.IsHit(wep.damage);
 
 					GameObject impactGO = Instantiate(blood, hit.point, Quaternion.LookRotation(hit.normal));
 					impactGO.GetComponent<ParticleSystem>().Play();
 					Destroy(impactGO, 1f);
 
 				}
-				else if (!hit.transform.CompareTag("Coin"))
+				else if (!hit.transform.CompareTag("Coin") && !hit.transform.CompareTag("Turret"))
 				{
 					GameObject impactGO = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
 					Destroy(impactGO, 1f);
 				}
-
-				//Weapon Sound (NEEDS TESTING)
-				if (wep.weapon.gunshot != null)
-				{
-					wep.weapon.gunshot.Play();
-				}
 			}
 		}
+
 		//Reduce ammo
 		wep.currentAmmo--;
 	}
 
 	public IEnumerator CanReload()
 	{
+		
 		canReload = true;
-		Invoke("Reload", 0.5f);
-		yield return new WaitForSeconds(0.5f);
+		reloadTimer = reloadSound.GetReloadTime();
+		if (!reloading)
+		{
+			reloadSound.PlayReload();
+			anim.SetBool("Reloading", true);
+			reloading = true;
+		}
+		yield return new WaitForSeconds(reloadTimer);
+		reloading = false;
+		anim.SetBool("Reloading", false);
+		Reload();
 	}
 
 	public void Reload()
