@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class BTN_s : MonoBehaviour
 {
 
+
     public void KeyPress()
     {
         if (Input.GetKeyDown(KeyCode.R))
@@ -35,10 +36,9 @@ public class BTN_s : MonoBehaviour
     }
     public void LoadGame()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Confined;
-        Debug.Log("loading game");
-        SceneManager.LoadScene("Level01");
+        // Load the next scene
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex + 1);
     }
     
     public void Test() {

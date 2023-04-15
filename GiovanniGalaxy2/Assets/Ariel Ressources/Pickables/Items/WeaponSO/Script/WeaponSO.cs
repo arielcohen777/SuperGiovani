@@ -18,8 +18,9 @@ public class WeaponSO : ItemSO
     public float rateOfFire;
     public float range;
     public float nextFire;
-    [Header("Game Objects")]
+    [Header("Sounds")]
     public GameObject gunshot;
+    public GameObject reload;
     [Header("Recoil")]
     public float recoilX;
     public float recoilY;

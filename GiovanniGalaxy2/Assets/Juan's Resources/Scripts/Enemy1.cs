@@ -43,7 +43,8 @@ public class Enemy1 : MonoBehaviour
     public AudioClip killJump;
     public AudioClip attack;
     public AudioClip [] chase;
-    public AudioClip[] hit; 
+    public AudioClip[] hit;
+    public PlayerRandomSounds playerSounds;
     
 
     // Start is called before the first frame update
@@ -180,7 +181,7 @@ public class Enemy1 : MonoBehaviour
     {
         if (!isDead)
         {
-            
+            gm.killEnemiesSounds.PlayRandomSound();
             navMesh.isStopped = true;
             audioSource.volume = 1f;
 

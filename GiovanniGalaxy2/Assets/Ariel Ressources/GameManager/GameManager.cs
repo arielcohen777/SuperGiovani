@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    
+
+    //
+    public PlayerRandomSounds killEnemiesSounds;
+
     //Player
     public GameObject player;
     public Health playerHealth;

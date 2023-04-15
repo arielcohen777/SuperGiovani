@@ -16,6 +16,7 @@ MonoBehaviour:
   price: 35
   prefab: {fileID: 5595385407789244914, guid: 8e7e45bf71a8f1d449aa2797aaac6863, type: 3}
   type: 0
+  timer: 0
   wepType: 2
   maxAmmo: 10
   ogMaxAmmo: 10
@@ -26,6 +27,7 @@ MonoBehaviour:
   range: 200
   nextFire: 0
   gunshot: {fileID: 0}
+  reload: {fileID: 1675306833945458271, guid: b6b5f0e945d0f054192916dcabe57576, type: 3}
   recoilX: 0
   recoilY: 0
   recoilZ: 0

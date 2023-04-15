@@ -4,35 +4,34 @@ using UnityEngine;
 
 public class TurretBehaviour : MonoBehaviour
 {
-    public GameObject projectile;
-    public GameObject areaOfAttack;
-    public GameObject muzzle;
+    [SerializeField] private GameObject projectile;
+    [SerializeField] private GameObject areaOfAttack;
+    [SerializeField] private GameObject muzzle;
 
-    public LeverSO lever;
+    [SerializeField] private LeverSO lever;
 
-    public float radius;
-    public float nextFireTime;
+    [SerializeField] private float nextFireTime;
 
-    public int cooldown;
-    public int cooldownExtra;
+    private int cooldown;
+    [SerializeField] private int cooldownExtra;
 
-    public bool activated;
+    //TurretActivated is used like a trigger while
+    //isActive shows that the turret is active
+    public bool turretActivated;
     public bool isActive;
-    public bool canShootAgain;
+    [SerializeField] private bool canShootAgain;
 
-    private int index = 0;
-
-    public int countdown;
+    [SerializeField] private int index = 0;
 
     public List<GameObject> enemiesInArea;
 
-    public GameObject topPivot;
-    public GameObject bottomPivot;
-    public GameObject interact;
+    [SerializeField] private GameObject topPivot;
+    [SerializeField] private GameObject bottomPivot;
+    [SerializeField] private GameObject interact;
 
-    public Animator anim;
+    [SerializeField] private Animator anim;
 
-    // Start is called bef`ore the first frame update
+    // Start is called before the first frame update
     void Start()
     {
         enemiesInArea = new List<GameObject>();
@@ -48,7 +47,8 @@ public class TurretBehaviour : MonoBehaviour
         if (index >= enemiesInArea.Count)
             index = 0;
 
-        if (activated)
+        //If the lever has been pulled, activate turret
+        if (turretActivated)
         {
             anim.SetBool("Activate", true);
             isActive = true;
@@ -56,6 +56,8 @@ public class TurretBehaviour : MonoBehaviour
             StartCoroutine(Cooldown());
         }
 
+        //If there are no enemies in the list of enemies and it cannot shoot again,
+        //don't do anything.
         if (enemiesInArea.Count == 0)
             return;
 
@@ -89,8 +91,7 @@ public class TurretBehaviour : MonoBehaviour
 
     IEnumerator Timer()
     {
-        activated = false;
-        countdown = lever.timer;
+        turretActivated = false;
         yield return new WaitForSeconds(lever.timer);
         enemiesInArea.Clear();
         isActive = false;
@@ -104,7 +105,6 @@ public class TurretBehaviour : MonoBehaviour
         interact.SetActive(true);
     }
 
-
     void RotateTurret(GameObject go)
     {
         //Top of turret rotation
@@ -114,19 +114,5 @@ public class TurretBehaviour : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
         rotation.x = rotation.z = 0;
         bottomPivot.transform.rotation = rotation;
-
-
-        //// get the relative position of the player
-        //Vector3 relativePos = go.transform.position - turretBottom.transform.position;
-
-        //// get the rotation that points the forward direction towards the player
-        //Quaternion lookRotation = Quaternion.LookRotation(relativePos, Vector3.up);
-
-        //// create a new Quaternion that only rotates on the y-axis
-        //Quaternion yRotation = Quaternion.Euler(0, lookRotation.eulerAngles.y, 0);
-
-        //// slerp between the current rotation and the desired rotation
-        //float rotationSpeed = 5f; // adjust this to change the speed of rotation
-        //turretBottom.transform.rotation = Quaternion.Slerp(turretBottom.transform.rotation, yRotation, Time.deltaTime * rotationSpeed);
     }
 }

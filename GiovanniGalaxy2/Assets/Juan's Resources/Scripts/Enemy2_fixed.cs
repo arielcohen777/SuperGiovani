@@ -87,6 +87,7 @@ public class Enemy2_fixed : MonoBehaviour
     public AudioClip [] hit;
     public AudioClip[] runAway;
     public AudioClip[] chase;
+    public PlayerRandomSounds playerSounds;
 
     private void Start()
     {
@@ -279,8 +280,6 @@ public class Enemy2_fixed : MonoBehaviour
     }
     private void RunAway()
     {
-        
-
         if (runPointSet)
         {
             isRunning = true;
@@ -355,7 +354,6 @@ public class Enemy2_fixed : MonoBehaviour
     }
     public void IsHit(float damage)
     {
-
         if (playerInSightRange && !playerSpotted)
         {
             enemyAlerted = true;
@@ -380,6 +378,7 @@ public class Enemy2_fixed : MonoBehaviour
     {
         if (!isDead)
         {
+            gm.killEnemiesSounds.PlayRandomSound();
             enemy.isStopped = true;
             isDead = true;
 

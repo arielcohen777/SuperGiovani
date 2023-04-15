@@ -2966,7 +2966,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6974890810860605399, guid: 8f685d9781def5d4e8c19af638136897, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7208682421048784577, guid: 8f685d9781def5d4e8c19af638136897, type: 3}
       propertyPath: DeathPanel

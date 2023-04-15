@@ -9,13 +9,24 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: 2ecd8b33ca187504b86337e1a1791eb7
   - enabled: 1
+    path: Assets/Scenes/LoadingScene 1.unity
+    guid: 5ec552fbee389514f8a5f9f10397a365
+  - enabled: 1
     path: Assets/Scenes/Level01.unity
     guid: 4ae5e75b7c728b14e9791e250a04a88e
   - enabled: 1
+    path: Assets/Scenes/LoadingScene 2.unity
+    guid: 5e4a2b3b7da93c3429131bd2660e8401
+  - enabled: 1
     path: Assets/Scenes/Level02.unity
     guid: f442b472a2d2fad4c9868ed55f02c8ca
-  - enabled: 0
-    path: Assets/Scenes/PlayTest Scene.unity
-    guid: c00ae1b0bfcb545409e802f717ff9753
-  m_configObjects:
-    com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7, type: 2}
+  - enabled: 1
+    path: Assets/Scenes/LoadingScene 3.unity
+    guid: 96386a9a3ae57054e8500d3fc2fab009
+  - enabled: 1
+    path: Assets/Scenes/Level03.unity
+    guid: cf0aca76ce8919d42bd9cd84c0e03f45
+  - enabled: 1
+    path: Assets/Scenes/WinScene.unity
+    guid: 1743cbd4be389af4da9063957e49ef23
+  m_configObjects: {}

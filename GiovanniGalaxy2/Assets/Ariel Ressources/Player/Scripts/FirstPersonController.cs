@@ -8,423 +8,420 @@ using UnityEngine.InputSystem;
 
 namespace StarterAssets
 {
-	[RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(CharacterController))]
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
-	[RequireComponent(typeof(PlayerInput))]
+    [RequireComponent(typeof(PlayerInput))]
 #endif
-	public class FirstPersonController : MonoBehaviour
-	{
-		[Header("Player")]
-		[Tooltip("Move speed of the character in m/s")]
-		public float MoveSpeed = 4.0f;
-		[Tooltip("Sprint speed of the character in m/s")]
-		public float SprintSpeed = 6.0f;
-		[Tooltip("Rotation speed of the character")]
-		public float RotationSpeed = 1.0f;
-		public float RotationSpeedOg;
-		[Tooltip("Acceleration and deceleration")]
-		public float SpeedChangeRate = 10.0f;
+    public class FirstPersonController : MonoBehaviour
+    {
+        [Header("Player")]
+        [Tooltip("Move speed of the character in m/s")]
+        public float MoveSpeed = 4.0f;
+        [Tooltip("Sprint speed of the character in m/s")]
+        public float SprintSpeed = 6.0f;
+        [Tooltip("Rotation speed of the character")]
+        public float RotationSpeed = 1.0f;
+        public float RotationSpeedOg;
+        [Tooltip("Acceleration and deceleration")]
+        public float SpeedChangeRate = 10.0f;
 
-		[Space(10)]
-		[Tooltip("The height the player can jump")]
-		public float JumpHeight = 1.2f;
-		[Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
-		public float Gravity = -15.0f;
+        [Space(10)]
+        [Tooltip("The height the player can jump")]
+        public float JumpHeight = 1.2f;
+        [Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
+        public float Gravity = -15.0f;
 
-		[Space(10)]
-		[Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
-		public float JumpTimeout = 0.1f;
-		[Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]
-		public float FallTimeout = 0.15f;
+        [Space(10)]
+        [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
+        public float JumpTimeout = 0.1f;
+        [Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]
+        public float FallTimeout = 0.15f;
 
-		[Header("Player Grounded")]
-		[Tooltip("If the character is grounded or not. Not part wof the CharacterController built in grounded check")]
-		public bool Grounded = true;
-		[Tooltip("Useful for rough ground")]
-		public float GroundedOffset = -0.14f;
-		[Tooltip("The radius of the grounded check. Should match the radius of the CharacterController")]
-		public float GroundedRadius = 0.5f;
-		[Tooltip("What layers the character uses as ground")]
-		public LayerMask GroundLayers;
+        [Header("Player Grounded")]
+        [Tooltip("If the character is grounded or not. Not part wof the CharacterController built in grounded check")]
+        public bool Grounded = true;
+        [Tooltip("Useful for rough ground")]
+        public float GroundedOffset = -0.14f;
+        [Tooltip("The radius of the grounded check. Should match the radius of the CharacterController")]
+        public float GroundedRadius = 0.5f;
+        [Tooltip("What layers the character uses as ground")]
+        public LayerMask GroundLayers;
+        public GameObject jumpSoundsGO;
 
-		[Header("Cinemachine")]
-		[Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
-		public GameObject CinemachineCameraTarget;
-		[Tooltip("How far in degrees can you move the camera up")]
-		public float TopClamp = 90.0f;
-		[Tooltip("How far in degrees can you move the camera down")]
-		public float BottomClamp = -90.0f;
+        [Header("Cinemachine")]
+        [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
+        public GameObject CinemachineCameraTarget;
+        [Tooltip("How far in degrees can you move the camera up")]
+        public float TopClamp = 90.0f;
+        [Tooltip("How far in degrees can you move the camera down")]
+        public float BottomClamp = -90.0f;
 
-		// cinemachine
-		private float _cinemachineTargetPitch;
+        // cinemachine
+        private float _cinemachineTargetPitch;
 
-		// player
-		private float _speed;
-		private float _rotationVelocity;
-		private float _verticalVelocity;
-		private float _terminalVelocity = 53.0f;
+        // player
+        private float _speed;
+        private float _rotationVelocity;
+        private float _verticalVelocity;
+        private float _terminalVelocity = 53.0f;
 
-		// timeout deltatime
-		private float _jumpTimeoutDelta;
-		private float _fallTimeoutDelta;
-		// Game Manager
-		private GameManager gm;
+        // timeout deltatime
+        private float _jumpTimeoutDelta;
+        private float _fallTimeoutDelta;
+        // Game Manager
+        private GameManager gm;
 
-		// weapons
-		[Header("Weapon Interactions")]
-		[Tooltip("Shows if the player can change weapons")]
-		[SerializeField] private bool _canChange;
-		[Tooltip("Shows if the player can shoot")]
-		[SerializeField] private bool _canShoot;
-		[Header("Sniper Score")]
-		[Tooltip("Shows if the player is aiming")]
-		[SerializeField] private bool _canAim;
-		[SerializeField] private GameObject sniperScopeUI;
-		[SerializeField] private GameObject heldGun;
-		[SerializeField] private GameObject sniperZoomCam;
-		[SerializeField] private float aimRotation;
+        // Weapons
+        [Header("Weapon Interactions")]
+        [Tooltip("Shows if the player can change weapons")]
+        [SerializeField] private bool _canChange;
+        [Tooltip("Shows if the player can shoot")]
+        [SerializeField] private bool _canShoot;
+        [Header("Sniper Scope")]
+        [Tooltip("Shows if the player can aim down the scope of the sniper depending on the actions they are doing.")]
+        [SerializeField] private bool _canAim;
+        [SerializeField] private GameObject sniperScopeUI;
+        [SerializeField] private GameObject heldGun;
+        [SerializeField] private GameObject sniperZoomCam;
+        [SerializeField] private float aimRotation;
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
-		private PlayerInput _playerInput;
+        private PlayerInput _playerInput;
 #endif
-		private CharacterController _controller;
-		private StarterAssetsInputs _input;
-		private Camera _mainCamera;
+        private CharacterController _controller;
+        private StarterAssetsInputs _input;
+        private Camera _mainCamera;
 
-		[SerializeField] private MeshFilter gunMesh;
+        [SerializeField] private MeshFilter gunMesh;
 
-		[SerializeField]public const float _threshold = 0f;
-		
+        [SerializeField] public const float _threshold = 0f;
+
         private bool IsCurrentDeviceMouse
-		{
-			get
-			{
-				#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
-				return _playerInput.currentControlScheme == "KeyboardMouse";
-				#else
-				return false;
-				#endif
-			}
-		}
-
-		private void Start()
-		{
-			sniperScopeUI.SetActive(false);
-			_canChange = true;
-			_canShoot = true;
-			_canAim = true;
-			RotationSpeedOg = RotationSpeed;
-			gm = GameManager.Instance;
-			_mainCamera = gm.cam;
-			_controller = GetComponent<CharacterController>();
-			_input = GetComponent<StarterAssetsInputs>();
+        {
+            get
+            {
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
-			_playerInput = GetComponent<PlayerInput>();
+                return _playerInput.currentControlScheme == "KeyboardMouse";
+#else
+				return false;
+#endif
+            }
+        }
+
+        private void Start()
+        {
+            sniperScopeUI.SetActive(false);
+            _canChange = true;
+            _canShoot = true;
+            _canAim = true;
+            RotationSpeedOg = RotationSpeed;
+            gm = GameManager.Instance;
+            _mainCamera = gm.cam;
+            _controller = GetComponent<CharacterController>();
+            _input = GetComponent<StarterAssetsInputs>();
+#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
+            _playerInput = GetComponent<PlayerInput>();
 #else
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
 
-			// reset our timeouts on start
-			_jumpTimeoutDelta = JumpTimeout;
-			_fallTimeoutDelta = FallTimeout;
-			
-		}
-
-		private void Update()
-		{
-			if (gm.player.GetComponent<Health>().isAlive)
-			{
-				KillPlayer();
-				JumpAndGravity();
-				GroundedCheck();
+            // reset our timeouts on start
+            _jumpTimeoutDelta = JumpTimeout;
+            _fallTimeoutDelta = FallTimeout;
+        }
+        private void Update()
+        {
+            if (gm.player.GetComponent<Health>().isAlive)
+            {
+                JumpAndGravity();
+                GroundedCheck();
                 Move();
-				InteractWithObject();
-				if (gm.inventory.Container.Count != 0)
-				{
-					if (gm.playerStuff.activeWeapon.wepType.Equals(WeaponType.Sniper))
-						Aim();
-					Shoot();
-					Reload();
-					
-				}
+                InteractWithObject();
+                if (gm.inventory.Container.Count != 0)
+                {
+                    if (gm.playerStuff.activeWeapon.wepType.Equals(WeaponType.Sniper))
+                        Aim();
+                    Shoot();
+                    Reload();
+                }
             }
         }
 
-        private void KillPlayer()
-        {
-			if (_input.die)
-				gm.playerHealth.IsHit(600);
-        }
-
         private void LateUpdate()
-		{
-			if (gm.player.GetComponent<Health>().isAlive)
-			{
-				CameraRotation();
-				ChangeWeapon();
-			}
-		}
+        {
+            if (gm.player.GetComponent<Health>().isAlive)
+            {
+                CameraRotation();
+                ChangeWeapon();
+            }
+        }
 
-		private void GroundedCheck()
-		{
-			// set sphere position, with offset
-			Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
-			Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
-		}
+        private void GroundedCheck()
+        {
+            // set sphere position, with offset
+            Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
+            Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
+        }
 
-		private void CameraRotation()
-		{
-            if (!PauseMenuScript.isPaused) {
-				// if there is an input
-				if (_input.look.sqrMagnitude >= _threshold)
-				{
-					//Don't multiply mouse input by Time.deltaTime
-					float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
+        private void CameraRotation()
+        {
+            if (!PauseMenuScript.isPaused)
+            {
+                // if there is an input
+                if (_input.look.sqrMagnitude >= _threshold)
+                {
+                    //Don't multiply mouse input by Time.deltaTime
+                    float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
-					_cinemachineTargetPitch += _input.look.y * RotationSpeed * deltaTimeMultiplier;
-					_rotationVelocity = _input.look.x * RotationSpeed * deltaTimeMultiplier;
+                    _cinemachineTargetPitch += _input.look.y * RotationSpeed * deltaTimeMultiplier;
+                    _rotationVelocity = _input.look.x * RotationSpeed * deltaTimeMultiplier;
 
-					// clamp our pitch rotation
-					_cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
+                    // clamp our pitch rotation
+                    _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
 
-					// Update Cinemachine camera target pitch
-					CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f);
+                    // Update Cinemachine camera target pitch
+                    CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f);
 
-					// rotate the player left and right
-					transform.Rotate(Vector3.up * _rotationVelocity);
-				}
-			}
-				
-		}
+                    // rotate the player left and right
+                    transform.Rotate(Vector3.up * _rotationVelocity);
+                }
+            }
 
-		private void Move()
-		{
-			//If they can change weapons nor aim while sprinting
-			_canChange = _canAim = !_input.sprint;
+        }
 
-			// set target speed based on move speed, sprint speed and if sprint is pressed and if aiming
-			float targetSpeed;
-			if (_input.aim)
-				targetSpeed = MoveSpeed;
-			else if (_input.sprint)
-			{
-				_canAim = false;
-				targetSpeed = SprintSpeed;
-			}
-			else
-				targetSpeed = MoveSpeed;
+        private void Move()
+        {
+            //If they can change weapons nor aim while sprinting
+            _canChange = _canAim = !_input.sprint;
 
-			// a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
+            // set target speed based on move speed, sprint speed and if sprint is pressed and if aiming
+            float targetSpeed;
+            if (_input.aim)
+                targetSpeed = MoveSpeed;
+            else if (_input.sprint)
+            {
+                _canAim = false;
+                targetSpeed = SprintSpeed;
+            }
+            else
+                targetSpeed = MoveSpeed;
 
-				// note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-				// if there is no input, set the target speed to 0
-			if (_input.move == Vector2.zero) targetSpeed = 0.0f;
+            // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
-			// a reference to the players current horizontal velocity
-			float currentHorizontalSpeed = 
-				new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
+            // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
+            // if there is no input, set the target speed to 0
+            if (_input.move == Vector2.zero) targetSpeed = 0.0f;
 
-			float speedOffset = 0.1f;
-			float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
+            // a reference to the players current horizontal velocity
+            float currentHorizontalSpeed =
+                new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
-			// accelerate or decelerate to target speed
-			if (currentHorizontalSpeed < targetSpeed - speedOffset 
-				|| currentHorizontalSpeed > targetSpeed + speedOffset)
-			{
-				// creates curved result rather than a linear one giving a more organic speed change
-				// note T in Lerp is clamped, so we don't need to clamp our speed
-				_speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude, 
-					Time.deltaTime * SpeedChangeRate);
+            float speedOffset = 0.1f;
+            float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
 
-				// round speed to 3 decimal places
-				_speed = Mathf.Round(_speed * 1000f) / 1000f;
-			}
-			else
-			{
-				_speed = targetSpeed;
-			}
+            // accelerate or decelerate to target speed
+            if (currentHorizontalSpeed < targetSpeed - speedOffset
+                || currentHorizontalSpeed > targetSpeed + speedOffset)
+            {
+                // creates curved result rather than a linear one giving a more organic speed change
+                // note T in Lerp is clamped, so we don't need to clamp our speed
+                _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude,
+                    Time.deltaTime * SpeedChangeRate);
 
-			// normalise input direction
-			Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+                // round speed to 3 decimal places
+                _speed = Mathf.Round(_speed * 1000f) / 1000f;
+            }
+            else
+            {
+                _speed = targetSpeed;
+            }
 
-			// note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-			// if there is a move input rotate player when the player is moving
-			if (_input.move != Vector2.zero)
-			{
-				if (gm.inventory.Container.Count != 0)
-					gm.crosshair.SetActive(!_input.sprint);
+            // normalise input direction
+            Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
 
-				if (_input.sprint && !_input.aim)
-					gm.shoot.anim.SetBool("Sprinting", true);
+            // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
+            // if there is a move input rotate player when the player is moving
+            if (_input.move != Vector2.zero)
+            {
+                if (gm.inventory.Container.Count != 0)
+                    gm.crosshair.SetActive(!_input.sprint);
+
+                if (_input.sprint && !_input.aim)
+                    gm.shoot.anim.SetBool("Sprinting", true);
                 else
-					gm.shoot.anim.SetBool("Sprinting", false);
-				
-				// move
-				inputDirection = transform.right * _input.move.x + transform.forward * _input.move.y;
-			}
-			else
-				gm.shoot.anim.SetBool("Sprinting", false);
+                    gm.shoot.anim.SetBool("Sprinting", false);
+
+                // move
+                inputDirection = transform.right * _input.move.x + transform.forward * _input.move.y;
+            }
+            else
+                gm.shoot.anim.SetBool("Sprinting", false);
 
 
-			// move the player
-			_controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
-		}
-
-		private void JumpAndGravity()
-		{
-			if (Grounded)
-			{
-				// reset the fall timeout timer
-				_fallTimeoutDelta = FallTimeout;
-
-				// stop our velocity dropping infinitely when grounded
-				if (_verticalVelocity < 0.0f)
-				{
-					_verticalVelocity = -2f;
-				}
-
-				// Jump
-				if (_input.jump && _jumpTimeoutDelta <= 0.0f)
-				{
-					// the square root of H * -2 * G = how much velocity needed to reach desired height
-					_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-					Grounded = false;
-				}
-
-				// jump timeout
-				if (_jumpTimeoutDelta >= 0.0f)
-				{
-					_jumpTimeoutDelta -= Time.deltaTime;
-				}
-			}
-			else
-			{
-				// reset the jump timeout timer
-				_jumpTimeoutDelta = JumpTimeout;
-
-				// fall timeout
-				if (_fallTimeoutDelta >= 0.0f)
-				{
-					_fallTimeoutDelta -= Time.deltaTime;
-				}
-
-				// if we are not grounded, do not jump
-				_input.jump = false;
-			}
-
-			// apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
-			if (_verticalVelocity < _terminalVelocity)
-			{
-				_verticalVelocity += Gravity * Time.deltaTime;
-			}
-		}
-
-		private void Shoot()
-        {
-			if (PauseMenuScript.isPaused)
-				return;
-
-			if (!_input.shoot)
-				return;
-
-			// When pressing shooting and not sprinting
-			if (!_input.sprint && _canShoot)
-			{
-				_canAim = false;
-				_canChange = false;
-				//Rate of fire check
-				if (Time.time > gm.playerStuff.activeWeapon.nextFire)
-				{
-					gm.playerStuff.activeWeapon.nextFire = Time.time + (gm.playerStuff.activeWeapon.rateOfFire / 100);
-
-					//Shoot and Update weapon hud
-					gm.shoot.Shooting(_mainCamera);
-					gm.wepUi.UpdateWeaponHud();
-				}
-			}
-			else
-				_canAim = true;
-		}
-		
-		private void Aim()
-        {
-			if (!_canAim)
-				return;
-			else if (_input.aim)
-			{
-				sniperScopeUI.SetActive(true);
-				heldGun.GetComponent<MeshFilter>().mesh = null; 
-				RotationSpeed = aimRotation;
-				sniperZoomCam.SetActive(true);
-				gm.crosshair.SetActive(false);
-			}
-			else
-			{
-				sniperScopeUI.SetActive(false);
-				RotationSpeed = RotationSpeedOg;
-				heldGun.GetComponent<MeshFilter>().mesh = gm.playerStuff.activeWeapon.weaponSo.prefab.GetComponentInChildren<MeshFilter>().mesh;
-				gm.cam.fieldOfView = 40;
-				sniperZoomCam.SetActive(false);
-				gm.crosshair.SetActive(true);
-			}
-		}
-
-		private void Reload()
-        {
-			if (_input.reload)
-			{
-				_canShoot = false;
-				_canAim = false;
-				StartCoroutine(gm.shoot.CanReload());
-				Invoke("CanShootAgain", 0.8f);
-			}
-        }
-		
-		private void CanShootAgain()
-        {
-			_canShoot = true;
-			_canAim = true;
+            // move the player
+            _controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
         }
 
-		private void ChangeWeapon()
-		{
-			if (_input.changeWep && _canChange)
-			{
-				_canAim = false;
-				_canShoot = false;
-				gm.changeGun.SwitchWeapons();
-				Invoke("CanShootAgain", 1f);
-			}
+        private void JumpAndGravity()
+        {
+            if (Grounded)
+            {
+                // reset the fall timeout timer
+                _fallTimeoutDelta = FallTimeout;
+
+                // stop our velocity dropping infinitely when grounded
+                if (_verticalVelocity < 0.0f)
+                {
+                    _verticalVelocity = -2f;
+                }
+
+                // Jump
+                if (_input.jump && _jumpTimeoutDelta <= 0.0f)
+                {
+                    // the square root of H * -2 * G = how much velocity needed to reach desired height
+                    _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                    Grounded = false;
+                    jumpSoundsGO.GetComponent<PlayerRandomSounds>().PlayRandomSound();
+                }
+
+                // jump timeout
+                if (_jumpTimeoutDelta >= 0.0f)
+                {
+                    _jumpTimeoutDelta -= Time.deltaTime;
+                }
+            }
+            else
+            {
+                // reset the jump timeout timer
+                _jumpTimeoutDelta = JumpTimeout;
+
+                // fall timeout
+                if (_fallTimeoutDelta >= 0.0f)
+                {
+                    _fallTimeoutDelta -= Time.deltaTime;
+                }
+
+                // if we are not grounded, do not jump
+                _input.jump = false;
+            }
+
+            // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
+            if (_verticalVelocity < _terminalVelocity)
+            {
+                _verticalVelocity += Gravity * Time.deltaTime;
+            }
         }
 
-		private void InteractWithObject()
-		{
-			if (_input.interact)
-			{
-				_canAim = false;
-				gm.interact.BuyItem();
-			}
-			else
-				_canAim = true;
-		}
+        private void Shoot()
+        {
+            if (PauseMenuScript.isPaused)
+                return;
 
-		private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
-		{
-			if (lfAngle < -360f) lfAngle += 360f;
-			if (lfAngle > 360f) lfAngle -= 360f;
-			return Mathf.Clamp(lfAngle, lfMin, lfMax);
-		}
+            if (!_input.shoot)
+                return;
 
-		private void OnDrawGizmosSelected()
-		{
-			Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
-			Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
+            // When pressing shooting and not sprinting
+            if (!_input.sprint && _canShoot)
+            {
+                _canAim = false;
+                _canChange = false;
+                //Rate of fire check
+                if (Time.time > gm.playerStuff.activeWeapon.nextFire)
+                {
+                    gm.playerStuff.activeWeapon.nextFire = Time.time + (gm.playerStuff.activeWeapon.rateOfFire / 100);
 
-			if (Grounded) Gizmos.color = transparentGreen;
-			else Gizmos.color = transparentRed;
+                    //Shoot and Update weapon hud
+                    gm.shoot.Shooting(_mainCamera);
+                    gm.wepUi.UpdateWeaponHud();
+                }
+            }
+            else
+                _canAim = true;
+        }
 
-			// when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
-			Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
-		}
-	}
+        private void Aim()
+        {
+            if (!_canAim)
+                return;
+
+            if (_input.aim)
+            {
+                sniperScopeUI.SetActive(true);
+                heldGun.GetComponent<MeshFilter>().sharedMesh = null;
+                RotationSpeed = aimRotation;
+                sniperZoomCam.SetActive(true);
+                gm.crosshair.SetActive(false);
+            }
+            else
+            {
+                sniperScopeUI.SetActive(false);
+                RotationSpeed = RotationSpeedOg;
+                heldGun.GetComponent<MeshFilter>().sharedMesh = gm.playerStuff.activeWeapon.weaponSo.prefab.GetComponentInChildren<MeshFilter>().sharedMesh;
+                gm.cam.fieldOfView = 40;
+                sniperZoomCam.SetActive(false);
+                gm.crosshair.SetActive(true);
+            }
+        }
+
+        private void Reload()
+        {
+            if (gm.playerStuff.activeWeapon.currentAmmo == gm.playerStuff.activeWeapon.magSize)
+                return;
+
+            if (_input.reload)
+            {
+                _canShoot = false;
+                _canAim = false;
+                StartCoroutine(gm.shoot.CanReload());
+                Invoke("CanShootAgain", gm.shoot.reloadTimer);
+            }
+        }
+
+        private void CanShootAgain()
+        {
+            _canShoot = true;
+            _canAim = true;
+        }
+
+        private void ChangeWeapon()
+        {
+            if (_input.changeWep && _canChange)
+            {
+                _canAim = false;
+                _canShoot = false;
+                gm.changeGun.SwitchWeapons();
+                Invoke("CanShootAgain", 1f);
+            }
+        }
+
+        private void InteractWithObject()
+        {
+            if (_input.interact)
+            {
+                _canAim = false;
+                gm.interact.BuyItem();
+            }
+            else
+                _canAim = true;
+        }
+
+        private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
+        {
+            if (lfAngle < -360f) lfAngle += 360f;
+            if (lfAngle > 360f) lfAngle -= 360f;
+            return Mathf.Clamp(lfAngle, lfMin, lfMax);
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
+            Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
+
+            if (Grounded) Gizmos.color = transparentGreen;
+            else Gizmos.color = transparentRed;
+
+            // when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
+            Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
+        }
+    }
 }

@@ -12,7 +12,11 @@ public class Shoot : MonoBehaviour
 	public Animator anim;
 	[SerializeField] private GameObject impact;
 	[SerializeField] private GameObject blood;
-	
+	[SerializeField] private ReloadSound reloadSound;
+	public float reloadTimer;
+	private bool reloading = false;
+
+
 	public AudioSource gunshot;
 
 	public LayerMask collisionLayerMask;
@@ -34,7 +38,7 @@ public class Shoot : MonoBehaviour
 	{
 		WeaponSlot wep = gm.playerStuff.activeWeapon;
 
-		//If out of ammo, reload
+		// If out of ammo, reload
 		if (wep.currentAmmo <= 0)
 		{
 			wep.currentAmmo = 0;
@@ -42,23 +46,22 @@ public class Shoot : MonoBehaviour
 			return;
 		}
 
-		//Gunshot Sound
+		// Gunshot Sound
 		if (gm.playerStuff.activeWeapon.gunshot != null)
 		{
-			Debug.Log("Play sound");
 			gunshot.Play();
 		}
 
-		//Gun anim
+		// Shooting Anim
 		anim.SetTrigger("Shooting");
 
-		//Muzzle Flash
+		// Muzzle Flash
 		int randomNumberForMuzzelFlash = Random.Range(0, flashList.Length);
 		holdFlash = Instantiate(flashList[randomNumberForMuzzelFlash], muzzleSpawn.transform.position /*- muzzelPosition*/, muzzleSpawn.transform.rotation * Quaternion.Euler(0, 0, 90));
 		holdFlash.transform.parent = muzzleSpawn.transform;
 		Destroy(holdFlash, 0.05f);
 
-		//Shotgun
+		// Shotgun
 		if (wep.weaponSo.wepType.Equals(WeaponType.Shotgun))
 		{
 			sg.Shoot(_mainCamera, impact);
@@ -87,7 +90,7 @@ public class Shoot : MonoBehaviour
 					Destroy(impactGO, 1f);
 
 				}
-				else if (!hit.transform.CompareTag("Coin"))
+				else if (!hit.transform.CompareTag("Coin") && !hit.transform.CompareTag("Turret"))
 				{
 					GameObject impactGO = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
 					Destroy(impactGO, 1f);
@@ -101,9 +104,19 @@ public class Shoot : MonoBehaviour
 
 	public IEnumerator CanReload()
 	{
+		
 		canReload = true;
-		Invoke("Reload", 0.5f);
-		yield return new WaitForSeconds(0.5f);
+		reloadTimer = reloadSound.GetReloadTime();
+		if (!reloading)
+		{
+			reloadSound.PlayReload();
+			anim.SetBool("Reloading", true);
+			reloading = true;
+		}
+		yield return new WaitForSeconds(reloadTimer);
+		reloading = false;
+		anim.SetBool("Reloading", false);
+		Reload();
 	}
 
 	public void Reload()

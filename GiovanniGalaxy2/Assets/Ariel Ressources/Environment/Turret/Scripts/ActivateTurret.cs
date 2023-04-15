@@ -7,8 +7,6 @@ public class ActivateTurret : MonoBehaviour
     public LeverSO lever;
 
     public TurretBehaviour tb;
-
-    public GameObject interact;
  
     GameManager gm;
 
@@ -26,7 +24,7 @@ public class ActivateTurret : MonoBehaviour
         gm.playerStuff.coins -= lever.price;
 
         gm.playerStuff.UpdateCoinDisplay();
-        tb.activated = true;
+        tb.turretActivated = true;
     }
 
 }
