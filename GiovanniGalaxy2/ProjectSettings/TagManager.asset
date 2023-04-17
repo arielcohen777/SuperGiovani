@@ -44,7 +44,7 @@ TagManager:
   - GameManager
   - NoNavMesh
   - PostProcessingLayer
-  - SideColliders
+  - 
   - 
   - 
   - 
