@@ -4,19 +4,46 @@ using UnityEngine;
 
 public class StickerPlatform : MonoBehaviour
 {
-    void OnCollisionEnter(Collision collision)
+    //{
+    //private Rigidbody rb;
+    //CharacterController playerController;
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            collision.gameObject.transform.SetParent(transform); 
+            // playerController = other.GetComponent<CharacterController>();
+            other.transform.parent = transform;
+
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            collision.gameObject.transform.SetParent(null);
+            other.transform.parent = null;
+
+
         }
     }
+
+
 }
+
+    //void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Player"))
+    //    {
+    //        collision.gameObject.transform.SetParent(transform); 
+    //    }
+    //}
+
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Player"))
+    //    {
+    //        collision.gameObject.transform.SetParent(null);
+    //    }
+    //}
+//}
