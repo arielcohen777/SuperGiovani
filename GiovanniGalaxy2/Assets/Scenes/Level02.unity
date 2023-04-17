@@ -3605,6 +3605,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6166411625054519768, guid: 8c90b3b3306c7c341b1b93bc5c1a4122, type: 3}
+      propertyPath: playList.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 0b35c55226985554b9308e4841cc068b, type: 3}
+    - target: {fileID: 6166411625054519768, guid: 8c90b3b3306c7c341b1b93bc5c1a4122, type: 3}
+      propertyPath: playList.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: b6578cb75ee86fa438c3d56bdfe9c4c0, type: 3}
+    - target: {fileID: 6166411625054519768, guid: 8c90b3b3306c7c341b1b93bc5c1a4122, type: 3}
+      propertyPath: playList.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 650b868ba2195f4468b16b20d05f0a2b, type: 3}
     - target: {fileID: 6166411625054519769, guid: 8c90b3b3306c7c341b1b93bc5c1a4122, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -11515,7 +11527,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7471769930895918764, guid: d34b92b66baca6a48bc68592da8492c7, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7471769930895918764, guid: d34b92b66baca6a48bc68592da8492c7, type: 3}
       propertyPath: enemy.Array.size
@@ -11616,8 +11628,8 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7471769930895918764, guid: d34b92b66baca6a48bc68592da8492c7, type: 3}
   m_PrefabInstance: {fileID: 1024131475}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1614815869}
-  m_Enabled: 0
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4895e851fc3e38a45af032a81925d641, type: 3}
   m_Name: 
@@ -18010,42 +18022,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 628ed6aa983829d4bb606711c473897d, type: 3}
---- !u!1 &1614815869 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2890234876681482284, guid: d34b92b66baca6a48bc68592da8492c7, type: 3}
-  m_PrefabInstance: {fileID: 1024131475}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1614815870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1614815869}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4895e851fc3e38a45af032a81925d641, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy:
-  - {fileID: 32987137638651388, guid: 0cc064d3c99ae8d4caf2e3ec5d9a1470, type: 3}
-  spawnPoint:
-  - {fileID: 1024131478}
-  - {fileID: 1024131477}
-  - {fileID: 1024131476}
-  - {fileID: 135943411}
-  - {fileID: 450408498}
-  - {fileID: 1009046244}
-  - {fileID: 1882840266}
-  - {fileID: 714927454}
-  - {fileID: 1670205494}
-  - {fileID: 775097667}
-  - {fileID: 159682289}
-  - {fileID: 834962266}
-  - {fileID: 1954958394}
-  enemyCtr: 0
-  maxEnemy: 30
-  delay: 0.5
 --- !u!1001 &1615136304
 PrefabInstance:
   m_ObjectHideFlags: 0
