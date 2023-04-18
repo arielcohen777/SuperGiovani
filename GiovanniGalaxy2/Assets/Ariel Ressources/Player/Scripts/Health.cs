@@ -20,7 +20,7 @@ public class Health : MonoBehaviour
 
     public GameObject DeathPanel;
     public float delayTime = 5f;
-    public string sceneName = "Main Menu";
+    //public string sceneName = "Main Menu";
 
     public PlayerRandomSounds hurtSounds;
 
@@ -94,6 +94,8 @@ public class Health : MonoBehaviour
 
     private void LoadScene()
     {
-        SceneManager.LoadScene(sceneName);
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
+       // SceneManager.LoadScene(sceneName);
     }
 }

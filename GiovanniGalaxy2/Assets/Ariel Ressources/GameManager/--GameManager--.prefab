@@ -78,7 +78,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Loading main menu...
+  m_text: Restarting level...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9c4dc134474cd8140b6b273e22f0c564, type: 2}
   m_sharedMaterial: {fileID: 7544039892860399155, guid: 9c4dc134474cd8140b6b273e22f0c564, type: 2}

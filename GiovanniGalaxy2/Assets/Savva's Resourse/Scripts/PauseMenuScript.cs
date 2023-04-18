@@ -11,6 +11,8 @@ public class PauseMenuScript : MonoBehaviour
 
     void Start()
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         pauseMenu.SetActive(false);
     }
 

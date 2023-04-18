@@ -14,6 +14,8 @@ public class BlinkingPrompt : MonoBehaviour
 
     void Start()
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         panel.SetActive(false);
         Invoke("ActivatePanel", delay);
     }

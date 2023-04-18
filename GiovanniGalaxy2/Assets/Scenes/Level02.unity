@@ -11981,6 +11981,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -27.6
       objectReference: {fileID: 0}
+    - target: {fileID: 1177892108647481927, guid: 6ed8e9bedf7f6f649a43f74633b6d524, type: 3}
+      propertyPath: batteryColor.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 845f69d690c342f42a3d419346995c7e, type: 2}
     - target: {fileID: 1177892109065972850, guid: 6ed8e9bedf7f6f649a43f74633b6d524, type: 3}
       propertyPath: m_LocalPosition.x
       value: 77.4
@@ -11993,6 +11997,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -95.4
       objectReference: {fileID: 0}
+    - target: {fileID: 1177892109267970375, guid: 6ed8e9bedf7f6f649a43f74633b6d524, type: 3}
+      propertyPath: batteryColor.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 845f69d690c342f42a3d419346995c7e, type: 2}
     - target: {fileID: 3552503707784105280, guid: 6ed8e9bedf7f6f649a43f74633b6d524, type: 3}
       propertyPath: m_RootOrder
       value: 8

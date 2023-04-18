@@ -13,19 +13,20 @@ public class BTN_s : MonoBehaviour
         {
         
             Debug.Log("Restart");
-            //SceneManager.LoadScene(1);
+            //SceneManager.LoadScene(Current);
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
        
             Debug.Log("Quit");
-            // Application.Quit();
+            Application.Quit();
         }
     }
     public void Restart()
     {
-        //SceneManager.LoadScene(1);
+        //int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        //SceneManager.LoadScene(currentSceneIndex);
         Debug.Log("Restart");
     }
 

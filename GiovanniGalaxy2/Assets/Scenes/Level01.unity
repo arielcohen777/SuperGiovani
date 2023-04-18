@@ -971,7 +971,7 @@ MonoBehaviour:
   batteryColor:
   - {fileID: 2100000, guid: 429ad1dd782a9b844a2619b20efe2892, type: 2}
   - {fileID: 2100000, guid: 358f1c54429cfff47b55699e1062028b, type: 2}
-  - {fileID: 2100000, guid: 4196922108a3da643ae2cbb4479a203b, type: 2}
+  - {fileID: 2100000, guid: 845f69d690c342f42a3d419346995c7e, type: 2}
   batterySFX:
   - {fileID: 8300000, guid: 64d4c12e8158b874cb531c9e9c5798fb, type: 3}
   - {fileID: 8300000, guid: d317ec43eb268094590faeb790adcfc0, type: 3}
@@ -17822,7 +17822,7 @@ MonoBehaviour:
   batteryColor:
   - {fileID: 2100000, guid: 429ad1dd782a9b844a2619b20efe2892, type: 2}
   - {fileID: 2100000, guid: 358f1c54429cfff47b55699e1062028b, type: 2}
-  - {fileID: 2100000, guid: 4196922108a3da643ae2cbb4479a203b, type: 2}
+  - {fileID: 2100000, guid: 845f69d690c342f42a3d419346995c7e, type: 2}
   batterySFX:
   - {fileID: 8300000, guid: 64d4c12e8158b874cb531c9e9c5798fb, type: 3}
   - {fileID: 8300000, guid: d317ec43eb268094590faeb790adcfc0, type: 3}
@@ -48182,7 +48182,7 @@ MonoBehaviour:
   batteryColor:
   - {fileID: 2100000, guid: 429ad1dd782a9b844a2619b20efe2892, type: 2}
   - {fileID: 2100000, guid: 358f1c54429cfff47b55699e1062028b, type: 2}
-  - {fileID: 2100000, guid: 4196922108a3da643ae2cbb4479a203b, type: 2}
+  - {fileID: 2100000, guid: 845f69d690c342f42a3d419346995c7e, type: 2}
   batterySFX:
   - {fileID: 8300000, guid: 64d4c12e8158b874cb531c9e9c5798fb, type: 3}
   - {fileID: 8300000, guid: d317ec43eb268094590faeb790adcfc0, type: 3}
